@@ -12,25 +12,24 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @license     TDM GPL license
- * @author		TDM TEAM DEV MODULE 
+ * @author		TDM TEAM DEV MODULE
  *
  * Version : 1.38 Thu 2012/04/12 14:04:25 : Timgno Exp $
  * ****************************************************************************
  */
-include '../../../include/cp_header.php'; 
+include '../../../include/cp_header.php';
 include_once("../include/functions.php");
 include_once("../include/common.php");
 include_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
 include_once(XOOPS_ROOT_PATH."/class/tree.php");
 include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
 
-
 if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))){
-	include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-	//return true;
+    include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
+    //return true;
 }else{
-	 redirect_header("../../../admin.php", 5, _AM_MODULEADMIN_MISSING, false);
-	//return false;
+     redirect_header("../../../admin.php", 5, _AM_MODULEADMIN_MISSING, false);
+    //return false;
 }
 
 //$moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));

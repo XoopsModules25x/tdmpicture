@@ -39,48 +39,48 @@ require './fpdf/fpdf.php';
 
 global $xoopsDB, $xoopsConfig, $xoopsModuleConfig;
 
-	if (empty($_REQUEST['st'])) {
-	redirect_header('index.php', 2, _MD_TDMPICTURE_NOPERM);
-	exit();
+    if (empty($_REQUEST['st'])) {
+    redirect_header('index.php', 2, _MD_TDMPICTURE_NOPERM);
+    exit();
     }
-	
+    
   if( file_exists(TDMPICTURE_ROOT_PATH."/language/".$xoopsConfig['language']."/admin.php") ) {
-	 include_once(TDMPICTURE_ROOT_PATH."/language/".$xoopsConfig['language']."/admin.php");
+     include_once(TDMPICTURE_ROOT_PATH."/language/".$xoopsConfig['language']."/admin.php");
   } else {
-	 include_once(TDMPICTURE_ROOT_PATH."/language/english/admin.php");
+     include_once(TDMPICTURE_ROOT_PATH."/language/english/admin.php");
   }
 $myts = & MyTextSanitizer :: getInstance(); // MyTextSanitizer object
 
 $option = !empty($_REQUEST['option']) ? $_REQUEST['option'] : 'default';
 
-		//Text generale
-		$pdf_data['member_name'] = Chars(_AM_TDMASSOC_MEMBER_FORM_NAME);
-		$pdf_data['member_firstname'] = Chars(_AM_TDMASSOC_MEMBER_FORM_FISRTNAME);
-		$pdf_data['member_adress'] = Chars(_AM_TDMASSOC_MEMBER_FORM_ADRESS);
-		$pdf_data['member_zipcode'] = Chars(_AM_TDMASSOC_MEMBER_PDF_ZIPCODE);
-		$pdf_data['member_town'] = Chars(_AM_TDMASSOC_MEMBER_FORM_TOWN);
-		$pdf_data['member_phone'] =Chars( _AM_TDMASSOC_MEMBER_FORM_PHONE);
-		$pdf_data['member_registration_start'] = Chars(_AM_TDMASSOC_MEMBER_FORM_REGISTRATION_START);
-		$pdf_data['member_registration_end'] = Chars(_AM_TDMASSOC_MEMBER_FORM_REGISTRATION_END);
-		$pdf_data['status_name'] = Chars(_AM_TDMASSOC_MEMBER_FORM_STATUS);
-		
-		//Composition de l'association
-		$pdf_data['composition_title'] = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_TITLE);
-		$pdf_data['composition_list_admin'] = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_LIST_ADMIN_TITLE);
-		$pdf_data['composition_list_office'] = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_LIST_OFFICE_TITLE);
-		
-		//Liste d'administrateurs
-		$pdf_data['list_admin_title'] = Chars(_AM_TDMASSOC_MEMBER_PDF_LISTADMIN_TITLE);
-		
-		
+        //Text generale
+        $pdf_data['member_name'] = Chars(_AM_TDMASSOC_MEMBER_FORM_NAME);
+        $pdf_data['member_firstname'] = Chars(_AM_TDMASSOC_MEMBER_FORM_FISRTNAME);
+        $pdf_data['member_adress'] = Chars(_AM_TDMASSOC_MEMBER_FORM_ADRESS);
+        $pdf_data['member_zipcode'] = Chars(_AM_TDMASSOC_MEMBER_PDF_ZIPCODE);
+        $pdf_data['member_town'] = Chars(_AM_TDMASSOC_MEMBER_FORM_TOWN);
+        $pdf_data['member_phone'] =Chars( _AM_TDMASSOC_MEMBER_FORM_PHONE);
+        $pdf_data['member_registration_start'] = Chars(_AM_TDMASSOC_MEMBER_FORM_REGISTRATION_START);
+        $pdf_data['member_registration_end'] = Chars(_AM_TDMASSOC_MEMBER_FORM_REGISTRATION_END);
+        $pdf_data['status_name'] = Chars(_AM_TDMASSOC_MEMBER_FORM_STATUS);
+        
+        //Composition de l'association
+        $pdf_data['composition_title'] = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_TITLE);
+        $pdf_data['composition_list_admin'] = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_LIST_ADMIN_TITLE);
+        $pdf_data['composition_list_office'] = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_LIST_OFFICE_TITLE);
+        
+        //Liste d'administrateurs
+        $pdf_data['list_admin_title'] = Chars(_AM_TDMASSOC_MEMBER_PDF_LISTADMIN_TITLE);
+        
+        
 switch( $option )
 {
    default:
-   	redirect_header("javascript:history.go(-1)",2, _PM_RMEDNON);
+    redirect_header("javascript:history.go(-1)",2, _PM_RMEDNON);
    break;
-	
+    
 //pdf pour l'affichage full
-   	case "auto":
+    case "auto":
 //load class
 $file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
 $cat_handler =& xoops_getModuleHandler('tdmpicture_cat', 'TDMPicture');
@@ -168,17 +168,17 @@ $pdf=new FPDF('L','mm','A1');
 
 }else {
 redirect_header("javascript:history.go(-1)",2, _MD_TDMPICTURE_PDFNONE);
-	exit();
-	}
+    exit();
+    }
 //
 //
 $pdf->AddPage();
 //titre
 $absx=($wt-$w)/2;
-$pdf->Image($file_path['image_path'], $absx, 0,$w);		
+$pdf->Image($file_path['image_path'], $absx, 0,$w);
 $pdf->Output();
 
-  	break;
+    break;
 
  case "A4":
 //load class
@@ -206,11 +206,11 @@ $pdf->AddPage();
 //titre
 $size = '210';
 $absx=(210-$size)/2;
-$pdf->Image($file_path['image_path'], $absx, 0,$size);		
+$pdf->Image($file_path['image_path'], $absx, 0,$size);
 $pdf->Output();
 
-  	break;
-	
+    break;
+    
 case "A3":
 //load class
 $file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
@@ -237,11 +237,11 @@ $pdf->AddPage();
 //titre
 $size = '297';
 $absx=(297-$size)/2;
-$pdf->Image($file_path['image_path'], $absx, 0,$size);		
+$pdf->Image($file_path['image_path'], $absx, 0,$size);
 $pdf->Output();
 
-  	break;
-	
+    break;
+    
 case "A2":
 //load class
 $file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
@@ -257,7 +257,6 @@ $color = '#CCCCCC';
 $h = $file->getVar('file_res_y');
 $w = $file->getVar('file_res_x');
 
-
 if ($h > 420) {
 $pdf=new FPDF('P','mm','A2');
 } else {
@@ -269,11 +268,11 @@ $pdf->AddPage();
 //titre
 $size = '420';
 $absx=(420-$size)/2;
-$pdf->Image($file_path['image_path'], $absx, 0,$size);		
+$pdf->Image($file_path['image_path'], $absx, 0,$size);
 $pdf->Output();
 
-  	break;
-	
+    break;
+    
 case "A1":
 //load class
 $file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
@@ -300,24 +299,21 @@ $pdf->AddPage();
 //titre
 $size = '594';
 $absx=(594-$size)/2;
-$pdf->Image($file_path['image_path'], $absx, 0,$size);		
+$pdf->Image($file_path['image_path'], $absx, 0,$size);
 $pdf->Output();
 
-  	break;
-	
+    break;
+    
 }
 //
 
 
-
     function Chars($text)
     {
-	$myts = & MyTextSanitizer :: getInstance(); 
+    $myts = & MyTextSanitizer :: getInstance();
+
         return preg_replace(
                             array( "/&#039;/i", "/&#233;/i", "/&#232;/i", "/&#224;/i", "/&quot;/i", '/<br \/>/i', "/&agrave;/i", "/&#8364;/i"),
                             array( "'", "é", "è", "à", '"', "\n", "à", "€"),
                            $text);
     }
-
-
-?>

@@ -12,12 +12,10 @@
  * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
-
-
 
 include 'admin_header.php';
 xoops_cp_header();
@@ -40,7 +38,7 @@ $file_waiting = $file_handler->getCount($criteria);
 
 ///////////////////////////////////////////////////////////
 //apelle du menu admin
-//test dossier 
+//test dossier
 // dossier dans uploads
 $folder = array(TDMPICTURE_UPLOADS_PATH, TDMPICTURE_THUMB_PATH, TDMPICTURE_CAT_PATH);
 //test GD
@@ -52,7 +50,7 @@ $veriffile = '<span style="color: red;"><img src="./../images/off.gif"> '._AM_TD
 $veriffile = '<span style="color: green;"><img src="./../images/on.gif" >'._AM_TDMPICTURE_MANAGE_GDOK.'</span>';
 }
 
-	$index_admin = new ModuleAdmin();
+    $index_admin = new ModuleAdmin();
     $index_admin->addInfoBox(_AM_TDMPICTURE_MANAGE_CAT);
     $index_admin->addInfoBox(_AM_TDMPICTURE_MANAGE_FILE);
     $index_admin->addInfoBoxLine(_AM_TDMPICTURE_MANAGE_CAT, _AM_TDMPICTURE_THEREARE_CAT, $numcat);
@@ -72,10 +70,9 @@ $veriffile = '<span style="color: green;"><img src="./../images/on.gif" >'._AM_T
         $index_admin->addConfigBoxLine($folder[$i], 'folder');
         $index_admin->addConfigBoxLine(array($folder[$i], '777'), 'chmod');
     }
-	$index_admin->addConfigBoxLine($veriffile);
+    $index_admin->addConfigBoxLine($veriffile);
     echo $index_admin->addNavigation('index.php');
     echo $index_admin->renderIndex();
-
 
 //if ( !is_readable(XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php"))	{
 //TDMPicture_adminmenu(0, _AM_TDMPICTURE_INDEXDESC);
@@ -85,4 +82,3 @@ $veriffile = '<span style="color: green;"><img src="./../images/on.gif" >'._AM_T
 //}
 
 xoops_cp_footer();
-?>

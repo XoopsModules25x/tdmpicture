@@ -12,7 +12,7 @@
  * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
@@ -22,8 +22,6 @@ xoops_cp_header();
 
 tdmpicture_adminheader();
 
-
-
 $file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
 $cat_handler =& xoops_getModuleHandler('tdmpicture_cat', 'TDMPicture');
 
@@ -32,7 +30,6 @@ $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 $start = isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
 $size = isset($_REQUEST['size']) ? $_REQUEST['size'] : 0;
 if( $size <= 0 || $size > 10000 ) $size = 10 ;
-
 
 //$forceredo = isset( $_POST['forceredo'] ) ? intval( $_POST['forceredo'] ) : false ;
 $forcethumb = isset( $_POST['forcethumb'] ) ? intval( $_POST['forcethumb'] ) : false ;
@@ -45,12 +42,11 @@ $resize = isset( $_REQUEST['resize'] ) ? intval( $_REQUEST['resize'] ) : false ;
 // get flag of safe_mode
 $safe_mode_flag = ini_get( "safe_mode" ) ;
 
-
 //$origine = "/chemin/vers/source/";
 //$destination = "/chemin/vers/destination/";
-//if(CopyDir($origine, $destination)) { 
- //   echo "Le dossier ".$origine." a ete copie avec succes vers ".$destination; 
-//}; 
+//if(CopyDir($origine, $destination)) {
+ //   echo "Le dossier ".$origine." a ete copie avec succes vers ".$destination;
+//};
 // check or make thumbs_dir
 //if( $myalbum_makethumb && ! is_dir( $thumbs_dir ) ) {
 //	if( $safe_mode_flag ) {
@@ -58,103 +54,103 @@ $safe_mode_flag = ini_get( "safe_mode" ) ;
 //		exit ;
 //	}
 
-	//$rs = mkdir( $thumbs_dir , 0777 ) ;
-	//if( ! $rs ) {
-	//	redirect_header(XOOPS_URL."/modules/$mydirname/",10,"$thumbs_dir is not a directory");
-	//	exit ;
-	//} else @chmod( $thumbs_dir , 0777 ) ;
+    //$rs = mkdir( $thumbs_dir , 0777 ) ;
+    //if( ! $rs ) {
+    //	redirect_header(XOOPS_URL."/modules/$mydirname/",10,"$thumbs_dir is not a directory");
+    //	exit ;
+    //} else @chmod( $thumbs_dir , 0777 ) ;
 //}
 
 if( ! empty( $_POST['submit'] ) ) {
-	ob_start() ;
+    ob_start() ;
 
-	$result = $xoopsDB->query( "SELECT lid , ext , res_x , res_y FROM $table_photos ORDER BY lid LIMIT $start , $size") or die( "DB Error" ) ;
-	$record_counter = 0 ;
-	while( list( $lid , $ext , $w , $h ) = $xoopsDB->fetchRow( $result ) ) {
-		$record_counter ++ ;
-		echo ( $record_counter + $start - 1 ) . ") " ;
-		printf( _AM_FMT_CHECKING , "$lid.$ext" ) ;
+    $result = $xoopsDB->query( "SELECT lid , ext , res_x , res_y FROM $table_photos ORDER BY lid LIMIT $start , $size") or die( "DB Error" ) ;
+    $record_counter = 0 ;
+    while( list( $lid , $ext , $w , $h ) = $xoopsDB->fetchRow( $result ) ) {
+        $record_counter ++ ;
+        echo ( $record_counter + $start - 1 ) . ") " ;
+        printf( _AM_FMT_CHECKING , "$lid.$ext" ) ;
 
-		// Check if the main image exists
-		if( ! is_readable( "$photos_dir/$lid.$ext" ) ) {
-			echo _AM_MB_PHOTONOTEXISTS." &nbsp; " ;
-			if( $removerec ) {
-				myalbum_delete_photos( "lid='$lid'" ) ;
-				echo _AM_MB_RECREMOVED."<br />\n" ;
-			} else {
-				echo _AM_MB_SKIPPED."<br />\n" ;
-			}
-			continue ;
-		}
+        // Check if the main image exists
+        if( ! is_readable( "$photos_dir/$lid.$ext" ) ) {
+            echo _AM_MB_PHOTONOTEXISTS." &nbsp; " ;
+            if( $removerec ) {
+                myalbum_delete_photos( "lid='$lid'" ) ;
+                echo _AM_MB_RECREMOVED."<br />\n" ;
+            } else {
+                echo _AM_MB_SKIPPED."<br />\n" ;
+            }
+            continue ;
+        }
 
-		// Check if the file is normal image
-		if( ! in_array( strtolower( $ext ) , $myalbum_normal_exts ) ) {
-			if( $forceredo || ! is_readable( "$thumbs_dir/$lid.gif" ) ) {
-				myalbum_create_thumb( "$photos_dir/$lid.$ext" , $lid , $ext ) ;
-				echo _AM_MB_CREATEDTHUMBS."<br />\n" ;
-			} else {
-				echo _AM_MB_SKIPPED."<br />\n" ;
-			}
-			continue ;
-		}
+        // Check if the file is normal image
+        if( ! in_array( strtolower( $ext ) , $myalbum_normal_exts ) ) {
+            if( $forceredo || ! is_readable( "$thumbs_dir/$lid.gif" ) ) {
+                myalbum_create_thumb( "$photos_dir/$lid.$ext" , $lid , $ext ) ;
+                echo _AM_MB_CREATEDTHUMBS."<br />\n" ;
+            } else {
+                echo _AM_MB_SKIPPED."<br />\n" ;
+            }
+            continue ;
+        }
 
-		// Size of main photo
-		list( $true_w , $true_h ) = getimagesize( "$photos_dir/$lid.$ext" ) ;
-		echo "{$true_w}x{$true_h} .. " ;
+        // Size of main photo
+        list( $true_w , $true_h ) = getimagesize( "$photos_dir/$lid.$ext" ) ;
+        echo "{$true_w}x{$true_h} .. " ;
 
-		// Check and resize the main photo if necessary
-		if( $resize && ( $true_w > $myalbum_width || $true_h > $myalbum_height ) ) {
-			$tmp_path = "$photos_dir/myalbum_tmp_photo" ;
-			@unlink( $tmp_path ) ;
-			rename( "$photos_dir/$lid.$ext" , $tmp_path ) ;
-			myalbum_modify_photo( $tmp_path , "$photos_dir/$lid.$ext" ) ;
-			@unlink( $tmp_path ) ;
-			echo _AM_MB_PHOTORESIZED." &nbsp; " ;
-			list( $true_w , $true_h ) = getimagesize( "$photos_dir/$lid.$ext" ) ;
-		}
+        // Check and resize the main photo if necessary
+        if( $resize && ( $true_w > $myalbum_width || $true_h > $myalbum_height ) ) {
+            $tmp_path = "$photos_dir/myalbum_tmp_photo" ;
+            @unlink( $tmp_path ) ;
+            rename( "$photos_dir/$lid.$ext" , $tmp_path ) ;
+            myalbum_modify_photo( $tmp_path , "$photos_dir/$lid.$ext" ) ;
+            @unlink( $tmp_path ) ;
+            echo _AM_MB_PHOTORESIZED." &nbsp; " ;
+            list( $true_w , $true_h ) = getimagesize( "$photos_dir/$lid.$ext" ) ;
+        }
 
-		// Check and repair record of the photo if necessary
-		if( $true_w != $w || $true_h != $h ) {
-			$xoopsDB->query( "UPDATE $table_photos SET res_x=$true_w, res_y=$true_h WHERE lid=$lid" ) or die( "DB error: UPDATE photo table." ) ;
-			echo _AM_MB_SIZEREPAIRED." &nbsp; " ;
-		}
+        // Check and repair record of the photo if necessary
+        if( $true_w != $w || $true_h != $h ) {
+            $xoopsDB->query( "UPDATE $table_photos SET res_x=$true_w, res_y=$true_h WHERE lid=$lid" ) or die( "DB error: UPDATE photo table." ) ;
+            echo _AM_MB_SIZEREPAIRED." &nbsp; " ;
+        }
 
-		// Create Thumbs
-		if( is_readable( "$thumbs_dir/$lid.$ext" ) ) {
-			list( $thumb_w , $thumb_h ) = getimagesize( "$thumbs_dir/$lid.$ext" ) ;
-			echo "{$thumb_w}x{$thumb_h} ... " ;
-			if( $forceredo ) {
-				$retcode = myalbum_create_thumb( "$photos_dir/$lid.$ext" , $lid , $ext ) ;
-			} else {
-				$retcode = 3 ;
-			}
-		} else {
-			if( $myalbum_makethumb ) {
-				$retcode = myalbum_create_thumb( "$photos_dir/$lid.$ext" , $lid , $ext ) ;
-			} else {
-				$retcode = 3 ;
-			}
-		}
+        // Create Thumbs
+        if( is_readable( "$thumbs_dir/$lid.$ext" ) ) {
+            list( $thumb_w , $thumb_h ) = getimagesize( "$thumbs_dir/$lid.$ext" ) ;
+            echo "{$thumb_w}x{$thumb_h} ... " ;
+            if( $forceredo ) {
+                $retcode = myalbum_create_thumb( "$photos_dir/$lid.$ext" , $lid , $ext ) ;
+            } else {
+                $retcode = 3 ;
+            }
+        } else {
+            if( $myalbum_makethumb ) {
+                $retcode = myalbum_create_thumb( "$photos_dir/$lid.$ext" , $lid , $ext ) ;
+            } else {
+                $retcode = 3 ;
+            }
+        }
 
-		switch( $retcode ) {
-			case 0 : 
-				echo _AM_MB_FAILEDREADING."<br />\n" ;
-				break ;
-			case 1 : 
-				echo _AM_MB_CREATEDTHUMBS."<br />\n" ;
-				break ;
-			case 2 : 
-				echo _AM_MB_BIGTHUMBS."<br />\n" ;
-				break ;
-			case 3 : 
-				echo _AM_MB_SKIPPED."<br />\n" ;
-				break ;
-		}
-	}
-	$result_str = ob_get_contents() ;
-	ob_end_clean() ;
+        switch( $retcode ) {
+            case 0 :
+                echo _AM_MB_FAILEDREADING."<br />\n" ;
+                break ;
+            case 1 :
+                echo _AM_MB_CREATEDTHUMBS."<br />\n" ;
+                break ;
+            case 2 :
+                echo _AM_MB_BIGTHUMBS."<br />\n" ;
+                break ;
+            case 3 :
+                echo _AM_MB_SKIPPED."<br />\n" ;
+                break ;
+        }
+    }
+    $result_str = ob_get_contents() ;
+    ob_end_clean() ;
 
-	$start += $size ;
+    $start += $size ;
 }
 
 // Make form objects
@@ -168,11 +164,10 @@ $removerec_radio = new XoopsFormRadioYN( _AM_RADIO_REMOVEREC , 'removerec' , $re
 $resize_radio = new XoopsFormRadioYN( _AM_RADIO_RESIZE." ({$myalbum_width}x{$myalbum_height})" , 'resize' , $resize ) ;
 
 if( isset( $record_counter ) && $record_counter < $size ) {
-	$submit_button = new XoopsFormLabel( "" , _AM_MB_FINISHED." &nbsp; <a href='redothumbs.php'>"._AM_LINK_RESTART."</a>" ) ;
+    $submit_button = new XoopsFormLabel( "" , _AM_MB_FINISHED." &nbsp; <a href='redothumbs.php'>"._AM_LINK_RESTART."</a>" ) ;
 } else {
-	$submit_button = new XoopsFormButton( "" , "submit" , _AM_SUBMIT_NEXT , "submit" ) ;
+    $submit_button = new XoopsFormButton( "" , "submit" , _AM_SUBMIT_NEXT , "submit" ) ;
 }
-
 
 // Render forms
 xoops_cp_header() ;
@@ -193,10 +188,8 @@ $form->display() ;
 myalbum_closetable() ;
 
 if( isset( $result_str ) ) {
-	echo "<br />\n" ;
-	echo $result_str ;
+    echo "<br />\n" ;
+    echo $result_str ;
 }
 
 xoops_cp_footer() ;
-
-?>

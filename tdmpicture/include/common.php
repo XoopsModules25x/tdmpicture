@@ -22,7 +22,7 @@
  */
 
 if (!defined("XOOPS_ROOT_PATH")) {
- 	die("XOOPS root path not defined");
+    die("XOOPS root path not defined");
 }
 
 define("TDMPICTURE_DIRNAME", basename(dirname(dirname(__FILE__))));
@@ -51,7 +51,6 @@ define("TDMPICTURE_HEIGHT", $xoopsModuleConfig['tdmpicture_heigth']);
 define('TDMPICTURE_THUMB_WIDTH', $xoopsModuleConfig['tdmpicture_thumb_width']);
 define('TDMPICTURE_THUMB_HEIGTH', $xoopsModuleConfig['tdmpicture_thumb_heigth']);
 
-
 include_once TDMPICTURE_ROOT_PATH . '/include/functions.php';
 include_once TDMPICTURE_ROOT_PATH . '/class/thumbnail.inc.php';
 include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
@@ -60,11 +59,9 @@ include_once TDMPICTURE_ROOT_PATH . '/class/tree.php';
 include_once TDMPICTURE_ROOT_PATH . '/class/tree2.php';
 
 //enregistre le style de vue pour la session_cache_expire
-		if(!isset($_SESSION['tdmpicture_display'])) {
-    	$_SESSION['tdmpicture_display'] = $xoopsModuleConfig['tdmpicture_display'];
-		define('TDMPICTURE_DISPLAY', $xoopsModuleConfig['tdmpicture_display'] );
-		} else {
-		define('TDMPICTURE_DISPLAY', $_SESSION['tdmpicture_display'] );
-		}
-
-?>
+        if(!isset($_SESSION['tdmpicture_display'])) {
+        $_SESSION['tdmpicture_display'] = $xoopsModuleConfig['tdmpicture_display'];
+        define('TDMPICTURE_DISPLAY', $xoopsModuleConfig['tdmpicture_display'] );
+        } else {
+        define('TDMPICTURE_DISPLAY', $_SESSION['tdmpicture_display'] );
+        }

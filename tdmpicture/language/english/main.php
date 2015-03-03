@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -14,95 +14,94 @@
  *
  * @copyright       	(http://www.)
  * @license        	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		TDM ; TEAM DEV MODULE 
+ * @author		TDM ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
 
 // php index
-define("_MD_TDMPICTURE_VIEWALBUM","See the album "); 
-define("_MD_TDMPICTURE_VIEWMYALBUM","See my album"); 
-define("_MD_TDMPICTURE_UPLOAD","Upload my images"); 
-define("_MD_TDMPICTURE_SWITCH","Modify View"); 
-define("_MD_TDMPICTURE_SLIDE","Slideshow"); 
-define("_MD_TDMPICTURE_SLIDEOFF","Cut the slideshow"); 
-define("_MD_TDMPICTURE_LISTE","List"); 
-define("_MD_TDMPICTURE_LAST","Recent list"); 
-define("_MD_TDMPICTURE_VOTEOK","Thank you for your vote"); 
-define("_MD_TDMPICTURE_VOTENOOK","Error: You have already voted"); 
-define("_MD_TDMPICTURE_BASEERROR","Error: Your changes are not recorded"); 
-define("_MD_TDMPICTURE_WIKI","About"); 
+define("_MD_TDMPICTURE_VIEWALBUM","See the album ");
+define("_MD_TDMPICTURE_VIEWMYALBUM","See my album");
+define("_MD_TDMPICTURE_UPLOAD","Upload my images");
+define("_MD_TDMPICTURE_SWITCH","Modify View");
+define("_MD_TDMPICTURE_SLIDE","Slideshow");
+define("_MD_TDMPICTURE_SLIDEOFF","Cut the slideshow");
+define("_MD_TDMPICTURE_LISTE","List");
+define("_MD_TDMPICTURE_LAST","Recent list");
+define("_MD_TDMPICTURE_VOTEOK","Thank you for your vote");
+define("_MD_TDMPICTURE_VOTENOOK","Error: You have already voted");
+define("_MD_TDMPICTURE_BASEERROR","Error: Your changes are not recorded");
+define("_MD_TDMPICTURE_WIKI","About");
 define("_MD_TDMPICTURE_POWERBY","Submitted by");
-define("_MD_TDMPICTURE_CAT","Category"); 
+define("_MD_TDMPICTURE_CAT","Category");
 define("_MD_TDMPICTURE_TYPE","Type");
 define("_MD_TDMPICTURE_SIZE","File Size");
 //define("_MD_TDMPICTURE_WIDTH","Dimensions");
-define("_MD_TDMPICTURE_MORE","About"); 
+define("_MD_TDMPICTURE_MORE","About");
 define("_MD_TDMPICTURE_SCREEN","Full Screen");
 
 define("_MD_TDMPICTURE_COMMENT","Comments");
-define("_MD_TDMPICTURE_FILECD","Number of CDs"); 
-define("_MD_TDMPICTURE_FILEEDITOR","Publisher"); 
-define("_MD_TDMPICTURE_FILENBFILE","Track Number"); 
-define("_MD_TDMPICTURE_ALBUM","album"); 
+define("_MD_TDMPICTURE_FILECD","Number of CDs");
+define("_MD_TDMPICTURE_FILEEDITOR","Publisher");
+define("_MD_TDMPICTURE_FILENBFILE","Track Number");
+define("_MD_TDMPICTURE_ALBUM","album");
 define("_MD_TDMPICTURE_DESCRIPTION","Description: ");
-define("_MD_TDMPICTURE_VOTEADD","Add one vote"); 
-define("_MD_TDMPICTURE_VOTEREMOVE","Remove a vote"); 
-define("_MD_TDMPICTURE_LE","the"); 
-define("_MD_TDMPICTURE_NONEALBUM","No album seems to be registered"); 
-define("_MD_TDMPICTURE_NONEARTISTE","No artist appears to be saved"); 
-define("_MD_TDMPICTURE_NONEGENRE","No genre seems to be registered"); 
-define("_MD_TDMPICTURE_NONEFILE","No files appear to be registered"); 
-define("_MD_TDMPICTURE_VOTE","Vote"); 
-define("_MD_TDMPICTURE_HITS","View"); 
+define("_MD_TDMPICTURE_VOTEADD","Add one vote");
+define("_MD_TDMPICTURE_VOTEREMOVE","Remove a vote");
+define("_MD_TDMPICTURE_LE","the");
+define("_MD_TDMPICTURE_NONEALBUM","No album seems to be registered");
+define("_MD_TDMPICTURE_NONEARTISTE","No artist appears to be saved");
+define("_MD_TDMPICTURE_NONEGENRE","No genre seems to be registered");
+define("_MD_TDMPICTURE_NONEFILE","No files appear to be registered");
+define("_MD_TDMPICTURE_VOTE","Vote");
+define("_MD_TDMPICTURE_HITS","View");
 define("_MD_TDMPICTURE_DL","Download");
 
-// button 
-define("_MD_TDMPICTURE_BTNLIST","Add to your Playlist"); 
-define("_MD_TDMPICTURE_BTNPREV","previous"); 
-define("_MD_TDMPICTURE_BTNNEXT","next"); 
+// button
+define("_MD_TDMPICTURE_BTNLIST","Add to your Playlist");
+define("_MD_TDMPICTURE_BTNPREV","previous");
+define("_MD_TDMPICTURE_BTNNEXT","next");
 // PDF
-define("_MD_TDMPICTURE_PDFNONE","Error: Please select a paper size"); 
+define("_MD_TDMPICTURE_PDFNONE","Error: Please select a paper size");
 define("_MD_TDMPICTURE_PDFAUTO","PDF format auto");
 define("_MD_TDMPICTURE_PDFA4","PDF format A4: 210 × 297");
 define("_MD_TDMPICTURE_PDFA3","PDF format A3: 297 × 420");
 define("_MD_TDMPICTURE_PDFA2","PDF format A2: 420 × 594");
 define("_MD_TDMPICTURE_PDFA1","PDF format A1: 594 × 841");
-define("_MD_TDMPICTURE_BTNEDIT","Edit your picture"); 
+define("_MD_TDMPICTURE_BTNEDIT","Edit your picture");
 
-
-// jquery 
-define("_MD_TDMPICTURE_QUERYNOREGISTER","You must be registered to perform this action"); 
-define("_MD_TDMPICTURE_QUERYOK","Save successful"); 
+// jquery
+define("_MD_TDMPICTURE_QUERYNOREGISTER","You must be registered to perform this action");
+define("_MD_TDMPICTURE_QUERYOK","Save successful");
 define("_MD_TDMPICTURE_QUERYDELOK","Delete successful");
-define("_MD_TDMPICTURE_QUERYNOPERM","You do not have permission for this action"); 
+define("_MD_TDMPICTURE_QUERYNOPERM","You do not have permission for this action");
 
-// tris 
-define("_MD_TDMPICTURE_TRIBY","Sort by"); 
-define("_MD_TDMPICTURE_TRIVIEW","Visible"); 
-define("_MD_TDMPICTURE_TRIPARC","Browsing"); 
+// tris
+define("_MD_TDMPICTURE_TRIBY","Sort by");
+define("_MD_TDMPICTURE_TRIVIEW","Visible");
+define("_MD_TDMPICTURE_TRIPARC","Browsing");
 define("_MD_TDMPICTURE_TRIFILE","File");
 define("_MD_TDMPICTURE_TRIART","Artist");
-define("_MD_TDMPICTURE_TRITITLE","Alphabetically"); 
-define("_MD_TDMPICTURE_TRIDATE","Publication Date"); 
-define("_MD_TDMPICTURE_TRIHITS","View"); 
+define("_MD_TDMPICTURE_TRITITLE","Alphabetically");
+define("_MD_TDMPICTURE_TRIDATE","Publication Date");
+define("_MD_TDMPICTURE_TRIHITS","View");
 define("_MD_TDMPICTURE_TRIDL","Download");
-define("_MD_TDMPICTURE_TRICOUNTS","Popularity"); 
-define("_MD_TDMPICTURE_TRICOMMENT","Reviews"); 
-define("_MD_TDMPICTURE_TRIRAND","Random"); 
+define("_MD_TDMPICTURE_TRICOUNTS","Popularity");
+define("_MD_TDMPICTURE_TRICOMMENT","Reviews");
+define("_MD_TDMPICTURE_TRIRAND","Random");
 
-// menu 
+// menu
 define("_MD_TDMPICTURE_MYALBUM","Our album");
-define("_MD_TDMPICTURE_MYARTISTE","our artists"); 
-define("_MD_TDMPICTURE_MYMENU","You can browse by:"); 
-define("_MD_TDMPICTURE_PERM_SUBMIT","Submit"); 
+define("_MD_TDMPICTURE_MYARTISTE","our artists");
+define("_MD_TDMPICTURE_MYMENU","You can browse by:");
+define("_MD_TDMPICTURE_PERM_SUBMIT","Submit");
 define("_MD_TDMPICTURE_PERM_8","Type");
-define("_MD_TDMPICTURE_PERM_16","Artist"); 
-define("_MD_TDMPICTURE_PERM_32","Album"); 
+define("_MD_TDMPICTURE_PERM_16","Artist");
+define("_MD_TDMPICTURE_PERM_32","Album");
 define("_MD_TDMPICTURE_PERM_64","File");
-define("_MD_TDMPICTURE_PERM_128","File Upload"); 
+define("_MD_TDMPICTURE_PERM_128","File Upload");
 
-// form 
+// form
 //define("_MD_TDMPICTURE_DISPLAY","Publish");
 define("_MD_TDMPICTURE_TITLE","Title");
 //define("_MD_TDMPICTURE_FOLDER","File");
@@ -144,7 +143,7 @@ define("_MD_TDMPICTURE_DISPLAYUSER","Show in the user");
 define("_MD_TDMPICTURE_BASE","Your changes saved successfully");
 //define("_MD_TDMPICTURE_BASEERROR","Error: Your changes are not recorded");
 define("_MD_TDMPICTURE_GENREDELALL","ATTENTION all folder and subfolder will be deleted");
-define("_MD_TDMPICTURE_NOPERM","You do not have permission for this action"); 
+define("_MD_TDMPICTURE_NOPERM","You do not have permission for this action");
 
 // version 1.3
 //define("_MD_TDMPICTURE_BACK","Return");

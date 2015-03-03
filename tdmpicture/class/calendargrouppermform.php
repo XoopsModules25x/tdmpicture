@@ -66,8 +66,8 @@ class CalendarGroupPermForm extends XoopsForm
      * @var string
      */
     var $_anonymous;
-	
-	 var $_permDesc;
+    
+     var $_permDesc;
 
     /**
      * Whether to include anonymous users
@@ -97,8 +97,8 @@ class CalendarGroupPermForm extends XoopsForm
      * Adds an item to which permission will be assigned
      *
      * @param string $itemName
-     * @param int $itemId
-     * @param int $itemParent
+     * @param int    $itemId
+     * @param int    $itemParent
      * @access public
      */
     function addItem($itemId, $itemName, $itemParent = 0, $anonymous = false)
@@ -108,13 +108,13 @@ class CalendarGroupPermForm extends XoopsForm
         $this->_itemTree[$itemId]['parent'] = $itemParent;
         $this->_itemTree[$itemId]['name'] = $itemName;
         $this->_itemTree[$itemId]['id'] = $itemId;
-		$this->_itemTree[$itemId]['anonymous'] = $anonymous;
+        $this->_itemTree[$itemId]['anonymous'] = $anonymous;
     }
 
     /**
      * Loads all child ids for an item to be used in javascript
      *
-     * @param int $itemId
+     * @param int   $itemId
      * @param array $childIds
      * @access private
      */
@@ -156,7 +156,7 @@ class CalendarGroupPermForm extends XoopsForm
                 // get selected item id(s) for each group
             $selected = $gperm_handler->getItemIds($this->_permName, $i, $this->_modid);
             $ele = new CalendarGroupFormCheckBox($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
-			$ele->setOptionTree($this->_itemTree);
+            $ele->setOptionTree($this->_itemTree);
             $this->addElement($ele);
             unset($ele);
         }
@@ -187,10 +187,10 @@ class CalendarGroupPermForm extends XoopsForm
         }
         $ret .= '</table>' . $hidden . '</form>';
         $ret .= $this->renderValidationJS(true);
+
         return $ret;
     }
 }
-
 
 /**
  * Renders checkbox options for a group permission form
@@ -295,6 +295,7 @@ class CalendarGroupFormCheckBox extends XoopsFormElement
         $option_ids_str = implode(', ', $option_ids);
         $ret .= _ALL . " <input id=\"" . $checkallbtn_id . "\" type=\"checkbox\" value=\"\" onclick=\"var optionids = new Array(" . $option_ids_str . "); xoopsCheckAllElements(optionids, '" . $checkallbtn_id . "');\" />";
         $ret .= '</td></tr></table>';
+
         return $ret;
     }
 
@@ -302,16 +303,16 @@ class CalendarGroupFormCheckBox extends XoopsFormElement
      * Renders checkbox options for an item tree
      *
      * @param string $tree
-     * @param array $option
+     * @param array  $option
      * @param string $prefix
-     * @param array $parentIds
+     * @param array  $parentIds
      * @access private
      */
     function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
     {
         $ele_name = $this->getName();
         $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $ele_name . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" id=\"" . $ele_name . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" onclick=\"";
-		// If there are parent elements, add javascript that will
+        // If there are parent elements, add javascript that will
         // make them selecteded when this element is checked to make
         // sure permissions to parent items are added as well.
         foreach($parentIds as $pid) {
@@ -332,12 +333,12 @@ class CalendarGroupFormCheckBox extends XoopsFormElement
         }
         $tree .= " />". $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . "[parents][" . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . "[itemname][" . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br />\n";
        
-	   if ($this->_groupId == XOOPS_GROUP_ANONYMOUS && $option['anonymous'])
-		{
-		$tree = "";
-		} 
+       if ($this->_groupId == XOOPS_GROUP_ANONYMOUS && $option['anonymous'])
+        {
+        $tree = "";
+        }
 
-	   if (isset($option['children'])) {
+       if (isset($option['children'])) {
             foreach($option['children'] as $child) {
                 array_push($parentIds, $option['id']);
                 $this->_renderOptionTree($tree, $this->_optionTree[$child], $prefix . '&nbsp;-', $parentIds);
@@ -345,4 +346,3 @@ class CalendarGroupFormCheckBox extends XoopsFormElement
         }
     }
 }
-?>

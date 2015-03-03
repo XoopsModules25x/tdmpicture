@@ -28,30 +28,29 @@ include_once '../../mainfile.php';
 
 // We verify that the user can post comments **********************************
 if(!isset($xoopsModuleConfig)) {
-	die();
+    die();
 }
 
-if($xoopsModuleConfig['com_rule'] == 0) {	// Comments are deactivate
-	die();
+if($xoopsModuleConfig['com_rule'] == 0) {    // Comments are deactivate
+    die();
 }
 
-if($xoopsModuleConfig['com_anonpost'] == 0 && !is_object($xoopsUser)) {	// Anonymous users can't post
-	die();
+if($xoopsModuleConfig['com_anonpost'] == 0 && !is_object($xoopsUser)) {    // Anonymous users can't post
+    die();
 }
 // ****************************************************************************
 
 $com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {
-	//$article = new NewsStory($com_itemid);
-	//if($article->storyid>0) {
-		//$com_replytext = _POSTEDBY.'&nbsp;<b>kk</b>&nbsp;'._DATE.'&nbsp;<b>jkhjkhk</b><br /><br />';
-		//$bodytext = $article->bodytext();
-		//if ($bodytext != '') {
-		//	$com_replytext .= '<br /><br />'.$bodytext.'';
-		//}
-		//$com_replytitle = $article->title();
-		include_once XOOPS_ROOT_PATH.'/include/comment_new.php';
-	} else {
-		exit;
-	}
-?>
+    //$article = new NewsStory($com_itemid);
+    //if($article->storyid>0) {
+        //$com_replytext = _POSTEDBY.'&nbsp;<b>kk</b>&nbsp;'._DATE.'&nbsp;<b>jkhjkhk</b><br /><br />';
+        //$bodytext = $article->bodytext();
+        //if ($bodytext != '') {
+        //	$com_replytext .= '<br /><br />'.$bodytext.'';
+        //}
+        //$com_replytitle = $article->title();
+        include_once XOOPS_ROOT_PATH.'/include/comment_new.php';
+    } else {
+        exit;
+    }

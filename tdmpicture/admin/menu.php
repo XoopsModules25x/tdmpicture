@@ -12,11 +12,10 @@
  * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
-
 
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 
@@ -29,7 +28,6 @@ $module          = $module_handler->getByDirname($dirname);
 $pathIcon32      = $module->getInfo('icons32');
 $pathModuleAdmin = $module->getInfo('dirmoduleadmin');
 $pathLanguage    = $path . $pathModuleAdmin;
-
 
 if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
     $fileinc = $pathLanguage . '/language/english/main.php';
@@ -80,10 +78,6 @@ $adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
 $adminmenu[$i]["link"]  = "admin/about.php";
 $adminmenu[$i]["icon"]  = $pathIcon32 . '/about.png';
 
-
-
-
-
  
 //$adminmenu[0]['title'] = _MI_TDMPICTURE_ADMENUINDEX;
 //$adminmenu[0]['link'] = "admin/index.php";
@@ -104,5 +98,4 @@ $adminmenu[$i]["icon"]  = $pathIcon32 . '/about.png';
 //$adminmenu[4]['title'] = _MI_TDMPICTURE_ADMENUABOUT;
 //$adminmenu[4]['link'] = "admin/about.php";
 //$adminmenu[4]['icon']  = 'images/decos/min_about.png';
-
-?>
+;

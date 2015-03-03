@@ -14,16 +14,16 @@
  *
  * @copyright       	(http://www.)
  * @license        	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		TDM ; TEAM DEV MODULE 
+ * @author		TDM ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
 
-//Admin menu 
+//Admin menu
 define("_MI_TDMPICTURE_ADMENUINDEX","Index");
-define("_MI_TDMPICTURE_ADMENUCAT","Categories"); 
+define("_MI_TDMPICTURE_ADMENUCAT","Categories");
 define("_MI_TDMPICTURE_ADMENUFILE","Images");
-define("_MI_TDMPICTURE_ADMENUPERMISSIONS","Permissions"); 
+define("_MI_TDMPICTURE_ADMENUPERMISSIONS","Permissions");
 define("_MI_TDMPICTURE_ADMENUABOUT","About");
 define("_MI_TDMPICTURE_ADMENUPREF","Preferences");
 //1.07
@@ -31,8 +31,7 @@ define("_MI_TDMPICTURE_ADMENUPREF","Preferences");
 define("_MI_TDMPICTURE_ADMENUIMPORT","Import");
 define("_MI_TDMPICTURE_ADMENUBATCH","Batch");
 
-
-//Preferences 
+//Preferences
 
 define("_MI_TDMPICTURE_UPLOAD_PATH","Upload Directory: TDMPicture");
 define("_MI_TDMPICTURE_UPLOAD_THUMB","Thumbnails Upload Directory: TDMPicture");
@@ -44,35 +43,35 @@ define("_MI_TDMPICTURE_EXTGALLERY_PATH","Upload Directory: Extgallery");
 define("_MI_TDMPICTURE_EXTGALLERY_THUMB","Thumbnails Upload Directory: Extgallery");
 
 define("_MI_TDMPICTURE_MIMEMAX","Max file size for upload");
-define("_MI_TDMPICTURE_MIMETYPE","Allowed Extensions separated by |"); 
-define("_MI_TDMPICTURE_EDITOR","Publisher"); 
-define("_MI_TDMPICTURE_FAVOURITE","Number of item to be favorites"); 
-define("_MI_TDMPICTURE_UPMAX","Maximum number of simultaneous uploads"); 
+define("_MI_TDMPICTURE_MIMETYPE","Allowed Extensions separated by |");
+define("_MI_TDMPICTURE_EDITOR","Publisher");
+define("_MI_TDMPICTURE_FAVOURITE","Number of item to be favorites");
+define("_MI_TDMPICTURE_UPMAX","Maximum number of simultaneous uploads");
 define("_MI_TDMPICTURE_LAST","Maximum number of new file display on index");
-define("_MI_TDMPICTURE_WIDTH","Maximum width of the image in detail"); 
-define("_MI_TDMPICTURE_HEIGTH","Maximum height of the image in detail"); 
-define("_MI_TDMPICTURE_THUMB_WIDTH","Thumbnail: Maximum width of the image"); 
-define("_MI_TDMPICTURE_THUMB_HEIGTH","Thumbnail: Maximum height of image"); 
-define("_MI_TDMPICTURE_THUMB_QUALITY","Thumbnail: Image quality"); 
-define("_MI_TDMPICTURE_PAGE","Maximum number of files per page?"); 
-define("_MI_TDMPICTURE_DESCRIPTION","META: Description pages without information for the rest of the pages it will be automatic"); 
-define("_MI_TDMPICTURE_KEYWORDS","META: Keywords pages without information, separate words with a space for the rest of the pages it will be automatic"); 
-define("_MI_TDMPICTURE_SLIDE_WIDTH","Slideshow Thumbnail: Image width"); 
-define("_MI_TDMPICTURE_SLIDE_HEIGTH","Slideshow Thumbnail: Image height"); 
+define("_MI_TDMPICTURE_WIDTH","Maximum width of the image in detail");
+define("_MI_TDMPICTURE_HEIGTH","Maximum height of the image in detail");
+define("_MI_TDMPICTURE_THUMB_WIDTH","Thumbnail: Maximum width of the image");
+define("_MI_TDMPICTURE_THUMB_HEIGTH","Thumbnail: Maximum height of image");
+define("_MI_TDMPICTURE_THUMB_QUALITY","Thumbnail: Image quality");
+define("_MI_TDMPICTURE_PAGE","Maximum number of files per page?");
+define("_MI_TDMPICTURE_DESCRIPTION","META: Description pages without information for the rest of the pages it will be automatic");
+define("_MI_TDMPICTURE_KEYWORDS","META: Keywords pages without information, separate words with a space for the rest of the pages it will be automatic");
+define("_MI_TDMPICTURE_SLIDE_WIDTH","Slideshow Thumbnail: Image width");
+define("_MI_TDMPICTURE_SLIDE_HEIGTH","Slideshow Thumbnail: Image height");
 define("_MI_TDMPICTURE_CAT_WIDTH","Category: Image Width");
 define("_MI_TDMPICTURE_CAT_HEIGTH","Category: Image Height");
 define("_MI_TDMPICTURE_DISPLAY","Order by default");
-// block 
-define("_AM_TDMPICTURE_BLOCK_DATE","Recent Files"); 
+// block
+define("_AM_TDMPICTURE_BLOCK_DATE","Recent Files");
 define("_AM_TDMPICTURE_BLOCK_HITS","Most viewed file");
 define("_AM_TDMPICTURE_BLOCK_COUNTS","Popular file");
 define("_AM_TDMPICTURE_BLOCK_DL","Most downloaded files");
 define("_AM_TDMPICTURE_BLOCK_COMMENTS","Most commented file");
-// 
-define("_AM_TDMPICTURE_SELECT_STYLE","Style of Block"); 
-define("_AM_TDMPICTURE_SELECT_TEXT","Text"); 
-define("_AM_TDMPICTURE_SELECT_IMAGE","Image"); 
-define("_AM_TDMPICTURE_SELECT_SLIDE","Slideshow"); 
+//
+define("_AM_TDMPICTURE_SELECT_STYLE","Style of Block");
+define("_AM_TDMPICTURE_SELECT_TEXT","Text");
+define("_AM_TDMPICTURE_SELECT_IMAGE","Image");
+define("_AM_TDMPICTURE_SELECT_SLIDE","Slideshow");
 
 // version 1.3
 //define("_MI_TDMPICTURE_FULL_WIDTH","Maximum width of the image true");

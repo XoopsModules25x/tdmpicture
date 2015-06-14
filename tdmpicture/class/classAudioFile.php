@@ -807,5 +807,3 @@ class AudioFile
     }
 
 }
-
-?>

@@ -15,28 +15,27 @@
  *
  * @copyright       	(http://www.)
  * @license        	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		TDM ; TEAM DEV MODULE 
+ * @author		TDM ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
 
-define("_MB_TDMPICTURE_DISPLAY", "Display"); 
+define("_MB_TDMPICTURE_DISPLAY", "Display");
 define("_MB_TDMPICTURE_TITLELENGTH", "Full length");
-define("_MB_TDMPICTURE_CATTODISPLAY", "Select the categories displayed"); 
-define("_MB_TDMPICTURE_ALLCAT", "All Categories"); 
+define("_MB_TDMPICTURE_CATTODISPLAY", "Select the categories displayed");
+define("_MB_TDMPICTURE_ALLCAT", "All Categories");
 
 define("_MB_TDMPICTURE_SLIDELENGTH", "Number of images in the loop only for Animation < View");
 define("_MB_TDMPICTURE_MINTHUMBWIDTH","Max thumbnail width");
 define("_MB_TDMPICTURE_MINTHUMBHEIGTH","Min thumbnail height");
 
-
 define("_MB_TDMPICTURE_FILEVOTE", "Votes");
-define("_MB_TDMPICTURE_FILECOUNTS", "Popularity"); 
+define("_MB_TDMPICTURE_FILECOUNTS", "Popularity");
 define("_MB_TDMPICTURE_FILEHITS", "Hits");
 define("_MB_TDMPICTURE_POWERBY", "Proposed by");
 
-define("_MD_TDMPICTURE_MORE", "About"); 
-define("_MD_TDMPICTURE_SCREEN", "Full Screen"); 
+define("_MD_TDMPICTURE_MORE", "About");
+define("_MD_TDMPICTURE_SCREEN", "Full Screen");
 define("_MD_TDMPICTURE_POWERBY", "Submit by");
 define("_MD_TDMPICTURE_IN", "the");
  

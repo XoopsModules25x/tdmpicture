@@ -12,7 +12,7 @@
  * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
@@ -22,103 +22,103 @@ if (!defined("XOOPS_ROOT_PATH")) {
 }
 
 class TDMPicture_file extends XoopsObject
-{ 
+{
 
 // constructor
-	function __construct()
-	{
-		$this->XoopsObject();
-		$this->initVar("file_id",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_cat",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_file",XOBJ_DTYPE_TXTBOX, null, false);		
-		$this->initVar("file_title",XOBJ_DTYPE_TXTBOX, null, false);
-		$this->initVar("file_text",XOBJ_DTYPE_TXTAREA, null, false);
-		$this->initVar("file_type",XOBJ_DTYPE_TXTBOX, null, false);
-		$this->initVar("file_display",XOBJ_DTYPE_INT,null,false,1);	
-		$this->initVar("file_hits",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_dl",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_votes",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_counts",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_indate",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_uid",XOBJ_DTYPE_INT, null, false);
-		$this->initVar("file_size",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_res_x",XOBJ_DTYPE_INT, null, false);
-		$this->initVar("file_res_y",XOBJ_DTYPE_INT, null, false);
-		$this->initVar("file_comments",XOBJ_DTYPE_INT,null,false,11);
-		$this->initVar("file_ext",XOBJ_DTYPE_INT,null,false,11);
-		// Pour autoriser le html
+    function __construct()
+    {
+        $this->XoopsObject();
+        $this->initVar("file_id",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_cat",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_file",XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar("file_title",XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar("file_text",XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar("file_type",XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar("file_display",XOBJ_DTYPE_INT,null,false,1);
+        $this->initVar("file_hits",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_dl",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_votes",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_counts",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_indate",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_uid",XOBJ_DTYPE_INT, null, false);
+        $this->initVar("file_size",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_res_x",XOBJ_DTYPE_INT, null, false);
+        $this->initVar("file_res_y",XOBJ_DTYPE_INT, null, false);
+        $this->initVar("file_comments",XOBJ_DTYPE_INT,null,false,11);
+        $this->initVar("file_ext",XOBJ_DTYPE_INT,null,false,11);
+        // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
-	
-	} 
+    
+    }
 
-	  function TDMPicture_file()
+      function TDMPicture_file()
     {
         $this->__construct();
     }
 
-	function getFilePath($force= false)
-	{
-	global $xoopsModuleConfig;
-	
-	switch($this->getVar("file_ext")) {
-	case 0:
-	default:
-	$image = $xoopsModuleConfig['tdm_upload_path'];
-	$thumb = $xoopsModuleConfig['tdm_upload_thumb'];
-	break;
-	case 1:
-	$image = $xoopsModuleConfig['tdm_myalbum_path'];
-	$thumb = $xoopsModuleConfig['tdm_myalbum_thumb'];
-	break;
-	case 2:
-	$image = $xoopsModuleConfig['tdm_extgallery_path'];
-	$thumb = $xoopsModuleConfig['tdm_extgallery_thumb'];
-	break;
-	}
-	
-	if (!empty($force)) {
-	$image .= $force;
-	$thumb .= $force;
-	}
-	
-	return array('image_url'=>XOOPS_URL.$image,'image_path'=>XOOPS_ROOT_PATH.$image, 'thumb_url'=>XOOPS_URL.$thumb,'thumb_path'=>XOOPS_ROOT_PATH.$thumb);
-	}
-	
-	function getFileThumb()
-	{
-	global $xoopsModuleConfig;
-	
-	switch($this->getVar("file_ext")) {
-	case 0:
-	default:
-	$url = $xoopsModuleConfig['tdm_upload_thumb'];
-	break;
-	case 1:
-	$url = $xoopsModuleConfig['tdm_myalbum_thumb'];
-	break;
-	case 2:
-	$url = $xoopsModuleConfig['tdm_extgallery_thumb'];
-	break;
-	}
-	
-	return $url;
-	}
-	
-	
-	function getFormLink()
-	{
-	$file_path = TDMPICTURE_URL.'/get.php?st='.$this->getVar("file_id");
-	$url = TDMPICTURE_URL.'/viewfile.php?st='.$this->getVar("file_id");
-	$form = new XoopsSimpleForm('', 'form', '', 'post', true);
-	$form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINK, '', 100, 255, $url));
-	$form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFULLSCREEN, '', 100, 255, TDMPICTURE_URL.'/get.php?st='.$this->getVar("file_id").'&size=full'));
-	$form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKDHUMB, '', 100, 255, TDMPICTURE_URL.'/get.php?st='.$this->getVar("file_id")));
-	$form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFORUM, '', 100, 255, '[url='.$url.'][img]'.$file_path.'[/img][/url]'));
-	$form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFORUM1, '', 100, 255, '[url='.$url.'][img='.$file_path.'][/url]'));
-	$form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKHTML, '', 100, 255, '<a href="'.$url.'" target="_blank"><img src="'.$file_path.'" border="0" alt="'.$this->getVar("file_title").'"/></a>'));
+    function getFilePath($force= false)
+    {
+    global $xoopsModuleConfig;
+    
+    switch($this->getVar("file_ext")) {
+    case 0:
+    default:
+    $image = $xoopsModuleConfig['tdm_upload_path'];
+    $thumb = $xoopsModuleConfig['tdm_upload_thumb'];
+    break;
+    case 1:
+    $image = $xoopsModuleConfig['tdm_myalbum_path'];
+    $thumb = $xoopsModuleConfig['tdm_myalbum_thumb'];
+    break;
+    case 2:
+    $image = $xoopsModuleConfig['tdm_extgallery_path'];
+    $thumb = $xoopsModuleConfig['tdm_extgallery_thumb'];
+    break;
+    }
+    
+    if (!empty($force)) {
+    $image .= $force;
+    $thumb .= $force;
+    }
+    
+    return array('image_url'=>XOOPS_URL.$image,'image_path'=>XOOPS_ROOT_PATH.$image, 'thumb_url'=>XOOPS_URL.$thumb,'thumb_path'=>XOOPS_ROOT_PATH.$thumb);
+    }
+    
+    function getFileThumb()
+    {
+    global $xoopsModuleConfig;
+    
+    switch($this->getVar("file_ext")) {
+    case 0:
+    default:
+    $url = $xoopsModuleConfig['tdm_upload_thumb'];
+    break;
+    case 1:
+    $url = $xoopsModuleConfig['tdm_myalbum_thumb'];
+    break;
+    case 2:
+    $url = $xoopsModuleConfig['tdm_extgallery_thumb'];
+    break;
+    }
+    
+    return $url;
+    }
+    
+    
+    function getFormLink()
+    {
+    $file_path = TDMPICTURE_URL.'/get.php?st='.$this->getVar("file_id");
+    $url = TDMPICTURE_URL.'/viewfile.php?st='.$this->getVar("file_id");
+    $form = new XoopsSimpleForm('', 'form', '', 'post', true);
+    $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINK, '', 100, 255, $url));
+    $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFULLSCREEN, '', 100, 255, TDMPICTURE_URL.'/get.php?st='.$this->getVar("file_id").'&size=full'));
+    $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKDHUMB, '', 100, 255, TDMPICTURE_URL.'/get.php?st='.$this->getVar("file_id")));
+    $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFORUM, '', 100, 255, '[url='.$url.'][img]'.$file_path.'[/img][/url]'));
+    $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFORUM1, '', 100, 255, '[url='.$url.'][img='.$file_path.'][/url]'));
+    $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKHTML, '', 100, 255, '<a href="'.$url.'" target="_blank"><img src="'.$file_path.'" border="0" alt="'.$this->getVar("file_title").'"/></a>'));
 
-	
-	   return $form;
+    
+       return $form;
 }
 
     function getForm($action = false)
@@ -131,63 +131,63 @@ class TDMPicture_file extends XoopsObject
 
         include_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
 
-		
-	$gperm_handler =& xoops_gethandler('groupperm');
-	//permission
-	if (is_object($xoopsUser)) {
+        
+    $gperm_handler =& xoops_gethandler('groupperm');
+    //permission
+    if (is_object($xoopsUser)) {
     $groups = $xoopsUser->getGroups();
-	$uid = $xoopsUser->getVar('uid');
-	} else {
-	$groups = XOOPS_GROUP_ANONYMOUS;
-	$uid = 0;
-	}
-		
-		
+    $uid = $xoopsUser->getVar('uid');
+    } else {
+    $groups = XOOPS_GROUP_ANONYMOUS;
+    $uid = 0;
+    }
+        
+        
         $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
-		$form->setExtra('enctype="multipart/form-data"');
+        $form->setExtra('enctype="multipart/form-data"');
       //  $form->addElement(new XoopsFormText(_MD_TDMPICTURE_TITLE, 'filecat_title', 100, 255, $this->getVar('filecat_title')), true);
      if (!$this->isNew()) {
             //Load groups
     $form->addElement(new XoopsFormHidden('id', $this->getVar('file_id')));
-	$form->addElement(new XoopsFormText(_MD_TDMPICTURE_TITLE, 'file_title', 100, 255, $this->getVar('file_title')), true);
+    $form->addElement(new XoopsFormText(_MD_TDMPICTURE_TITLE, 'file_title', 100, 255, $this->getVar('file_title')), true);
  }
  
-//  
+//
 
  if (!$this->isNew()) {
 $button_file = new XoopsFormText(_MD_TDMPICTURE_URL, 'file_file', 100, 255, $this->getVar('file_file'));
 $button_file->setExtra("disabled");
 $form->addElement($button_file);
 
-	//categorie
-		$cat_handler =& xoops_getModuleHandler('tdmpicture_cat', 'TDMPicture');
-		
-		$criteriaDisplay = new CriteriaCompo();
-		$criteriaDisplay->add(new Criteria('cat_display', 1));
-		$criteriaDisplay->add(new Criteria('cat_index', 1));
+    //categorie
+        $cat_handler =& xoops_getModuleHandler('tdmpicture_cat', 'TDMPicture');
+        
+        $criteriaDisplay = new CriteriaCompo();
+        $criteriaDisplay->add(new Criteria('cat_display', 1));
+        $criteriaDisplay->add(new Criteria('cat_index', 1));
 
-		$criteriaUser = new CriteriaCompo();
-		$criteriaUser->add($criteriaDisplay);
-		$criteriaUser->add(new Criteria('cat_display', 1), 'OR');
-		$criteriaUser->add(new Criteria('cat_uid', $uid));
+        $criteriaUser = new CriteriaCompo();
+        $criteriaUser->add($criteriaDisplay);
+        $criteriaUser->add(new Criteria('cat_display', 1), 'OR');
+        $criteriaUser->add(new Criteria('cat_uid', $uid));
 
-		$arr = $cat_handler->getall($criteriaUser);
-		$mytree = new TDMObjectTree($arr, 'cat_id', 'cat_pid');
-		$form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, 
-		$mytree->makeSelBox('file_cat', 'cat_title','-', $this->getVar('file_cat'), '', 0, '', 'tdmpicture_catview')));
-		
-		//
-		
+        $arr = $cat_handler->getall($criteriaUser);
+        $mytree = new TDMObjectTree($arr, 'cat_id', 'cat_pid');
+        $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT,
+        $mytree->makeSelBox('file_cat', 'cat_title','-', $this->getVar('file_cat'), '', 0, '', 'tdmpicture_catview')));
+        
+        //
+        
 //editor
-	    $editor_configs=array();
-    	$editor_configs["name"] ="file_text";
-    	$editor_configs["value"] = $this->getVar('file_text', 'e');
-    	$editor_configs["rows"] = 20;
-    	$editor_configs["cols"] = 80;
-    	$editor_configs["width"] = "100%";
-    	$editor_configs["height"] = "400px";
-    	$editor_configs["editor"] = $xoopsModuleConfig["tdmpicture_editor"];				
-		$form->addElement( new XoopsFormEditor(_MD_TDMPICTURE_TEXT, "file_text", $editor_configs), false );
+        $editor_configs=array();
+        $editor_configs["name"] ="file_text";
+        $editor_configs["value"] = $this->getVar('file_text', 'e');
+        $editor_configs["rows"] = 20;
+        $editor_configs["cols"] = 80;
+        $editor_configs["width"] = "100%";
+        $editor_configs["height"] = "400px";
+        $editor_configs["editor"] = $xoopsModuleConfig["tdmpicture_editor"];
+        $form->addElement( new XoopsFormEditor(_MD_TDMPICTURE_TEXT, "file_text", $editor_configs), false );
 
 //
 $form->addElement(new XoopsFormText(_MD_TDMPICTURE_SIZE, 'file_size', 10, 11, $this->getVar('file_size')));
@@ -197,79 +197,79 @@ $form->addElement(new XoopsFormText(_MD_TDMPICTURE_WIDTH, 'file_res_x', 10, 11, 
 $form->addElement(new XoopsFormText(_MD_TDMPICTURE_HEIGHT, 'file_res_y', 10, 11, $this->getVar('file_res_y')));
 
 //display
-	if ( is_object($xoopsUser) && $xoopsUser->isAdmin()) {
+    if ( is_object($xoopsUser) && $xoopsUser->isAdmin()) {
     $form->addElement(new XoopsFormRadioYN(_MD_TDMPICTURE_DISPLAYUSER, 'file_display', $this->getVar('file_display'), _YES, _NO));
-	}else {
-	
-	$gperm_handler =& xoops_gethandler('groupperm');
-	
-	if (is_object($xoopsUser)) {
+    }else {
+    
+    $gperm_handler =& xoops_gethandler('groupperm');
+    
+    if (is_object($xoopsUser)) {
     $groups = $xoopsUser->getGroups();
-	} else {
-	$groups = XOOPS_GROUP_ANONYMOUS;
-	}
+    } else {
+    $groups = XOOPS_GROUP_ANONYMOUS;
+    }
 
-	if ($gperm_handler->checkRight('tdmpicture_view', 16, $groups, $xoopsModule->getVar('mid'))) {
-	$form->addElement(new XoopsFormHidden('file_display', 1));
-	}else {
-	$form->addElement(new XoopsFormHidden('file_display', 0));
-	}
-	}
+    if ($gperm_handler->checkRight('tdmpicture_view', 16, $groups, $xoopsModule->getVar('mid'))) {
+    $form->addElement(new XoopsFormHidden('file_display', 1));
+    }else {
+    $form->addElement(new XoopsFormHidden('file_display', 0));
+    }
+    }
 
 $form->addElement(new XoopsFormHidden('op', 'edit_file'));
 $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-		
+        
 }
-		
+        
  if ($this->isNew()) {
 
-	//categorie
-		$cat_handler =& xoops_getModuleHandler('tdmpicture_cat', 'TDMPicture');
-		
-		$criteriaDisplay = new CriteriaCompo();
-		$criteriaDisplay->add(new Criteria('cat_display', 1));
-		$criteriaDisplay->add(new Criteria('cat_index', 1));
+    //categorie
+        $cat_handler =& xoops_getModuleHandler('tdmpicture_cat', 'TDMPicture');
+        
+        $criteriaDisplay = new CriteriaCompo();
+        $criteriaDisplay->add(new Criteria('cat_display', 1));
+        $criteriaDisplay->add(new Criteria('cat_index', 1));
 
-		$criteriaUser = new CriteriaCompo();
-		$criteriaUser->add($criteriaDisplay);
-		$criteriaUser->add(new Criteria('cat_display', 1), 'OR');
-		$criteriaUser->add(new Criteria('cat_uid', $uid));
+        $criteriaUser = new CriteriaCompo();
+        $criteriaUser->add($criteriaDisplay);
+        $criteriaUser->add(new Criteria('cat_display', 1), 'OR');
+        $criteriaUser->add(new Criteria('cat_uid', $uid));
 
-		$arr = $cat_handler->getall($criteriaUser);
-		//$mytree = new XoopsObjectTree($arr, 'cat_id', 'cat_pid');
-		//$form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelBox('file_cat', 'cat_title','-', $this->getVar('cat_pid'), true)), true);
+        $arr = $cat_handler->getall($criteriaUser);
+        //$mytree = new XoopsObjectTree($arr, 'cat_id', 'cat_pid');
+        //$form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelBox('file_cat', 'cat_title','-', $this->getVar('cat_pid'), true)), true);
 
-		$mytree = new TDMObjectTree($arr, 'cat_id', 'cat_pid');
-		$form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, 
-		$mytree->makeSelBox('file_cat', 'cat_title','-', $this->getVar('cat_pid'), '', 0, '', 'tdmpicture_catview')));
-		
-		//
-	
-	
-	
-	
-	
-	if ( is_object($xoopsUser) && $xoopsUser->isAdmin()) {
+        $mytree = new TDMObjectTree($arr, 'cat_id', 'cat_pid');
+        $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT,
+        $mytree->makeSelBox('file_cat', 'cat_title','-', $this->getVar('cat_pid'), '', 0, '', 'tdmpicture_catview')));
+        
+        //
+    
+    
+    
+    
+    
+    if ( is_object($xoopsUser) && $xoopsUser->isAdmin()) {
     $form->addElement(new XoopsFormRadioYN(_MD_TDMPICTURE_DISPLAYUSER, 'file_display', 1, _YES, _NO));
-	}else {
-	
-	$gperm_handler =& xoops_gethandler('groupperm');
-	
-	if (is_object($xoopsUser)) {
+    }else {
+    
+    $gperm_handler =& xoops_gethandler('groupperm');
+    
+    if (is_object($xoopsUser)) {
     $groups = $xoopsUser->getGroups();
-	} else {
-	$groups = XOOPS_GROUP_ANONYMOUS;
-	}
+    } else {
+    $groups = XOOPS_GROUP_ANONYMOUS;
+    }
 
-	if ($gperm_handler->checkRight('tdmpicture_view', 16, $groups, $xoopsModule->getVar('mid'))) {
-	$form->addElement(new XoopsFormHidden('file_display', 1));
-	}else {
-	$form->insertBreak('<div align="center">'._MD_TDMPICTURE_UPLOAD_LIMIT.'</div>', 'odd');
-	$form->addElement(new XoopsFormHidden('file_display', 0));
-	}
-	}	
-	
-	
+    if ($gperm_handler->checkRight('tdmpicture_view', 16, $groups, $xoopsModule->getVar('mid'))) {
+    $form->addElement(new XoopsFormHidden('file_display', 1));
+    }else {
+    $form->insertBreak('<div align="center">'._MD_TDMPICTURE_UPLOAD_LIMIT.'</div>', 'odd');
+    $form->addElement(new XoopsFormHidden('file_display', 0));
+    }
+    }
+    
+    
 
 //javascript
 //echo '<script language="JavaScript" type="text/javascript">
@@ -290,7 +290,7 @@ $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 //note
 $form->insertBreak('<div align="center">'._MD_TDMPICTURE_UPLOAD_DESC.'</div>', 'odd');
 
-	
+    
 //$form->insertBreak('
 //<applet code="wjhk.jupload2.JUploadApplet"
 //           archive="'.TDMPICTURE_URL.'/jupload/wjhk.jupload.jar" width="'.$xoopsModuleConfig['tdmpicture_java_width'].'" height="'.$xoopsModuleConfig['tdmpicture_java_heigth'].'" alt=""
@@ -318,23 +318,23 @@ $tdmpicture(document).ready( function() {
 
     //Création dun premier input
     creerInput();
-	}); 
+	});
 	
 
 </script>';
 
-	
+    
 //pour multi upload
 $form->addElement(new XoopsFormHidden('MAX_FILE_SIZE', $xoopsModuleConfig['tdmpicture_mimemax']));
-    	
+        
 $fileseltray= new XoopsFormElementTray(_MD_TDMPICTURE_UPLOAD,'<br />');
 $fileseltray->addElement(new XoopsFormLabel('<div id="tdmfiletext" maxlength="'.$xoopsModuleConfig["tdmpicture_upmax"].'">
-            <b>'.sprintf(_MD_TDMPICTURE_MULTIUPLOAD, $xoopsModuleConfig["tdmpicture_upmax"]).'</b><br />      
+            <b>'.sprintf(_MD_TDMPICTURE_MULTIUPLOAD, $xoopsModuleConfig["tdmpicture_upmax"]).'</b><br />
             
         </div>' ), false);
-    	$form->addElement($fileseltray);
+        $form->addElement($fileseltray);
 
-		//
+        //
 //centrage
 //$tagchannel = array('100|75' => '100x75 (avatar)', '150|112' => '150x112 (thumbnail)', '320|240' => '320x240 (for websites and email)', '640|480' => '640x480 (for message boards)', '800|600' => '800x600 (15-inch monitor)', '1024|768' => '1024x768 (17-inch monitor)', '1280|1024' => '1280x1024 (19-inch monitor)', '1600|1200' => '1600x1200 (21-inch monitor)', '1024|768' => '1024x768 (17-inch monitor)' );
 $tagchannel = explode('|',$xoopsModuleConfig['tdmpicture_size']);
@@ -348,35 +348,34 @@ $form->addElement($tagchannel_select);
 
 $form->addElement(new XoopsFormHidden('op', 'save_file'));
  
-	$button_tray = new XoopsFormElementTray('', '');
+    $button_tray = new XoopsFormElementTray('', '');
 
-	$button_create = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
-	$button_tray->addElement($button_create);
+    $button_create = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+    $button_tray->addElement($button_create);
 
-	$button_cancel = new XoopsFormButton('', 'submit', _CANCEL, 'button');
-	$button_cancel->setExtra('onclick="history.go(-1)"');
-	$button_tray->addElement($button_cancel);
+    $button_cancel = new XoopsFormButton('', 'submit', _CANCEL, 'button');
+    $button_cancel->setExtra('onclick="history.go(-1)"');
+    $button_tray->addElement($button_cancel);
 
-	$form->addElement($button_tray);
-	
-	}
-	
+    $form->addElement($button_tray);
+    
+    }
+    
    
-	   return $form;
-		
-		
-	}
-	
+       return $form;
+        
+        
+    }
+    
 
 }
 
-
-class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler 
+class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
 {
 
  function &getGroupby($criteria = null, $fields = null, $asObject = true, $id_as_key = true)
     {
-	    if (is_array($fields) && count($fields) > 0) {
+        if (is_array($fields) && count($fields) > 0) {
             if (!in_array($this->handler->keyName, $fields)) {
                 $fields[] = $this->handler->keyName;
             }
@@ -386,7 +385,7 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
         }
         $limit = null;
         $start = null;
-		$sql = "SELECT {$select} FROM `{$this->table}`";
+        $sql = "SELECT {$select} FROM `{$this->table}`";
         if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
             $sql .= " " . $criteria->renderWhere();
             if ($groupby = $criteria->getGroupby()) {
@@ -420,147 +419,150 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
             while ($myrow = $this->db->fetchArray($result)) {
                 $object->assignVars($myrow);
                 if ($id_as_key) {
-					$ret[$myrow[$this->keyName]] = $object->getValues(array_keys($myrow));
+                    $ret[$myrow[$this->keyName]] = $object->getValues(array_keys($myrow));
                 } else {
                     $ret[] = $object->getValues(array_keys($myrow));
                 }
             }
             unset($object);
         }
+
         return $ret;
     }
 
-    function __construct(&$db) 
+    function __construct(&$db)
     {
-		$this->_dirname = basename(dirname(dirname(__FILE__)));
+        $this->_dirname = basename(dirname(dirname(__FILE__)));
         parent::__construct($db, "tdmpicture_file", 'TDMPicture_file', 'file_id', 'file_title');
     }
-	
-	function deletes($ids) {
-		foreach($ids as $lid) {
-			$this->delete($lid, true);
-		}
-		return true;
+    
+    function deletes($ids) {
+        foreach($ids as $lid) {
+            $this->delete($lid, true);
+        }
+
+        return true;
     }
     
     function delete($photo, $force = true) {
-	global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
-	
-	   	if (is_numeric($photo)) {
-    		$obj = $this->get($photo);
-    	}
+    global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+    
+        if (is_numeric($photo)) {
+            $obj = $this->get($photo);
+        }
 
-    	//$file_thumb = $obj->getFileThumb().$obj->getVar("file_file");
-		//$file_path = $obj->getFilePath().$obj->getVar("file_file");
-		$file_path = $obj->getFilePath($obj->getVar('file_file'));
-		
-    	xoops_comment_delete( $xoopsModule->getVar('mid') , $obj->getVar('file_id') ) ;
-		//xoops_notification_deletebyitem( $xoopsModule->getVar('mid') , 'tdmpicture' , $obj->getVar('file_id') ) ;
-		
-		@unlink($file_path['image_path']);
-		@unlink($file_path['thumb_path']);
-		return parent::delete($obj, $force);						
+        //$file_thumb = $obj->getFileThumb().$obj->getVar("file_file");
+        //$file_path = $obj->getFilePath().$obj->getVar("file_file");
+        $file_path = $obj->getFilePath($obj->getVar('file_file'));
+        
+        xoops_comment_delete( $xoopsModule->getVar('mid') , $obj->getVar('file_id') ) ;
+        //xoops_notification_deletebyitem( $xoopsModule->getVar('mid') , 'tdmpicture' , $obj->getVar('file_id') ) ;
+        
+        @unlink($file_path['image_path']);
+        @unlink($file_path['thumb_path']);
+
+        return parent::delete($obj, $force);
     }
-	
-	function displays($ids) {
-		foreach($ids as $lid) {
-			$this->display($lid, true);
-		}
-		return true;
+    
+    function displays($ids) {
+        foreach($ids as $lid) {
+            $this->display($lid, true);
+        }
+
+        return true;
     }
     
     function display($photo, $force = true) {
-	global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
-	
-	   	if (is_numeric($photo)) {
-    		$obj = $this->get($photo);
-    	}
+    global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+    
+        if (is_numeric($photo)) {
+            $obj = $this->get($photo);
+        }
 
-    	$obj->getVar('file_display') == 1 ? $obj->setVar('file_display', 0) : $obj->setVar('file_display', 1);
-		$this->insert($obj);
-		
+        $obj->getVar('file_display') == 1 ? $obj->setVar('file_display', 0) : $obj->setVar('file_display', 1);
+        $this->insert($obj);
+        
 
-		return true;						
+        return true;
     }
-	
-	function updates($ids) {
-		foreach($ids as $lid) {
-			$this->update($lid, true);
-		}
-		return true;
+    
+    function updates($ids) {
+        foreach($ids as $lid) {
+            $this->update($lid, true);
+        }
+
+        return true;
     }
     
     function update($photo, $force = true) {
-	global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
-	
-	   	if (is_numeric($photo)) {
-    		$obj = $this->get($photo);
-    	}
-		$file_path = $obj->getFilePath($obj->getVar('file_file'));
-		$photo = new Thumbnail($file_path['image_path']);
-		
-		$obj->setVar('file_indate', time());
-		$obj->setVar('file_res_x', $photo->getCurrentWidth());
-		$obj->setVar('file_res_y', $photo->getCurrentHeight());
-		$obj->setVar('file_size', $photo->getCurrentSize());
-		$obj->setVar('file_type', $photo->getCurrentType());
-		//thumb
-		$this->thumb($obj->getVar('file_id'));
-	
-		$this->insert($obj);
-		
+    global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+    
+        if (is_numeric($photo)) {
+            $obj = $this->get($photo);
+        }
+        $file_path = $obj->getFilePath($obj->getVar('file_file'));
+        $photo = new Thumbnail($file_path['image_path']);
+        
+        $obj->setVar('file_indate', time());
+        $obj->setVar('file_res_x', $photo->getCurrentWidth());
+        $obj->setVar('file_res_y', $photo->getCurrentHeight());
+        $obj->setVar('file_size', $photo->getCurrentSize());
+        $obj->setVar('file_type', $photo->getCurrentType());
+        //thumb
+        $this->thumb($obj->getVar('file_id'));
+    
+        $this->insert($obj);
+        
 
-		return true;						
+        return true;
     }
-	
-	function thumbs($ids) {
-		foreach($ids as $lid) {
-			$this->thumb($lid, false);
-		}
-		return true;
+    
+    function thumbs($ids) {
+        foreach($ids as $lid) {
+            $this->thumb($lid, false);
+        }
+
+        return true;
     }
     
     function thumb($class_photo, $photo = false) {
-	global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
-	
-	 //  	if (is_numeric($photo)) {
-    //	$obj = $this->get($photo);	
-	//	$file_path = $obj->getFilePath($obj->getVar('file_file'));	
+    global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+    
+     //  	if (is_numeric($photo)) {
+    //	$obj = $this->get($photo);
+    //	$file_path = $obj->getFilePath($obj->getVar('file_file'));
     //	}else {
-	//	$obj =& $this->create();
-	//	$file_path = $obj->getFilePath($force);
-	//	}
-	
-		
+    //	$obj =& $this->create();
+    //	$file_path = $obj->getFilePath($force);
+    //	}
+    
+        
     //$thumb = new Thumbnail($file_path['image_path']);
-	
-	 switch($xoopsModuleConfig['tdmpicture_thumb_style']) {
-	 
-	 case "center":
-	   default:
-	$class_photo->cropFromCenter($xoopsModuleConfig['tdmpicture_thumb_width']);
-	 break;
-	 
-	 case "limit-width-height":
-	$class_photo->resize($xoopsModuleConfig['tdmpicture_thumb_width'],$xoopsModuleConfig['tdmpicture_thumb_heigth']);
-	 break;
-	 
-	 case "limit-width":
-	$class_photo->resize($xoopsModuleConfig['tdmpicture_thumb_width'], "");
-	 break;
-	 
-	 case "limit-height":
-	$class_photo->resize("",$xoopsModuleConfig['tdmpicture_thumb_heigth']);
-	 break;
-	 }
-	
-	$class_photo->save(TDMPICTURE_THUMB_PATH.$photo,$xoopsModuleConfig['tdmpicture_thumb_quality']);
-	//test si reussis	
+    
+     switch($xoopsModuleConfig['tdmpicture_thumb_style']) {
+     
+     case "center":
+       default:
+    $class_photo->cropFromCenter($xoopsModuleConfig['tdmpicture_thumb_width']);
+     break;
+     
+     case "limit-width-height":
+    $class_photo->resize($xoopsModuleConfig['tdmpicture_thumb_width'],$xoopsModuleConfig['tdmpicture_thumb_heigth']);
+     break;
+     
+     case "limit-width":
+    $class_photo->resize($xoopsModuleConfig['tdmpicture_thumb_width'], "");
+     break;
+     
+     case "limit-height":
+    $class_photo->resize("",$xoopsModuleConfig['tdmpicture_thumb_heigth']);
+     break;
+     }
+    
+    $class_photo->save(TDMPICTURE_THUMB_PATH.$photo,$xoopsModuleConfig['tdmpicture_thumb_quality']);
+    //test si reussis
     return true;
-								
+                                
     }
 
 }
-
-
-?>

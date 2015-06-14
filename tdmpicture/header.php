@@ -12,7 +12,7 @@
  * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
@@ -29,10 +29,10 @@ $gperm_handler =& xoops_gethandler('groupperm');
 //permission
 if (is_object($xoopsUser)) {
     $groups = $xoopsUser->getGroups();
-	$xd_uid = $xoopsUser->getVar('uid');
+    $xd_uid = $xoopsUser->getVar('uid');
 } else {
-	$groups = XOOPS_GROUP_ANONYMOUS;
-	$xd_uid = 0;
+    $groups = XOOPS_GROUP_ANONYMOUS;
+    $xd_uid = 0;
 }
 
 //perm
@@ -52,4 +52,3 @@ $perm_cat = ($gperm_handler->checkRight('tdmpicture_view', 1024, $groups, $xoops
 $perm_dl = ($gperm_handler->checkRight('tdmpicture_view', 32, $groups, $xoopsModule->getVar('mid'))) ? true : false ;
 
 $mydirname = basename( dirname( __FILE__ ) ) ;
-?>

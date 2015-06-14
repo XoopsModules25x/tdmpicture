@@ -12,19 +12,19 @@
  * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
  
 if (!defined('XOOPS_ROOT_PATH')) {
-	die("XOOPS root path not defined");
+    die("XOOPS root path not defined");
 }
 
 // comment callback functions
 
 function picture_comments_update( $file_id , $total_num ) {
-	global $xoopsDB ;
+    global $xoopsDB ;
 
 $file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
 $view = $file_handler->get($file_id);
@@ -34,12 +34,11 @@ $obj =& $file_handler->get($file_id);
 $obj->setVar('file_comments', $hits);
 $ret = $file_handler->insert($obj);
 
-	return $ret ;
-	
+    return $ret ;
+    
 }
 
 function picture_comments_approve( &$comment )
 {
-	// notification mail here
+    // notification mail here
 }
-?>

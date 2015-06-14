@@ -12,7 +12,7 @@
  * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
@@ -26,9 +26,9 @@ $file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
  $post_size = isset($_REQUEST['size']) ? $_REQUEST['size'] : false;
  
  
-	if (empty($post_st)) {
-	 redirect_header('index.php', 2, _AM_TDMPICTURE_BASEERROR);
-	 	exit();
+    if (empty($post_st)) {
+     redirect_header('index.php', 2, _AM_TDMPICTURE_BASEERROR);
+        exit();
     }
 
 $document = $file_handler->get($post_st);
@@ -61,7 +61,6 @@ if (file_exists($imagePath)) {
     redirect_header('index.php', 2, _AM_TDMPICTURE_BASEERROR);
     exit();
 }
-
 
 $dl = $document->getVar('file_hits');
 $dl++;

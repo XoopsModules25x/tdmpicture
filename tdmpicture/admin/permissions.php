@@ -12,7 +12,7 @@
  * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
@@ -26,48 +26,46 @@ include_once ("../class/calendargrouppermform.php");
 //include_once XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->dirname().'/class/mygrouppermform.php';
 
 
-
 if( ! empty( $_POST['submit'] ) ) {
-	redirect_header( XOOPS_URL."/modules/".$xoopsModule->dirname()."/admin/permissions.php" , 1 , _AM_XD_GPERMUPDATED);
+    redirect_header( XOOPS_URL."/modules/".$xoopsModule->dirname()."/admin/permissions.php" , 1 , _AM_XD_GPERMUPDATED);
 }
-	
-	$category_admin = new ModuleAdmin();
+    
+    $category_admin = new ModuleAdmin();
     echo $category_admin->addNavigation('permissions.php');
 
 $module_id = $xoopsModule->getVar('mid');
 
-
 $perm_name = "tdmpicture_view";
 $perm_desc = _AM_TDMPICTURE_MANAGE_PERM;
 
-	$global_perms_array = array(
-		'4' => _AM_TDMPICTURE_PERM_4 ,
-		'8' => _AM_TDMPICTURE_PERM_8 ,
-		'16' => _AM_TDMPICTURE_PERM_16 ,
-		'128' => _AM_TDMPICTURE_PERM_128,
-		'256' => _AM_TDMPICTURE_PERM_256,
-		'512' => _AM_TDMPICTURE_PERM_512,
-		'1024' => _AM_TDMPICTURE_PERM_1024,
-		'1048' => _AM_TDMPICTURE_PERM_1048,
-		
+    $global_perms_array = array(
+        '4' => _AM_TDMPICTURE_PERM_4 ,
+        '8' => _AM_TDMPICTURE_PERM_8 ,
+        '16' => _AM_TDMPICTURE_PERM_16 ,
+        '128' => _AM_TDMPICTURE_PERM_128,
+        '256' => _AM_TDMPICTURE_PERM_256,
+        '512' => _AM_TDMPICTURE_PERM_512,
+        '1024' => _AM_TDMPICTURE_PERM_1024,
+        '1048' => _AM_TDMPICTURE_PERM_1048,
+        
         '2' => _AM_TDMPICTURE_PERM_2 ,
-		'32' => _AM_TDMPICTURE_PERM_32 ,
-		'64' => _AM_TDMPICTURE_PERM_64
-		 );
+        '32' => _AM_TDMPICTURE_PERM_32 ,
+        '64' => _AM_TDMPICTURE_PERM_64
+         );
 
-	
+    
 
 $permform = new CalendarGroupPermForm('', $module_id, $perm_name, '', '');
-	
+    
 
 foreach( $global_perms_array as $perm_id => $perm_name ) {
 if($perm_name == _AM_TDMPICTURE_PERM_2 || $perm_name == _AM_TDMPICTURE_PERM_32 || $perm_name == _AM_TDMPICTURE_PERM_64) {
-		$permform->addItem( $perm_id , $perm_name ) ;
+        $permform->addItem( $perm_id , $perm_name ) ;
 } else {
-		$permform->addItem( $perm_id , $perm_name, 0, true ) ;
-		}
-	}
-	
+        $permform->addItem( $perm_id , $perm_name, 0, true ) ;
+        }
+    }
+    
 
      echo '<style type="text/css">
     <!--
@@ -79,7 +77,6 @@ if($perm_name == _AM_TDMPICTURE_PERM_2 || $perm_name == _AM_TDMPICTURE_PERM_32 |
 }
     //-->
     </style>';
-
 
     echo '<div class="tips">' . _AM_TDMPICTURE_MANAGE_PERM . '</div><br />';
 echo $permform->render();

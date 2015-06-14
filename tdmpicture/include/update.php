@@ -12,12 +12,11 @@
  * 4. Vous n'avez pas la liberté de l'améliorer ni de rendre publiques les modifications
  *
  * @license     TDMFR GNU public license
- * @author		TDMFR ; TEAM DEV MODULE 
+ * @author		TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
 if( ! defined( 'XOOPS_ROOT_PATH' ) ) exit ;
-
 
 function xoops_module_update_TDMPicture(&$xoopsModule, $oldVersion = null) {
 
@@ -36,14 +35,15 @@ function xoops_module_update_TDMPicture(&$xoopsModule, $oldVersion = null) {
 }
 
 function FieldExists($fieldname,$table) {
-	global $xoopsDB;
-	$result=$xoopsDB->queryF("SHOW COLUMNS FROM	$table LIKE '$fieldname'");
-	return($xoopsDB->getRowsNum($result) > 0);
+    global $xoopsDB;
+    $result=$xoopsDB->queryF("SHOW COLUMNS FROM	$table LIKE '$fieldname'");
+
+    return($xoopsDB->getRowsNum($result) > 0);
 }
 
 function TableExists($tablename) {
-	global $xoopsDB;
-	$result=$xoopsDB->queryF("SHOW TABLES LIKE '$tablename'");
-	return($xoopsDB->getRowsNum($result) > 0);
+    global $xoopsDB;
+    $result=$xoopsDB->queryF("SHOW TABLES LIKE '$tablename'");
+
+    return($xoopsDB->getRowsNum($result) > 0);
 }
-?>

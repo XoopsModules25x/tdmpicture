@@ -27,7 +27,7 @@ class TDMPicture_vote extends XoopsObject
 // constructor
     function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar("vote_id",XOBJ_DTYPE_INT,null,false,10);
         $this->initVar("vote_file",XOBJ_DTYPE_INT,null,false,10);
         $this->initVar("vote_album",XOBJ_DTYPE_INT,null,false,10);

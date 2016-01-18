@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
  *  - Licence PRO Copyright (c)  (http://www.tdmxoops.net)

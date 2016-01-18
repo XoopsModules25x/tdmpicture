@@ -27,7 +27,7 @@ class TDMPicture_cat extends XoopsObject
 // constructor
     function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar("cat_id",XOBJ_DTYPE_INT,null,false,11);
         $this->initVar("cat_pid",XOBJ_DTYPE_INT,null,false,11);
         $this->initVar("cat_title",XOBJ_DTYPE_TXTBOX, null, false);

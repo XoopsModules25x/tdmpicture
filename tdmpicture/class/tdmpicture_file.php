@@ -27,7 +27,7 @@ class TDMPicture_file extends XoopsObject
 // constructor
     function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar("file_id",XOBJ_DTYPE_INT,null,false,11);
         $this->initVar("file_cat",XOBJ_DTYPE_INT,null,false,11);
         $this->initVar("file_file",XOBJ_DTYPE_TXTBOX, null, false);

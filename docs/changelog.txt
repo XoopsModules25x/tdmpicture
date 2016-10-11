@@ -1,5 +1,37 @@
 ************************************************************
-Version 1.06 | 30-June-2012
+1.08 Beta 1       2014-04-23
+Dev: Xoops 2.5.8, PHP 5.6
+************************************************************
+- moved all images, CSS, and JS files to /assets (mamba)
+- renamed .html Smarty templates to .tpl (mamba)
+- removed @version (mamba)
+- PSR-2 code cosmetics (mamba)
+- addNavigation(basename(__FILE__))  (mamba)
+- dirname(__FILE__) to __DIR__ (mamba)
+- XOOPS 2.5.8, PHP 7 (mamba)
+- replaced < b /> with < b > (mamba)
+- Unnecessary double quotes (mamba)
+- reference mismatch (mamba)
+- Hardening to type safe (mamba)
+- update Help (mamba)
+- changed _handler to Handler (mamba)
+- changed to ->renderButton('left') (mamba)
+- moving to XMF (mamba)
+
+************************************************************
+1.07 Beta 1 | 2013-08-18
+Dev: Xoops 2.5.6, PHP 5.5
+************************************************************
+- updated to preg regex (mamba)
+- fix various bugs (Venom)
+- added new Front-end GUI (Venom)
+- added voting (Venom)
+- added Import from MyAlbum and extGallery (Venom)
+- added batch upload (venom)
+
+
+************************************************************
+1.06 | 30-June-2012
 Dev: Xoops 2.0.16 / 2.2.3
 ************************************************************
 - 2012-06-30 : more Admin GUI standardization (mamba)
@@ -9,19 +41,24 @@ Dev: Xoops 2.0.16 / 2.2.3
 - 2012-06-30 : adding admin_footer.php (mamba)
 - 2012-06-30 : adding Help file (mamba)
 - 2012-06-29 : Conversion to XOOPS 2.5.x Admin GUI (Venom)
+
 ************************************************************
-Version 1.05 | 12-AVR-2010
+1.05 | 12-AVR-2010
 Dev: 2.4.4
 ************************************************************
 - 12/04/10 : modifier permission bug
 - 11/12/10 : multiupload
+
+
 ************************************************************
-Version 1.04 | 31-MAR-2010
+1.04 | 31-MAR-2010
 Dev: 2.4.4
 ************************************************************
 - 31/03/10 : modifier xoops_version.php bug affichage
+
+
 ************************************************************
-Version 1.03 | 14-MAR-2010
+1.03 | 14-MAR-2010
 Dev: 2.4.2
 ************************************************************
 - 14/03/10 : modifier all ajout multi upload
@@ -30,16 +67,20 @@ Dev: 2.4.2
 - 14/03/10 : modifier jquery mode noConflict
 - 14/03/10 : modifier  search.inc.php bug info user
 - 14/03/10 : modifier rss.php, bug IE.
-- 14/03/10 : modifier viewcat style d'affichage catégorie.
+- 14/03/10 : modifier viewcat style d'affichage categorie.
+
+
 ************************************************************
-Version 1.02 | 17-NOV-2009
+1.02 | 17-NOV-2009
 Dev: Xoops 2.4.2
 ************************************************************
 - 21/12/09 : modifier xoops_version.php bug
 - 21/12/09 : modifier all.php bug xoops 2.4
 - 21/12/09 : modifier all.html ajout de variable smarty
+
+
 ************************************************************
-Version 1.01 | 17-NOV-2009
+1.01 | 17-NOV-2009
 Dev: Xoops 2.0.16 / 2.2.3
 ************************************************************
 - 17/11/09 : modifier admin/index.php ajout permission dossier upload
@@ -47,15 +88,13 @@ Dev: Xoops 2.0.16 / 2.2.3
 - 17/11/09 : modifier tpfile.html, viewfile.html changement dans le template
 - 17/11/09 : modifier viewfile.php, functions.php bug de redimention
 - 17/11/09 : modifier  include.php jquery bug alert
-- 18/11/09 : modifier xoops_version.php, tpcat.html, index.php, viewcat.php redimension image catégories.
+- 18/11/09 : modifier xoops_version.php, tpcat.html, index.php, viewcat.php redimension image categories.
 - 18/11/09 : modifier meta automatique
+
+
 ************************************************************
-Version 1.00 | 03-OCT-2009
+1.00 | 03-OCT-2009
 Dev: Xoops 2.0.16 / 2.2.3
 ************************************************************
 - 10/10/09 : Ajout de l'anglais
 - 10/10/09 : Suppression du .htaccess bug
-************************************************************
-
-
-

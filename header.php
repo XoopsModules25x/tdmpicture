@@ -6,26 +6,27 @@
  *
  * Cette licence, contient des limitations!!!
  *
- * 1. Vous devez posséder une permission d'exécuter le logiciel, pour n'importe quel usage.
- * 2. Vous ne devez pas l' étudier,
+ * 1. Vous devez possÃ©der une permission d'exÃ©cuter le logiciel, pour n'importe quel usage.
+ * 2. Vous ne devez pas l' Ã©tudier,
  * 3. Vous ne devez pas le redistribuer ni en faire des copies,
- * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
+ * 4. Vous n'avez pas la libertÃ© de l'amÃ©liorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE
+ * @author      TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
- 
-include "../../mainfile.php";
+
+$moduleDirName = basename(__DIR__);
+include __DIR__ . '/../../mainfile.php';
 
 /* Use XOOPS_ROOT_PATH for all include file */
-include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-include_once(XOOPS_ROOT_PATH."/class/tree.php");
-include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
-include_once XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->getVar("dirname").'/include/common.php';
+include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+include_once XOOPS_ROOT_PATH . '/class/tree.php';
+include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/common.php';
 //include_once XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->getVar("dirname").'/include/get_perms.php';
-$gperm_handler =& xoops_gethandler('groupperm');
+$gpermHandler = xoops_getHandler('groupperm');
 //permission
 if (is_object($xoopsUser)) {
     $groups = $xoopsUser->getGroups();
@@ -36,19 +37,18 @@ if (is_object($xoopsUser)) {
 }
 
 //perm
-if (!$gperm_handler->checkRight('tdmpicture_view', 2, $groups, $xoopsModule->getVar('mid'))) {
-redirect_header(XOOPS_URL, 2,_MD_TDMPICTURE_NOPERM);
-exit();
+if (!$gpermHandler->checkRight('tdmpicture_view', 2, $groups, $xoopsModule->getVar('mid'))) {
+    redirect_header(XOOPS_URL, 2, _MD_TDMPICTURE_NOPERM);
 }
 
-$perm_playlist = ($gperm_handler->checkRight('tdmpicture_view', 4, $groups, $xoopsModule->getVar('mid'))) ? true : false ;
+$perm_playlist = $gpermHandler->checkRight('tdmpicture_view', 4, $groups, $xoopsModule->getVar('mid')) ? true : false;
 
-$perm_vote = ($gperm_handler->checkRight('tdmpicture_view', 64, $groups, $xoopsModule->getVar('mid'))) ? true : false ;
+$perm_vote = $gpermHandler->checkRight('tdmpicture_view', 64, $groups, $xoopsModule->getVar('mid')) ? true : false;
 
-$perm_submit = ($gperm_handler->checkRight('tdmpicture_view', 8, $groups, $xoopsModule->getVar('mid'))) ? true : false ;
+$perm_submit = $gpermHandler->checkRight('tdmpicture_view', 8, $groups, $xoopsModule->getVar('mid')) ? true : false;
 
-$perm_cat = ($gperm_handler->checkRight('tdmpicture_view', 1024, $groups, $xoopsModule->getVar('mid'))) ? true : false ;
+$perm_cat = $gpermHandler->checkRight('tdmpicture_view', 1024, $groups, $xoopsModule->getVar('mid')) ? true : false;
 
-$perm_dl = ($gperm_handler->checkRight('tdmpicture_view', 32, $groups, $xoopsModule->getVar('mid'))) ? true : false ;
+$perm_dl = $gpermHandler->checkRight('tdmpicture_view', 32, $groups, $xoopsModule->getVar('mid')) ? true : false;
 
-$mydirname = basename( dirname( __FILE__ ) ) ;
+$moduleDirName = basename(__DIR__);

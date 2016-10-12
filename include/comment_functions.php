@@ -6,39 +6,42 @@
  *
  * Cette licence, contient des limitations!!!
  *
- * 1. Vous devez posséder une permission d'exécuter le logiciel, pour n'importe quel usage.
- * 2. Vous ne devez pas l' étudier,
+ * 1. Vous devez possÃ©der une permission d'exÃ©cuter le logiciel, pour n'importe quel usage.
+ * 2. Vous ne devez pas l' Ã©tudier,
  * 3. Vous ne devez pas le redistribuer ni en faire des copies,
- * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
+ * 4. Vous n'avez pas la libertÃ© de l'amÃ©liorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE
+ * @author      TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
+ * @param $file_id
+ * @param $total_num
  */
- 
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 // comment callback functions
 
-function picture_comments_update( $file_id , $total_num ) {
-    global $xoopsDB ;
+function picture_comments_update($file_id, $total_num)
+{
+    global $xoopsDB;
 
-$file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
-$view = $file_handler->get($file_id);
-$hits = $view->getVar('file_comments');
-$hits++;
-$obj =& $file_handler->get($file_id);
-$obj->setVar('file_comments', $hits);
-$ret = $file_handler->insert($obj);
+    $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
+    $view         = $fileHandler->get($file_id);
+    $hits         = $view->getVar('file_comments');
+    ++$hits;
+    $obj = $fileHandler->get($file_id);
+    $obj->setVar('file_comments', $hits);
+    $ret = $fileHandler->insert($obj);
 
-    return $ret ;
-    
+    return $ret;
 }
 
-function picture_comments_approve( &$comment )
+/**
+ * @param $comment
+ */
+function picture_comments_approve(&$comment)
 {
     // notification mail here
 }

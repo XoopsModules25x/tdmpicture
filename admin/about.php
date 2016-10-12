@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Module\Admin;
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -6,27 +9,26 @@
  *
  * Cette licence, contient des limitations!!!
  *
- * 1. Vous devez posséder une permission d'exécuter le logiciel, pour n'importe quel usage.
- * 2. Vous ne devez pas l' étudier,
+ * 1. Vous devez possÃ©der une permission d'exÃ©cuter le logiciel, pour n'importe quel usage.
+ * 2. Vous ne devez pas l' Ã©tudier,
  * 3. Vous ne devez pas le redistribuer ni en faire des copies,
- * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
+ * 4. Vous n'avez pas la libertÃ© de l'amÃ©liorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE
+ * @author      TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
 
-include_once dirname(__FILE__) . '/admin_header.php';
-
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$aboutAdmin = new ModuleAdmin();
-$file_protection = "Tatane, Xoopsfr<br /><br />
-Cesag, Xoopsfr<br /><br />Grosdunord, Xoopsfr<br /><br />Phira, Xoopsfr<br />";
-$aboutAdmin->addInfoBox(_AM_TDMPICTURE_TEST);
-$aboutAdmin->addInfoBoxLine(_AM_TDMPICTURE_TEST, $file_protection, '', '', 'information');
-echo $aboutAdmin->addNavigation('about.php');
-echo $aboutAdmin->renderAbout('6KJ7RW5DR3VTJ', FALSE);
+$file_protection = 'XOOPS France: Tatane, Cesagonchu, Grosdunord, Phira<br>';
+$adminObject->addInfoBox(_AM_TDMPICTURE_TEST);
+$adminObject->addInfoBoxLine($file_protection, '', '', 'information');
 
-include 'admin_footer.php';
+echo $adminObject->displayNavigation(basename(__FILE__));
+\Xmf\Module\Admin::setPaypal('6KJ7RW5DR3VTJ');
+echo $adminObject->renderAbout(false);
+
+include_once __DIR__ . '/admin_footer.php';

@@ -6,133 +6,119 @@
  *
  * Cette licence, contient des limitations!!!
  *
- * 1. Vous devez posséder une permission d'exécuter le logiciel, pour n'importe quel usage.
- * 2. Vous ne devez pas l' étudier,
+ * 1. Vous devez possÃ©der une permission d'exÃ©cuter le logiciel, pour n'importe quel usage.
+ * 2. Vous ne devez pas l' Ã©tudier,
  * 3. Vous ne devez pas le redistribuer ni en faire des copies,
- * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
+ * 4. Vous n'avez pas la libertÃ© de l'amÃ©liorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE
+ * @author      TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
- 
-include_once "header.php";
-$myts =& MyTextSanitizer::getInstance();
 
-include_once XOOPS_ROOT_PATH.'/header.php';
-include_once XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->getVar("dirname").'/include/common.php';
+include_once __DIR__ . '/header.php';
+$myts = MyTextSanitizer::getInstance();
 
-$xoopsTpl->assign('dirname', $mydirname);
+include_once XOOPS_ROOT_PATH . '/header.php';
+include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/common.php';
 
- $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
+$xoopsTpl->assign('dirname', $moduleDirName);
+
+$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 
 //load class
-$file_handler =& xoops_getModuleHandler('tdmpicture_file', 'TDMPicture');
-$cat_handler =& xoops_getModuleHandler('tdmpicture_cat', 'TDMPicture');
+$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
- switch($op) {
+switch ($op) {
 
- case "edit":
- 
- //perm
-if (!$gperm_handler->checkRight('tdmpicture_view', 128, $groups, $xoopsModule->getVar('mid'))) {
-redirect_header(XOOPS_URL, 2,_MD_TDMPICTURE_NOPERM);
-exit();
-}
+    case 'edit':
 
-    $obj = $file_handler->get($_REQUEST['file_id']);
-    if (!empty($xoopsUser) && $xoopsUser->getVar('uid') == $obj->getVar('file_uid') OR $xoopsUser->isAdmin())
-    {
-    $form = $obj->getForm();
-    $form->display();
-    }else {
-    redirect_header(TDMPICTURE_URL, 2, _MD_TDMPICTURE_NOPERM);
-    }
-    break;
-    
-    case "edit_file":
-
-    //perm
-if (!$gperm_handler->checkRight('tdmpicture_view', 128, $groups, $xoopsModule->getVar('mid'))) {
-redirect_header(XOOPS_URL, 2,_MD_TDMPICTURE_NOPERM);
-exit();
-}
-
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+        //perm
+        if (!$gpermHandler->checkRight('tdmpicture_view', 128, $groups, $xoopsModule->getVar('mid'))) {
+            redirect_header(XOOPS_URL, 2, _MD_TDMPICTURE_NOPERM);
         }
-        if (isset($_REQUEST['file_id'])) {
-        $obj =& $file_handler->get($_REQUEST['file_id']);
+
+        $obj = $fileHandler->get($_REQUEST['file_id']);
+        if (!empty($xoopsUser) && $xoopsUser->getVar('uid') == $obj->getVar('file_uid') || $xoopsUser->isAdmin()) {
+            $form = $obj->getForm();
+            $form->display();
         } else {
-        $obj =& $file_handler->create();
+            redirect_header(TDMPICTURE_URL, 2, _MD_TDMPICTURE_NOPERM);
         }
-        
-    if (!empty($xoopsUser) && $xoopsUser->getVar('uid') == $obj->getVar('file_uid') OR $xoopsUser->isAdmin())
-    {
-    //fichier commun
-    $obj->setVar('file_title', $_REQUEST['file_title']);
-    $obj->setVar('file_display', $_REQUEST['file_display']);
-    $obj->setVar('file_cat', $_REQUEST['file_cat']);
-    $obj->setVar('file_indate', time());
-    $obj->setVar('file_text', $_REQUEST['file_text']);
-    $obj->setVar('file_size', $_REQUEST['file_size']);
-    $obj->setVar('file_res_x', $_REQUEST['file_res_x']);
-    $obj->setVar('file_res_y', $_REQUEST['file_res_y']);
-        
-    $erreur = $file_handler->insert($obj);
-    }
+        break;
 
-    if ($erreur) {
-     redirect_header('index.php', 2, _MD_TDMPICTURE_BASE);
-      } else {
-    redirect_header('index.php', 2, _MD_TDMPICTURE_BASEERROR);
-    }
-    break;
-    
-    
-    
-     case "delete":
-     
-     //perm
-if (!$gperm_handler->checkRight('tdmpicture_view', 512, $groups, $xoopsModule->getVar('mid'))) {
-redirect_header(XOOPS_URL, 2,_MD_TDMPICTURE_NOPERM);
-exit();
-}
+    case 'edit_file':
 
-    $obj =& $file_handler->get($_REQUEST['file_id']);
+        //perm
+        if (!$gpermHandler->checkRight('tdmpicture_view', 128, $groups, $xoopsModule->getVar('mid'))) {
+            redirect_header(XOOPS_URL, 2, _MD_TDMPICTURE_NOPERM);
+        }
 
-    
-    if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('index.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        
-    if (!empty($xoopsUser) && $xoopsUser->getVar('uid') == $obj->getVar('file_uid') OR $xoopsUser->isAdmin())
-    {
-    
-        if ($file_handler->delete($_REQUEST['file_id'])) {
-           redirect_header('javascript:history.go(-2)', 2, _AM_TDMPICTURE_BASE);
+        if (isset($_REQUEST['file_id'])) {
+            $obj = $fileHandler->get($_REQUEST['file_id']);
         } else {
-        redirect_header(TDMPICTURE_URL, 2, _AM_TDMPICTURE_BASEERROR);
-       }
-       
-
+            $obj = $fileHandler->create();
         }
-        
-    } else {
-        xoops_confirm(array('ok' => 1, 'file_id' => $_REQUEST['file_id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], _MD_TDMPICTURE_FORMSUREDEL);
-    }
-    break;
-        
-  case "list":
-  default:
 
-    redirect_header(TDMPICTURE_URL, 2, _MD_TDMPICTURE_NOPERM);
-    exit();
+        if (!empty($xoopsUser) && $xoopsUser->getVar('uid') == $obj->getVar('file_uid') || $xoopsUser->isAdmin()) {
+            //fichier commun
+            $obj->setVar('file_title', $_REQUEST['file_title']);
+            $obj->setVar('file_display', $_REQUEST['file_display']);
+            $obj->setVar('file_cat', $_REQUEST['file_cat']);
+            $obj->setVar('file_indate', time());
+            $obj->setVar('file_text', $_REQUEST['file_text']);
+            $obj->setVar('file_size', $_REQUEST['file_size']);
+            $obj->setVar('file_res_x', $_REQUEST['file_res_x']);
+            $obj->setVar('file_res_y', $_REQUEST['file_res_y']);
 
-   break;
+            $erreur = $fileHandler->insert($obj);
+        }
+
+        if ($erreur) {
+            redirect_header('index.php', 2, _MD_TDMPICTURE_BASE);
+        } else {
+            redirect_header('index.php', 2, _MD_TDMPICTURE_BASEERROR);
+        }
+        break;
+
+    case 'delete':
+
+        //perm
+        if (!$gpermHandler->checkRight('tdmpicture_view', 512, $groups, $xoopsModule->getVar('mid'))) {
+            redirect_header(XOOPS_URL, 2, _MD_TDMPICTURE_NOPERM);
+        }
+
+        $obj = $fileHandler->get($_REQUEST['file_id']);
+
+        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
+            if (!$GLOBALS['xoopsSecurity']->check()) {
+                redirect_header('index.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+            }
+
+            if (!empty($xoopsUser) && $xoopsUser->getVar('uid') == $obj->getVar('file_uid') || $xoopsUser->isAdmin()) {
+                if ($fileHandler->delete($_REQUEST['file_id'])) {
+                    redirect_header('javascript:history.go(-2)', 2, _AM_TDMPICTURE_BASE);
+                } else {
+                    redirect_header(TDMPICTURE_URL, 2, _AM_TDMPICTURE_BASEERROR);
+                }
+            }
+        } else {
+            xoops_confirm(array('ok' => 1, 'file_id' => $_REQUEST['file_id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], _MD_TDMPICTURE_FORMSUREDEL);
+        }
+        break;
+
+    case 'list':
+    default:
+
+        redirect_header(TDMPICTURE_URL, 2, _MD_TDMPICTURE_NOPERM);
+
+        break;
 
 }
-tdmpicture_header();
-include_once XOOPS_ROOT_PATH.'/footer.php';
+TdmPictureUtilities::header();
+include_once XOOPS_ROOT_PATH . '/footer.php';

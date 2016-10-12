@@ -36,7 +36,7 @@ include_once XOOPS_ROOT_PATH . '/header.php';
 $myts = MyTextSanitizer::getInstance();
 require __DIR__ . '/fpdf/fpdf.php';
 
-global $xoopsDB, $xoopsConfig, $xoopsModuleConfig;
+global $xoopsDB, $xoopsConfig;
 
 if (empty($_REQUEST['st'])) {
     redirect_header('index.php', 2, _MD_TDMPICTURE_NOPERM);
@@ -81,7 +81,7 @@ switch ($option) {
         $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
         $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
-        $file      =& $fileHandler->get($_REQUEST['st']);
+        $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
 
         $newsletter_text   = utf8_decode(Chars($file->getVar('file_text')));
@@ -168,7 +168,7 @@ switch ($option) {
         $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
         $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
-        $file      =& $fileHandler->get($_REQUEST['st']);
+        $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
 
         $newsletter_text   = utf8_decode(Chars($file->getVar('file_text')));
@@ -199,7 +199,7 @@ switch ($option) {
         $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
         $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
-        $file      =& $fileHandler->get($_REQUEST['st']);
+        $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
 
         $newsletter_text   = utf8_decode(Chars($file->getVar('file_text')));
@@ -230,7 +230,7 @@ switch ($option) {
         $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
         $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
-        $file      =& $fileHandler->get($_REQUEST['st']);
+        $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
 
         $newsletter_text   = utf8_decode(Chars($file->getVar('file_text')));
@@ -261,7 +261,7 @@ switch ($option) {
         $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
         $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
-        $file      =& $fileHandler->get($_REQUEST['st']);
+        $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
 
         $newsletter_text   = utf8_decode(Chars($file->getVar('file_text')));

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  *  - TDMDownloads By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -70,8 +71,8 @@ if (isset($_REQUEST['limit'])) {
     $criteria_2->setLimit($_REQUEST['limit']);
     $limit = $_REQUEST['limit'];
 } else {
-    $criteria_2->setLimit($xoopsModuleConfig['tdmpicture_page']);
-    $limit = $xoopsModuleConfig['tdmpicture_page'];
+    $criteria_2->setLimit($helper->getConfig('tdmpicture_page'));
+    $limit = $helper->getConfig('tdmpicture_page');
 }
 if (isset($_REQUEST['start'])) {
     $criteria_2->setStart($_REQUEST['start']);
@@ -104,14 +105,14 @@ foreach (array_keys($file_arr) as $i) {
     if ($members) {
         $file['user_uname'] = $members->getVar('uname');
         $file['user_name']  = $members->getVar('name');
-        //if ($members->getVar('user_avatar') != "blank.gif") {
+        //if ($members->getVar('user_avatar') != "blank.png") {
         //$file['user_avatarurl'] = XOOPS_URL.'/uploads/'.$members->getVar('user_avatar');
         //} else {
         //$file['user_avatarurl'] = TDMMP_IMAGES_URL.'/imguser.png';
 
         //poster
         $poster_image = XOOPS_ROOT_PATH . '/uploads/' . $members->getVar('user_avatar');
-        if (file_exists($poster_image) && $members->getVar('user_avatar') != 'blank.gif') {
+        if (file_exists($poster_image) && $members->getVar('user_avatar') != 'blank.png') {
             $file['user_img'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $members->getVar('user_avatar') . "' height='60px' title=" . $members->getVar('uname') . " style='border: 1px solid #CCC;' alt=" . $members->getVar('uname') . '>';
         } else {
             $file['user_img'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
@@ -134,10 +135,10 @@ TdmPictureUtilities::header();
 $xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($xoopsModule->name()));
 
 if (isset($xoTheme) && is_object($xoTheme)) {
-    $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($xoopsModuleConfig['tdmpicture_keywords']));
-    $xoTheme->addMeta('meta', 'description', $xoopsModuleConfig['tdmpicture_description']);
+    $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($helper->getConfig('tdmpicture_keywords')));
+    $xoTheme->addMeta('meta', 'description', $helper->getConfig('tdmpicture_description'));
 } else {    // Compatibility for old Xoops versions
-    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($xoopsModuleConfig['tdmpicture_keywords']));
-    $xoopsTpl->assign('xoops_meta_description', $xoopsModuleConfig['tdmpicture_description']);
+    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($helper->getConfig('tdmpicture_keywords')));
+    $xoopsTpl->assign('xoops_meta_description', $helper->getConfig('tdmpicture_description'));
 }
 include XOOPS_ROOT_PATH . '/footer.php';

@@ -19,14 +19,14 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-global $xoopsModuleConfig, $xoopsModule;
-
+global $xoopsModule;
+$moduleDirName = basename(dirname(__DIR__));
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $xoopsModule   = $moduleHandler->getByDirname($moduleDirName);
-if (!isset($xoopsModuleConfig)) {
+if (!isset($GLOBALS['xoopsModuleConfig'])) {
     $configHandler    = xoops_getHandler('config');
-    $xoopsModuleConfig = &$configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+    $GLOBALS['xoopsModuleConfig'] = &$configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 }
 
 include_once XOOPS_ROOT_PATH . '/modules/' . basename(dirname(__DIR__)) . '/include/common.php';
@@ -55,7 +55,8 @@ function addCatSelect($cats)
  */
 function b_tdmpicture($options)
 {
-    global $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoTheme, $xoopsTpl;
+    global $xoopsConfig, $xoopsModule, $xoTheme, $xoopsTpl;
+    $moduleDirName = basename(dirname(__DIR__));
 
     if (isset($xoTheme) && is_object($xoTheme)) {
         $xoTheme->addStylesheet(TDMPICTURE_URL . '/css/tdmpicture.css');
@@ -87,12 +88,12 @@ function b_tdmpicture($options)
     $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
     $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
-    if (!isset($xoopsModuleConfig)) {
+    if (!isset($GLOBALS['xoopsModuleConfig'])) {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $xoopsModule       = $moduleHandler->getByDirname($moduleDirName);
         $configHandler    = xoops_getHandler('config');
-        $xoopsModuleConfig = $configHandler->getConfigList($xoopsModule->getVar('mid'));
+        $GLOBALS['xoopsModuleConfig'] = $configHandler->getConfigList($xoopsModule->getVar('mid'));
     }
 
     switch ($type_block) {
@@ -188,6 +189,7 @@ function b_tdmpicture($options)
  */
 function b_tdmpicture_edit($options)
 {
+    $moduleDirName = basename(dirname(__DIR__));
     $catHandler = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
     $criteria    = new CriteriaCompo();
     $criteria->add(new Criteria('cat_display', 1));

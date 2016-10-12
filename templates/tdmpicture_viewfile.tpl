@@ -27,25 +27,25 @@
         <{foreach item=file from=$file}>
             <div class="TDMNav TDMNav outer odd">
                 <{if $perm_dl }><a href="<{$smarty.const.TDMPICTURE_URL}>/download.php?st=<{$file.id}>" ><img
-                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>down.png"
+                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/down.png"
                             title="<{$smarty.const._MD_TDMPICTURE_DL}>"></a><{/if}>
                 <a href="javascript:;" slide="<{$file.img_popup}>" class="group1" title="<{$file.title}>"
-                   alt="<{$file.title}>"><img src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>zoom.png"
+                   alt="<{$file.title}>"><img src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/zoom.png"
                                               title="<{$smarty.const._MD_TDMPICTURE_SCREEN}>"/></a>
                 <a href="<{$smarty.const.TDMPICTURE_URL}>/get.php?st=<{$file.id}>&size=full" target="_blank"><img
-                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>fullscreen.png"
+                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/fullscreen.png"
                             title="<{$smarty.const._MD_TDMPICTURE_FULLSCREEN}>"></a>
-                <a href="javascript:masque('1');"><img src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>link.png"
+                <a href="javascript:masque('1');"><img src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/link.png"
                                                        title="<{$smarty.const._MD_TDMPICTURE_LINK}>"/></a>
                 <{if $file.useralb }><a href="<{$smarty.const.TDMPICTURE_URL}>/user.php?ut=<{$file.uid}>" ><img
-                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>photo.png"
+                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/photo.png"
                             title="<{$smarty.const._MD_TDMPICTURE_VIEWALBUM}> <{$file.postername}>"></a><{/if}>
                 <{if $perm_submit}><a href="<{$smarty.const.TDMPICTURE_URL}>/submit.php" ><img
-                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>upload.png"
+                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/upload.png"
                             title="<{$smarty.const._MD_TDMPICTURE_UPLOAD}>">
                     </a><{/if}>
                 <{if $perm_cat}><a href="<{$smarty.const.TDMPICTURE_URL}>/submit.php?op=cat"><img
-                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>uploadcat.png"
+                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/uploadcat.png"
                             title="<{$smarty.const._MD_TDMPICTURE_UPLOADCAT}>"></a><{/if}>
             </div>
             <br class="clear"/>
@@ -105,8 +105,7 @@
                     <br>
                     <div id="tdmpicture_num" class="switch_large odd">
                         <div class="switch_mediuml">
-                            <{$smarty.const._MD_TDMPICTURE_BY}>: <a
-                                    href="<{$smarty.const.TDMPICTURE_URL}>/user.php?ut=<{$file.uid}>"/><{$file.postername}></a>
+                            <{$smarty.const._MD_TDMPICTURE_BY}>: <a href="<{$smarty.const.TDMPICTURE_URL}>/user.php?ut=<{$file.uid}>"/><{$file.postername}></a>
                             <br>
                             <{$smarty.const._MD_TDMPICTURE_IN}>: <a
                                     href="<{$smarty.const.TDMPICTURE_URL}>/viewcat.php?ct=<{$file.file_cat_id}>"/><{$file.cat}></a>
@@ -156,23 +155,23 @@
                         <div class="switch_large odd">
                             <div style="text-align:center;">
                                 <a href="<{$smarty.const.TDMPICTURE_URL}>/pdf_paper.php?option=auto&st=<{$file.id}>"><img
-                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>pdf_mini.png"
+                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/pdf_mini.png"
                                             title="<{$smarty.const._MD_TDMPICTURE_PDFAUTO}>"
                                             alt="<{$smarty.const._MD_TDMPICTURE_PDFAUTO}>"/></a>
                                 <a href="<{$smarty.const.TDMPICTURE_URL}>/pdf_paper.php?option=A4&st=<{$file.id}>"><img
-                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>pdf_A4.png"
+                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/pdf_A4.png"
                                             title="<{$smarty.const._MD_TDMPICTURE_PDFA4}>"
                                             alt="<{$smarty.const._MD_TDMPICTURE_PDFA4}>"/></a>
                                 <a href="<{$smarty.const.TDMPICTURE_URL}>/pdf_paper.php?option=A3&st=<{$file.id}>"><img
-                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>pdf_A3.png"
+                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/pdf_A3.png"
                                             title="<{$smarty.const._MD_TDMPICTURE_PDFA3}>"
                                             alt="<{$smarty.const._MD_TDMPICTURE_PDFA3}>"/></a>
                                 <a href="<{$smarty.const.TDMPICTURE_URL}>/pdf_paper.php?option=A2&st=<{$file.id}>"><img
-                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>pdf_A2.png"
+                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/pdf_A2.png"
                                             title="<{$smarty.const._MD_TDMPICTURE_PDFA2}>"
                                             alt="<{$smarty.const._MD_TDMPICTURE_PDFA2}>"/></a>
                                 <a href="<{$smarty.const.TDMPICTURE_URL}>/pdf_paper.php?option=A1&st=<{$file.id}>"><img
-                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>pdf_A1.png"
+                                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/pdf_A1.png"
                                             title="<{$smarty.const._MD_TDMPICTURE_PDFA1}>"
                                             alt="<{$smarty.const._MD_TDMPICTURE_PDFA1}>"/></a>
                             </div>
@@ -238,7 +237,7 @@
             <div style="float:right;"><a href="<{$smarty.const.TDMPICTURE_URL}>/rss.php"
                                          title="<{$smarty.const._MD_TDMPICTURE_RSS}>"
                                          alt="<{$smarty.const._MD_TDMPICTURE_RSS}>"><img
-                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>rss.png"
+                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/rss.png"
                             title="<{$smarty.const._MD_TDMPICTURE_RSS}>"
                             alt="<{$smarty.const._MD_TDMPICTURE_RSS}>"/></a></div>
         <{/if}>

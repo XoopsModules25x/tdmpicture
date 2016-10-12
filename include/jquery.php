@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Module\Helper;
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -23,7 +26,7 @@ require XOOPS_ROOT_PATH . '/header.php';
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 $myts = MyTextSanitizer::getInstance();
-global $xoopsUser, $xoopsModuleConfig, $xoopsModule;
+global $xoopsUser, $xoopsModule;
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 
@@ -38,9 +41,9 @@ $gpermHandler = xoops_getHandler('groupperm');
 $moduleHandler = xoops_getHandler('module');
 $xoopsModule   = $moduleHandler->getByDirname($moduleDirName);
 
-if (!isset($xoopsModuleConfig)) {
+if (!isset($GLOBALS['xoopsModuleConfig'])) {
     $configHandler    = xoops_getHandler('config');
-    $xoopsModuleConfig = &$configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+    $GLOBALS['xoopsModuleConfig'] = &$configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 }
 
 include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/common.php';
@@ -123,13 +126,13 @@ switch ($op) {
         break;
 
     case 'upload':
-        global $xoopsDB, $xoopsTpl, $xoopsModule, $xoopsModuleConfig, $xoopsUser;
+        global $xoopsDB, $xoopsTpl, $xoopsModule, $xoopsUser;
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
         $uploaddir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/upload/';
-        $mimetype  = explode('|', $xoopsModuleConfig['tdmpicture_mimetype']);
-        $uploader  = new XoopsMediaUploader(TDMPICTURE_UPLOADS_PATH, $mimetype, $xoopsModuleConfig['tdmpicture_mimemax'], null, null);
+        $mimetype  = explode('|', $helper->getConfig('tdmpicture_mimetype'));
+        $uploader  = new XoopsMediaUploader(TDMPICTURE_UPLOADS_PATH, $mimetype, $helper->getConfig('tdmpicture_mimemax'), null, null);
 
         $obj = $fileHandler->create();
         $obj->setVar('file_cat', $_REQUEST['file_cat']);
@@ -163,9 +166,9 @@ switch ($op) {
                     //thumb
                     include_once TDMPICTURE_ROOT_PATH . '/class/thumbnail.inc.php';
                     $thumb = new Thumbnail(TDMPICTURE_UPLOADS_PATH . $uploader->getSavedFileName());
-                    $thumb->resize($xoopsModuleConfig['tdmpicture_thumb_width'], $xoopsModuleConfig['tdmpicture_thumb_heigth']);
-                    $thumb->save(TDMPICTURE_THUMB_PATH . $uploader->getSavedFileName(), $xoopsModuleConfig['tdmpicture_thumb_quality']);
-                    //$thumb->save($uploaddir.'thumb/'.$uploader->getSavedFileName(),$xoopsModuleConfig['TDMPicture_thumb_quality']);
+                    $thumb->resize($helper->getConfig('tdmpicture_thumb_width'), $helper->getConfig('tdmpicture_thumb_heigth'));
+                    $thumb->save(TDMPICTURE_THUMB_PATH . $uploader->getSavedFileName(), $helper->getConfig('tdmpicture_thumb_quality'));
+                    //$thumb->save($uploaddir.'thumb/'.$uploader->getSavedFileName(),$helper->getConfig('TDMPicture_thumb_quality'));
                     //$msgError = TDMPICTURE_UPLOADS_PATH;
                     $fileHandler->insert($obj);
                 }

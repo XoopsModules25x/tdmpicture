@@ -73,7 +73,7 @@ if (!$tpl->is_cached('db:tdmpicture_rss.tpl')) {
         $tpitem['title'] = $item_arr[$i]->getVar('file_title');
         $tpitem['cat']   = $item_arr[$i]->getVar('file_cat');
         //trouve la categorie
-        if ($cat =& $catHandler->get($item_arr[$i]->getVar('file_cat'))) {
+        if ($cat = $catHandler->get($item_arr[$i]->getVar('file_cat'))) {
             $tpitem['cat_title'] = $cat->getVar('cat_title');
             $tpitem['cat_id']    = $cat->getVar('cat_id');
         }

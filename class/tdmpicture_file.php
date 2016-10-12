@@ -1,4 +1,7 @@
 <?php
+use Xmf\Module\Helper;
+
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -55,34 +58,34 @@ class TDMPicture_file extends XoopsObject
      */
     public function getFilePath($force = false)
     {
-        global $xoopsModuleConfig;
-
+        $moduleDirName = basename(dirname(__DIR__));
+        $helper = Helper::getHelper($moduleDirName);
         switch ($this->getVar('file_ext')) {
             case 0:
             default:
-                $image = $xoopsModuleConfig['tdm_upload_path'];
-                $thumb = $xoopsModuleConfig['tdm_upload_thumb'];
+                $image = $helper->getConfig('tdm_upload_path');
+                $thumb = $helper->getConfig('tdm_upload_thumb');
                 break;
             case 1:
-                $image = $xoopsModuleConfig['tdm_myalbum_path'];
-                $thumb = $xoopsModuleConfig['tdm_myalbum_thumb'];
+                $image = $helper->getConfig('tdm_myalbum_path');
+                $thumb = $helper->getConfig('tdm_myalbum_thumb');
                 break;
             case 2:
-                $image = $xoopsModuleConfig['tdm_extgallery_path'];
-                $thumb = $xoopsModuleConfig['tdm_extgallery_thumb'];
+                $image = $helper->getConfig('tdm_extgallery_path');
+                $thumb = $helper->getConfig('tdm_extgallery_thumb');
                 break;
         }
 
         if (!empty($force)) {
-            $image .= $force;
-            $thumb .= $force;
+            $image .=  '/'. $force;
+            $thumb .=  '/'.  $force;
         }
 
         return array(
-            'image_url'  => XOOPS_URL . $image,
-            'image_path' => XOOPS_ROOT_PATH . $image,
-            'thumb_url'  => XOOPS_URL . $thumb,
-            'thumb_path' => XOOPS_ROOT_PATH . $thumb
+            'image_url'  => XOOPS_URL . '/' . $image,
+            'image_path' => XOOPS_ROOT_PATH . '/' .  $image,
+            'thumb_url'  => XOOPS_URL . '/' .  $thumb,
+            'thumb_path' => XOOPS_ROOT_PATH . '/' .  $thumb
         );
     }
 
@@ -91,18 +94,18 @@ class TDMPicture_file extends XoopsObject
      */
     public function getFileThumb()
     {
-        global $xoopsModuleConfig;
-
+        $moduleDirName = basename(dirname(__DIR__));
+        $helper = Helper::getHelper($moduleDirName);
         switch ($this->getVar('file_ext')) {
             case 0:
             default:
-                $url = $xoopsModuleConfig['tdm_upload_thumb'];
+                $url = $helper->getConfig('tdm_upload_thumb');
                 break;
             case 1:
-                $url = $xoopsModuleConfig['tdm_myalbum_thumb'];
+                $url = $helper->getConfig('tdm_myalbum_thumb');
                 break;
             case 2:
-                $url = $xoopsModuleConfig['tdm_extgallery_thumb'];
+                $url = $helper->getConfig('tdm_extgallery_thumb');
                 break;
         }
 
@@ -133,8 +136,9 @@ class TDMPicture_file extends XoopsObject
      */
     public function getForm($action = false)
     {
-        global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsUser, $xoopsDB, $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
+        $helper = Helper::getHelper($moduleDirName);
 
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
@@ -195,7 +199,7 @@ class TDMPicture_file extends XoopsObject
             $editor_configs['cols']   = 80;
             $editor_configs['width']  = '100%';
             $editor_configs['height'] = '400px';
-            $editor_configs['editor'] = $xoopsModuleConfig['tdmpicture_editor'];
+            $editor_configs['editor'] = $helper->getConfig('tdmpicture_editor');
             $form->addElement(new XoopsFormEditor(_MD_TDMPICTURE_TEXT, 'file_text', $editor_configs), false);
 
             //
@@ -291,17 +295,17 @@ class TDMPicture_file extends XoopsObject
 
             //$form->insertBreak('
             //<applet code="wjhk.jupload2.JUploadApplet"
-            //           archive="'.TDMPICTURE_URL.'/jupload/wjhk.jupload.jar" width="'.$xoopsModuleConfig['tdmpicture_java_width'].'" height="'.$xoopsModuleConfig['tdmpicture_java_heigth'].'" alt=""
+            //           archive="'.TDMPICTURE_URL.'/jupload/wjhk.jupload.jar" width="'.$helper->getConfig('tdmpicture_java_width').'" height="'.$helper->getConfig('tdmpicture_java_heigth').'" alt=""
             //            mayscript>
             //            <param name="postURL"
             //                value="'.TDMPICTURE_URL.'/include/jquery.php?op=upload&file_cat='.$_REQUEST['file_cat'].'&file_display='.$_REQUEST['file_display'].'" />
-            //           <param name="maxChunkSize" value="'.$xoopsModuleConfig['tdmpicture_mimemax'].'" />
+            //           <param name="maxChunkSize" value="'.$helper->getConfig('tdmpicture_mimemax').'" />
             //           <param name="uploadPolicy" value="PictureUploadPolicy" />
             //            <param name="nbFilesPerRequest" value="1" />
             //            <!-- Optionnal, see code comments -->
-            //           <param name="maxPicHeight" value="'.$xoopsModuleConfig['tdmpicture_full_heigth'].'" />
+            //           <param name="maxPicHeight" value="'.$helper->getConfig('tdmpicture_full_heigth').'" />
             //           <!-- Optionnal, see code comments -->
-            //           <param name="maxPicWidth" value="'.$xoopsModuleConfig['tdmpicture_full_width'].'" />
+            //           <param name="maxPicWidth" value="'.$helper->getConfig('tdmpicture_full_width').'" />
             //           <!-- Optionnal, see code comments -->
             //           <param name="debugLevel" value="0" />
             //          <param name="showLogWindow" value="false" />
@@ -322,11 +326,11 @@ $tdmpicture(document).ready( function() {
 </script>';
 
             //pour multi upload
-            $form->addElement(new XoopsFormHidden('MAX_FILE_SIZE', $xoopsModuleConfig['tdmpicture_mimemax']));
+            $form->addElement(new XoopsFormHidden('MAX_FILE_SIZE', $helper->getConfig('tdmpicture_mimemax')));
 
             $fileseltray = new XoopsFormElementTray(_MD_TDMPICTURE_UPLOAD, '<br>');
-            $fileseltray->addElement(new XoopsFormLabel('<div id="tdmfiletext" maxlength="' . $xoopsModuleConfig['tdmpicture_upmax'] . '">
-            <b>' . sprintf(_MD_TDMPICTURE_MULTIUPLOAD, $xoopsModuleConfig['tdmpicture_upmax']) . '</b><br>
+            $fileseltray->addElement(new XoopsFormLabel('<div id="tdmfiletext" maxlength="' . $helper->getConfig('tdmpicture_upmax') . '">
+            <b>' . sprintf(_MD_TDMPICTURE_MULTIUPLOAD, $helper->getConfig('tdmpicture_upmax')) . '</b><br>
 
         </div>'), false);
             $form->addElement($fileseltray);
@@ -334,8 +338,8 @@ $tdmpicture(document).ready( function() {
             //
             //centrage
             //$tagchannel = array('100|75' => '100x75 (avatar)', '150|112' => '150x112 (thumbnail)', '320|240' => '320x240 (for websites and email)', '640|480' => '640x480 (for message boards)', '800|600' => '800x600 (15-inch monitor)', '1024|768' => '1024x768 (17-inch monitor)', '1280|1024' => '1280x1024 (19-inch monitor)', '1600|1200' => '1600x1200 (21-inch monitor)', '1024|768' => '1024x768 (17-inch monitor)' );
-            $tagchannel        = explode('|', $xoopsModuleConfig['tdmpicture_size']);
-            $tag               = explode('|', $xoopsModuleConfig['tdmpicture_size']);
+            $tagchannel        = explode('|', $helper->getConfig('tdmpicture_size'));
+            $tag               = explode('|', $helper->getConfig('tdmpicture_size'));
             $data              = array_combine($tagchannel, $tag);
             $tagchannel_select = new XoopsFormSelect(_MD_TDMPICTURE_RESIZE, 'resize', 0);
             $tagchannel_select->addOption(0, _NONE);
@@ -460,7 +464,7 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
      */
     public function delete(XoopsObject $photo, $force = true)
     {
-        global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsUser, $xoopsDB, $xoopsModule;
 
         if (is_numeric($photo)) {
             $obj = $this->get($photo);
@@ -499,7 +503,7 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
      */
     public function display($photo, $force = true)
     {
-        global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsUser, $xoopsDB, $xoopsModule;
 
         if (is_numeric($photo)) {
             $obj = $this->get($photo);
@@ -531,7 +535,7 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
      */
     public function update($photo, $force = true)
     {
-        global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsUser, $xoopsDB, $xoopsModule;
 
         if (is_numeric($photo)) {
             $obj = $this->get($photo);
@@ -572,7 +576,9 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
      */
     public function thumb($class_photo, $photo = false)
     {
-        global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsUser, $xoopsDB, $xoopsModule;
+        $moduleDirName = basename(dirname(__DIR__));
+        $helper = Helper::getHelper($moduleDirName);
 
         if (is_numeric($class_photo)) {
             $obj         = $this->get($class_photo);
@@ -587,27 +593,27 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
         //$thumb = new Thumbnail($file_path['image_path']);
         //   $class_photo = new Thumbnail($file_path['image_path']);
 
-        switch ($xoopsModuleConfig['tdmpicture_thumb_style']) {
+        switch ($helper->getConfig('tdmpicture_thumb_style')) {
 
             case 'center':
             default:
-                $class_photo->cropFromCenter($xoopsModuleConfig['tdmpicture_thumb_width']);
+                $class_photo->cropFromCenter($helper->getConfig('tdmpicture_thumb_width'));
                 break;
 
             case 'limit-width-height':
-                $class_photo->resize($xoopsModuleConfig['tdmpicture_thumb_width'], $xoopsModuleConfig['tdmpicture_thumb_heigth']);
+                $class_photo->resize($helper->getConfig('tdmpicture_thumb_width'), $helper->getConfig('tdmpicture_thumb_heigth'));
                 break;
 
             case 'limit-width':
-                $class_photo->resize($xoopsModuleConfig['tdmpicture_thumb_width'], '');
+                $class_photo->resize($helper->getConfig('tdmpicture_thumb_width'), '');
                 break;
 
             case 'limit-height':
-                $class_photo->resize('', $xoopsModuleConfig['tdmpicture_thumb_heigth']);
+                $class_photo->resize('', $helper->getConfig('tdmpicture_thumb_heigth'));
                 break;
         }
         //  $test1 = $class_photo->fileName;
-        $class_photo->save(TDMPICTURE_THUMB_PATH . $photo, $xoopsModuleConfig['tdmpicture_thumb_quality']);
+        $class_photo->save(TDMPICTURE_THUMB_PATH . $photo, $helper->getConfig('tdmpicture_thumb_quality'));
 
         //test si reussis
         return true;

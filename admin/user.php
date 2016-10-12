@@ -1,4 +1,7 @@
 <?php
+
+//use Xmf\Module\Helper;
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -16,7 +19,7 @@
  *
  * ****************************************************************************
  */
-
+include_once __DIR__ . '/admin_header.php';
 $moduleDirName = basename(dirname(__DIR__));
 include_once __DIR__ . '/../../../include/cp_header.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -69,8 +72,8 @@ switch ($op) {
         //upload
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploaddir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/upload/user/';
-        $mimetype  = explode('|', $xoopsModuleConfig['tdmpicture_mimetype']);
-        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $xoopsModuleConfig['tdmpicture_mimemax']);
+        $mimetype  = explode('|', $helper->getConfig('tdmpicture_mimetype'));
+        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $helper->getConfig('tdmpicture_mimemax'));
 
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('picture_');
@@ -137,7 +140,7 @@ switch ($op) {
             $mytree    = new XoopsObjectTree($arr, 'user_id', 'user_pid');
             $treechild = $mytree->getAllChild($obj->getVar('user_id'));
             foreach ($treechild as $child) {
-                $ret =& $userHandler->get($child->getVar('user_id'));
+                $ret = $userHandler->get($child->getVar('user_id'));
                 $userHandler->delete($ret);
             }
 
@@ -203,7 +206,7 @@ switch ($op) {
             echo '</tr>';
             $class               = 'odd';
             $mytree              = new TDMObjectTree($assoc_user, 'user_id', 'user_pid');
-            $useregory_ArrayTree = $mytree->makeArrayTree('', '<img src="' . TDMPICTURE_IMAGES_URL . 'decos/arrow.gif">');
+            $useregory_ArrayTree = $mytree->makeArrayTree('', '<img src="' . TDMPICTURE_IMAGES_URL . '/decos/arrow.gif">');
             foreach (array_keys($useregory_ArrayTree) as $i) {
                 $class      = ($class == 'even') ? 'odd' : 'even';
                 $user_id    = $assoc_user[$i]->getVar('user_id');

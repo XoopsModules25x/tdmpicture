@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Module\Helper;
+
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -37,7 +40,10 @@ require __DIR__ . '/../fpdf/fpdf.php';
 //include_once XOOPS_ROOT_PATH.'/modules/tdmpicture/class/tdmassoc_pdf_table.php';
 include_once XOOPS_ROOT_PATH . '/modules/tdmpicture/class/utilities.php';
 
-global $xoopsDB, $xoopsConfig, $xoopsModuleConfig;
+global $xoopsDB, $xoopsConfig;
+
+$moduleDirName = basename(dirname(__DIR__));
+$helper = Helper::getHelper($moduleDirName);
 
 if (file_exists(XOOPS_ROOT_PATH . '/modules/tdmpicture/language/' . $xoopsConfig['language'] . '/admin.php')) {
     include_once XOOPS_ROOT_PATH . '/modules/tdmpicture/language/' . $xoopsConfig['language'] . '/admin.php';
@@ -159,7 +165,7 @@ switch ($option) {
 
     case 'ticket':
         $ticketHandler = xoops_getModuleHandler('tdmassoc_ticket', 'tdmpicture');
-        $ticket        =& $ticketHandler->get($_REQUEST['ticket_id']);
+        $ticket        = $ticketHandler->get($_REQUEST['ticket_id']);
 
         $ticket_nb_pages = !empty($_REQUEST['ticket_nb_pages']) ? $_REQUEST['ticket_nb_pages'] : '1';
         $type_page       = !empty($_REQUEST['type_page']) ? $_REQUEST['type_page'] : 'A4';
@@ -198,7 +204,7 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 210; ++$j) {
                                 if ((210 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/TDMPicture/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -236,7 +242,7 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 297; ++$j) {
                                 if ((297 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/tdmpicture/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -277,7 +283,7 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 297; ++$j) {
                                 if ((297 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/tdmpicture/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -316,7 +322,7 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 420; ++$j) {
                                 if ((420 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/tdmpicture/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -354,7 +360,7 @@ switch ($option) {
     //pdf pour les newsletter
     case 'list_newsletter':
         $newsletterHandler = xoops_getModuleHandler('tdmassoc_newsletter', 'tdmpicture');
-        $newsletter         =& $newsletterHandler->get($_REQUEST['newsletter_id']);
+        $newsletter         = $newsletterHandler->get($_REQUEST['newsletter_id']);
 
         $newsletter_head   = utf8_decode(Chars($newsletter->getVar('newsletter_head')));
         $newsletter_text   = utf8_decode(Chars($newsletter->getVar('newsletter_text')));
@@ -417,7 +423,7 @@ switch ($option) {
 
         $productHandler = xoops_getModuleHandler('tdmassoc_product', 'tdmpicture');
         $stockHandler   = xoops_getModuleHandler('tdmassoc_stock', 'tdmpicture');
-        $product         =& $productHandler->get($_REQUEST['product_id']);
+        $product         = $productHandler->get($_REQUEST['product_id']);
         $product_ref     = utf8_decode(Chars($product->getVar('product_ref')));
         $product_tva     = $product->getVar('product_tva');
         $product_text    = utf8_decode(Chars($product->getVar('product_text')));
@@ -526,7 +532,7 @@ switch ($option) {
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(90);
         $pdf->Cell(80, 10, Chars(_AM_TDMASSOC_PRODUCT_RECA), 1, 0, 'C', 0);
-        $pdf->Cell(20, 10, Chars($xoopsModuleConfig['assoc_type_money']), 1, 0, 'C', 0);
+        $pdf->Cell(20, 10, Chars($helper->getConfig('assoc_type_money')), 1, 0, 'C', 0);
         $pdf->Ln(10);
         //Données
         $pdf->Cell(90);
@@ -559,8 +565,8 @@ switch ($option) {
     case 'list_stock':
         $stockHandler   = xoops_getModuleHandler('tdmassoc_stock', 'tdmpicture');
         $productHandler = xoops_getModuleHandler('tdmassoc_product', 'tdmpicture');
-        $stock           =& $stockHandler->get($_REQUEST['stock_id']);
-        $product         =& $productHandler->get($stock->getVar('stock_product'));
+        $stock           = $stockHandler->get($_REQUEST['stock_id']);
+        $product         = $productHandler->get($stock->getVar('stock_product'));
 
         //travail les reponse
         $stock_title  = utf8_decode(Chars($stock->getVar('stock_title')));
@@ -657,7 +663,7 @@ switch ($option) {
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(90);
         $pdf->Cell(80, 10, Chars(_AM_TDMASSOC_PRODUCT_RECA), 1, 0, 'C', 0);
-        $pdf->Cell(20, 10, Chars($xoopsModuleConfig['assoc_type_money']), 1, 0, 'C', 0);
+        $pdf->Cell(20, 10, Chars($helper->getConfig('assoc_type_money')), 1, 0, 'C', 0);
         $pdf->Ln(10);
         //Données
         $pdf->Cell(90);
@@ -689,7 +695,7 @@ switch ($option) {
     //pour le RIB
     case 'list_rib':
 
-        $secu_id = urldecode(hash('ripemd128', $xoopsModuleConfig['assoc_label']));
+        $secu_id = urldecode(hash('ripemd128', $helper->getConfig('assoc_label')));
 
         if ($_REQUEST['secu_id'] != $secu_id) {
             redirect_header('account.php', 3, _AM_TDMASSOC_FORMNONE);
@@ -704,14 +710,14 @@ switch ($option) {
             $pdf->Ln(20);
             //mini nom
             $pdf->SetFont('Arial', '', 9);
-            $pdf->Cell(30, 10, Chars($xoopsModuleConfig['assoc_name']), 0, 0, 'L');
+            $pdf->Cell(30, 10, Chars($helper->getConfig('assoc_name')), 0, 0, 'L');
             $pdf->Ln(10);
             //mini adresse
             $pdf->SetFont('Arial', '', 8);
-            $pdf->Cell(30, 10, Chars($xoopsModuleConfig['assoc_adress']), 0, 0, 'L');
+            $pdf->Cell(30, 10, Chars($helper->getConfig('assoc_adress')), 0, 0, 'L');
             $pdf->Ln(5);
             //mini tel
-            $pdf->Cell(30, 10, $xoopsModuleConfig['assoc_tel'], 0, 0, 'L');
+            $pdf->Cell(30, 10, $helper->getConfig('assoc_tel'), 0, 0, 'L');
             $pdf->Ln(20);
             //Tableau Largeurs des colonnes
             //En-tête
@@ -720,19 +726,19 @@ switch ($option) {
             $pdf->Ln();
             //
             $pdf->SetFont('Arial', '', 9);
-            $pdf->Cell(90, 7, Chars($xoopsModuleConfig['assoc_label']), 'LR', 0, 'L', 0);
-            $pdf->Cell(90, 7, Chars(_MI_TDMASSOC_ACCOUNT_COBANQ . ' : ' . $xoopsModuleConfig['assoc_banque']), 'LR', 0, 'L', 0);
+            $pdf->Cell(90, 7, Chars($helper->getConfig('assoc_label')), 'LR', 0, 'L', 0);
+            $pdf->Cell(90, 7, Chars(_MI_TDMASSOC_ACCOUNT_COBANQ . ' : ' . $helper->getConfig('assoc_banque')), 'LR', 0, 'L', 0);
 
             $pdf->Ln();
             //Données
-            $pdf->Cell(90, 6, Chars($xoopsModuleConfig['assoc_domiciliation']), 'LR', 0, 'L');
-            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_COGUI . ' : ' . $xoopsModuleConfig['assoc_guichet']), 'LR', 0, 'L');
+            $pdf->Cell(90, 6, Chars($helper->getConfig('assoc_domiciliation')), 'LR', 0, 'L');
+            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_COGUI . ' : ' . $helper->getConfig('assoc_guichet')), 'LR', 0, 'L');
             $pdf->Ln();
             $pdf->Cell(90, 6, '', 'LR', 0, 'L');
-            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_COMPTE . ' : ' . $xoopsModuleConfig['assoc_compte']), 'LR', 0, 'L');
+            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_COMPTE . ' : ' . $helper->getConfig('assoc_compte')), 'LR', 0, 'L');
             $pdf->Ln();
             $pdf->Cell(90, 6, '', 'LR', 0, 'L');
-            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_CLEFRIB . ' : ' . $xoopsModuleConfig['assoc_rib']), 'LR', 0, 'L');
+            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_CLEFRIB . ' : ' . $helper->getConfig('assoc_rib')), 'LR', 0, 'L');
             $pdf->Ln();
             $pdf->Cell(90, 10, '', 'LR', 0, 'L');
             $pdf->Cell(90, 10, '', 'LR', 0, 'L');
@@ -743,9 +749,9 @@ switch ($option) {
             //tableau recapitulatif
             //Tableau Largeurs des colonnes
             //Données
-            $pdf->Cell(180, 7, Chars(_MI_TDMASSOC_ACCOUNT_IBAN . ' : ' . $xoopsModuleConfig['assoc_iban']), 'LR', 0, 'L');
+            $pdf->Cell(180, 7, Chars(_MI_TDMASSOC_ACCOUNT_IBAN . ' : ' . $helper->getConfig('assoc_iban')), 'LR', 0, 'L');
             $pdf->Ln();
-            $pdf->Cell(180, 7, Chars(_MI_TDMASSOC_ACCOUNT_BIC . ' : ' . $xoopsModuleConfig['assoc_bic']), 'LR', 0, 'L');
+            $pdf->Cell(180, 7, Chars(_MI_TDMASSOC_ACCOUNT_BIC . ' : ' . $helper->getConfig('assoc_bic')), 'LR', 0, 'L');
             $pdf->Ln();
             $pdf->Cell(180, 0, '', 1, 0, 'L');
             $pdf->Ln();

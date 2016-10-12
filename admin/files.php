@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Module\Helper;
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -20,8 +23,10 @@
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-TdmPictureUtilities::adminheader();
+$moduleDirName = basename(dirname(__DIR__));
+$helper = Helper::getHelper($moduleDirName);
 
+TdmPictureUtilities::adminheader();
 $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
 $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
@@ -80,8 +85,8 @@ switch ($op) {
         $path = $obj->getFilePath();
 
         @chmod($path['image_path'], 0755);
-        $mimetype = explode('|', $xoopsModuleConfig['tdmpicture_mimetype']);
-        $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $xoopsModuleConfig['tdmpicture_mimemax'], null, null);
+        $mimetype = explode('|', $helper->getConfig('tdmpicture_mimetype'));
+        $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $helper->getConfig('tdmpicture_mimemax'), null, null);
 
         //variable commune
         $obj->setVar('file_cat', $_REQUEST['file_cat']);
@@ -118,7 +123,7 @@ switch ($op) {
                     if (!empty($_REQUEST['resize'])) {
                         $size = explode('x', $_REQUEST['resize']);
                         $photo->adaptiveResize($size[0], $size[1]);
-                        $photo->save($file_path['image_path'], $xoopsModuleConfig['tdmpicture_thumb_quality']);
+                        $photo->save($file_path['image_path'], $helper->getConfig('tdmpicture_thumb_quality'));
                     }
 
                     $obj->setVar('file_res_x', $photo->getCurrentWidth());
@@ -201,7 +206,7 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            $obj            =& $fileHandler->get($_REQUEST['file_id']);
+            $obj            = $fileHandler->get($_REQUEST['file_id']);
             $category_admin = new ModuleAdmin();
             echo $category_admin->addNavigation(basename(__FILE__));
 
@@ -419,7 +424,7 @@ switch ($op) {
                 if (file_exists($file_path['image_path'])) {
                     $file_img = $file_path['image_url'];
                 } else {
-                    $file_img = XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/upload/blank.gif';
+                    $file_img = TDMPICTURE_IMAGES_URL . '/blank.png';
                 }
 
                 //on test l'existance du thumb

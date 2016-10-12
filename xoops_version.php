@@ -25,7 +25,7 @@ $modversion = array(
     'name' => _MI_TDMPICTURE_NAME,
     'description' => _MI_TDMPICTURE_DESC,
     'version' => 1.08,
-    'module_status' => 'Beta 1',
+    'module_status' => 'RC 1',
     'release_date' => '2016/10/10', //yyyy/mm/dd
     //    'release'             => '2015-04-04',
     'official' => 1, //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
@@ -240,7 +240,7 @@ $modversion['config'][] = array(
     'formtype' => 'textbox',
     'valuetype' => 'text',
     //'default'     => '/modules/' . $modversion['dirname' . '/upload/',
-    'default' => '/uploads/' . $modversion['dirname']. '/'
+    'default' => '/uploads/' . $modversion['dirname']
 );
 
 $modversion['config'][] = array(
@@ -250,7 +250,7 @@ $modversion['config'][] = array(
     'formtype' => 'textbox',
     'valuetype' => 'text',
     //'default'     => '/modules/' . $modversion['dirname' . '/upload/thumb/',
-    'default' => '/uploads/' . $modversion['dirname'] . '/thumb/'
+    'default' => '/uploads/' . $modversion['dirname'] . '/thumb'
 );
 
 $modversion['config'][] = array(
@@ -259,7 +259,7 @@ $modversion['config'][] = array(
     'description' => '_MI_TDMPICTURE_UPLOAD_DESC',
     'formtype' => 'textbox',
     'valuetype' => 'text',
-    'default' => '/uploads/myalbum/photos/'
+    'default' => '/uploads/myalbum/photos'
 );
 
 $modversion['config'][] = array(
@@ -269,7 +269,7 @@ $modversion['config'][] = array(
     'formtype' => 'textbox',
     'valuetype' => 'text',
     //'default'     => '/uploads/thumbs/',
-    'default' => '/uploads/myalbum/thumbs/'
+    'default' => '/uploads/myalbum/thumbs'
 );
 
 $modversion['config'][] = array(
@@ -278,7 +278,7 @@ $modversion['config'][] = array(
     'description' => '_MI_TDMPICTURE_UPLOAD_DESC',
     'formtype' => 'textbox',
     'valuetype' => 'text',
-    'default' => '/uploads/extgallery/public-photo/medium/'
+    'default' => '/uploads/extgallery/public-photo/medium'
 );
 
 $modversion['config'][] = array(
@@ -287,7 +287,7 @@ $modversion['config'][] = array(
     'description' => '_MI_TDMPICTURE_UPLOAD_DESC',
     'formtype' => 'textbox',
     'valuetype' => 'text',
-    'default' => '/uploads/extgallery/public-photo/thumb/'
+    'default' => '/uploads/extgallery/public-photo/thumb'
 );
 
 $modversion['config'][] = array(

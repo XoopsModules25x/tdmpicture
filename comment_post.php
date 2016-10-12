@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Module\Helper;
+
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -27,15 +30,15 @@
 include __DIR__ . '/../../mainfile.php';
 
 // We verify that the user can post comments **********************************
-if (!isset($xoopsModuleConfig)) {
+if (!isset($GLOBALS['xoopsModuleConfig'])) {
     die();
 }
 
-if ($xoopsModuleConfig['com_rule'] == 0) {    // Comments are deactivate
+if ($helper->getConfig('com_rule'] == 0) {    // Comments are deactivate
     die();
 }
 
-if ($xoopsModuleConfig['com_anonpost'] == 0 && !is_object($xoopsUser)) {    // Anonymous users can't post
+if ($helper->getConfig('com_anonpost'] == 0 && !is_object($xoopsUser)) {    // Anonymous users can't post
     die();
 }
 // ****************************************************************************

@@ -47,19 +47,19 @@
         <div class="TDMNav outer odd">
             <{$smarty.const._MD_TDMPICTURE_TRIBY}> <{$display_tris}> |
             <a href="javascript:swith();" class="switch_thumb"><img
-                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>view_choose.png"
+                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/view_choose.png"
                         title="<{$smarty.const._MD_TDMPICTURE_SWITCH}>"></a>
-            <a href="#" class="openSlideshow"><img src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>diapo.png"
+            <a href="#" class="openSlideshow"><img src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/diapo.png"
                                                    title="<{$smarty.const._MD_TDMPICTURE_SLIDE}>"></a>
             <{if $xoops_userid}><a href="<{$smarty.const.TDMPICTURE_URL}>/user.php?ut=<{$xoops_userid}>"><img
-                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>photo.png"
+                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/photo.png"
                         title="<{$smarty.const._MD_TDMPICTURE_VIEWMYALBUM}>"></a><{/if}>
             <{if $perm_submit}><a href="<{$smarty.const.TDMPICTURE_URL}>/submit.php"><img
-                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>upload.png"
+                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/upload.png"
                         title="<{$smarty.const._MD_TDMPICTURE_UPLOAD}>">
                 </a><{/if}>
             <{if $perm_cat}><a href="<{$smarty.const.TDMPICTURE_URL}>/submit.php?op=cat"><img
-                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>uploadcat.png"
+                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/uploadcat.png"
                         title="<{$smarty.const._MD_TDMPICTURE_UPLOADCAT}>"></a><{/if}>
         </div>
         <br class="clear"/>
@@ -88,7 +88,7 @@
         <div style="float:right;"><a href="<{$smarty.const.TDMPICTURE_URL}>/rss.php"
                                      title="<{$smarty.const._MD_TDMPICTURE_RSS}>"
                                      alt="<{$smarty.const._MD_TDMPICTURE_RSS}>"><img
-                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>rss.png"
+                        src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/rss.png"
                         title="<{$smarty.const._MD_TDMPICTURE_RSS}>" alt="<{$smarty.const._MD_TDMPICTURE_RSS}>"/></a>
         </div>
     <{/if}>

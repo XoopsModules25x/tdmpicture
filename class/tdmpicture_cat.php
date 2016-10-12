@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Module\Helper;
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -47,8 +50,9 @@ class TDMPicture_cat extends XoopsObject
      */
     public function getForm($action = false)
     {
-        global $xoopsUser, $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsUser, $xoopsDB, $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
+        $helper = Helper::getHelper($moduleDirName);
 
         if (is_object($xoopsUser)) {
             $groups = $xoopsUser->getGroups();
@@ -98,12 +102,12 @@ class TDMPicture_cat extends XoopsObject
         $editor_configs['cols']   = 80;
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
-        $editor_configs['editor'] = $xoopsModuleConfig['tdmpicture_editor'];
+        $editor_configs['editor'] = $helper->getConfig('tdmpicture_editor');
         $form->addElement(new XoopsFormEditor(_MD_TDMPICTURE_TEXT, 'cat_text', $editor_configs), false);
 
         //upload
-        $img            = $this->getVar('cat_img') ?: 'blank.gif';
-        $uploadirectory = 'modules/' . $xoopsModule->dirname() . '/upload/cat/';
+        $img            = $this->getVar('cat_img') ?: 'blank.png';
+        $uploadirectory = $helper->getConfig('tdm_upload_path') . '/cat';
         $imgtray        = new XoopsFormElementTray(_MD_TDMPICTURE_IMG, '<br>');
         $imgpath        = sprintf(_MD_TDMPICTURE_PATH, $uploadirectory);
         $imageselect    = new XoopsFormSelect($imgpath, 'img', $img);
@@ -116,7 +120,7 @@ class TDMPicture_cat extends XoopsObject
         $imgtray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_URL . '/' . $uploadirectory . '/' . $img . "' name='image3' id='image3' alt='' />"));
 
         $fileseltray = new XoopsFormElementTray('', '<br>');
-        $fileseltray->addElement(new XoopsFormFile(_MD_TDMPICTURE_UPLOAD, 'attachedfile', $xoopsModuleConfig['tdmpicture_mimemax']), false);
+        $fileseltray->addElement(new XoopsFormFile(_MD_TDMPICTURE_UPLOAD, 'attachedfile', $helper->getConfig('tdmpicture_mimemax')), false);
         $fileseltray->addElement(new XoopsFormLabel(''), false);
         $imgtray->addElement($fileseltray);
         $form->addElement($imgtray);

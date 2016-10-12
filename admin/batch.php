@@ -1,4 +1,8 @@
 <?php
+
+
+use Xmf\Module\Helper;
+
 /**
  * ****************************************************************************
  *  - TDMSpot By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -19,13 +23,15 @@
 
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
+$moduleDirName = basename(dirname(__DIR__));
+$helper = Helper::getHelper($moduleDirName);
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 
 $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
 $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
 $op           = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
-$batch_folder = isset($_REQUEST['batch_folder']) ? $_REQUEST['batch_folder'] : '' . XOOPS_ROOT_PATH . '/uploads/photos/';
+$batch_folder = isset($_REQUEST['batch_folder']) ? $_REQUEST['batch_folder'] : '' . XOOPS_ROOT_PATH . "/uploads/$moduleDirName/photo/";
 $nbPhotos     = isset($_POST['nbPhotos']) ? $_POST['nbPhotos'] : 0;
 
 switch ($op) {
@@ -188,7 +194,7 @@ switch ($op) {
         $editor_configs['cols']   = 80;
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
-        $editor_configs['editor'] = $xoopsModuleConfig['tdmpicture_editor'];
+        $editor_configs['editor'] = $helper->getConfig('tdmpicture_editor');
         $form->addElement(new XoopsFormEditor(_MD_TDMPICTURE_TEXT, 'file_text', $editor_configs), false);
 
         //

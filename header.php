@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Module\Helper;
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -17,8 +20,10 @@
  * ****************************************************************************
  */
 
-$moduleDirName = basename(__DIR__);
 include __DIR__ . '/../../mainfile.php';
+
+$moduleDirName = basename(__DIR__);
+$helper = Helper::getHelper($moduleDirName);
 
 /* Use XOOPS_ROOT_PATH for all include file */
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';

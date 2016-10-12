@@ -68,10 +68,11 @@ define('_AM_TDMPICTURE_BLOCK_COUNTS', 'Popular file');
 define('_AM_TDMPICTURE_BLOCK_DL', 'Most downloaded files');
 define('_AM_TDMPICTURE_BLOCK_COMMENTS', 'Most commented file');
 //
-define('_AM_TDMPICTURE_SELECT_STYLE', 'Style of Block');
+define('_AM_TDMPICTURE_SELECT_STYLE', 'Block Style');
 define('_AM_TDMPICTURE_SELECT_TEXT', 'Text');
 define('_AM_TDMPICTURE_SELECT_IMAGE', 'Image');
 define('_AM_TDMPICTURE_SELECT_SLIDE', 'Slideshow');
+define('_AM_TDMPICTURE_SELECT_MUR', 'Wall');
 
 // version 1.3
 //define("_MI_TDMPICTURE_FULL_WIDTH","Maximum width of the image true");
@@ -93,7 +94,7 @@ define('_MI_TDMPICTURE_PDF', 'Display PDF?');
 
 // New
 define('_AM_TDMPICTURE_BLOCK_RANDS', 'Random File');
-define('_AM_TDMPICTURE_SELECT_IMAGE_DESC', 'Image Description ');
+define('_AM_TDMPICTURE_SELECT_IMAGE_DESC', 'Image Info');
 
 // Version 1.5
 
@@ -118,6 +119,7 @@ define('_MI_TDMPICTURE_SIZEDESC', 'Allowed form sizes (Width x Height) separated
 // The name of this module
 define('_MI_TDMPICTURE_NAME', 'TDMPicture');
 define('_MI_TDMPICTURE_DESC', 'The module was created to manage your photo album in a fashionable Web 2.0 way.');
+define('_AM_TDMPICTURE_ALL', 'All Pictures');
 
 //Help
 define('_MI_TDMPICTURE_DIRNAME', basename(dirname(dirname(__DIR__))));

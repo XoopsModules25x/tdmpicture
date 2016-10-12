@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -20,7 +21,7 @@
 include_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'tdmpicture_viewfile.tpl';
 require XOOPS_ROOT_PATH . '/header.php';
-
+$moduleDirName = basename(__DIR__);
 $xoopsTpl->assign('dirname', $moduleDirName);
 
 // get User ID
@@ -42,7 +43,7 @@ $gpermHandler = xoops_getHandler('groupperm');
 
 $myts = MyTextSanitizer::getInstance();
 
-global $XoopsUser, $xoopsModule, $xoopsModuleConfig;
+global $XoopsUser, $xoopsModule;
 
 //perm
 $xoopsTpl->assign('perm_submit', $perm_submit);
@@ -51,8 +52,8 @@ $xoopsTpl->assign('perm_playlist', $perm_playlist);
 $xoopsTpl->assign('perm_dl', $perm_dl);
 $xoopsTpl->assign('perm_cat', $perm_cat);
 
-$xoopsTpl->assign('thumb_width', $xoopsModuleConfig['tdmpicture_thumb_width'] . 'px');
-$xoopsTpl->assign('thumb_heigth', $xoopsModuleConfig['tdmpicture_thumb_heigth'] . 'px');
+$xoopsTpl->assign('thumb_width', $helper->getConfig('tdmpicture_thumb_width') . 'px');
+$xoopsTpl->assign('thumb_heigth', $helper->getConfig('tdmpicture_thumb_heigth') . 'px');
 
 switch ($op) {
 
@@ -92,8 +93,8 @@ switch ($op) {
         //define("TDM_CAT_URL", TDMPICTURE_CAT_URL);
         //define("TDM_CAT_PATH", TDMPICTURE_CAT_PATH);
         //$GLOBALS['scat_display'] = false;
-        //$cat_display = $xoopsModuleConfig['tdmpicture_cat_display'];
-        //$cat_cel = $xoopsModuleConfig['tdmpicture_cat_cel'];
+        //$cat_display = $helper->getConfig('tdmpicture_cat_display');
+        //$cat_cel = $helper->getConfig('tdmpicture_cat_cel');
         //$display_cat = $mytree->makeCatBox($fileHandler, 'cat_title','-', $ct);
         //$xoopsTpl->assign('display_cat', $display_cat);
 
@@ -251,7 +252,7 @@ switch ($op) {
             $poster       = new XoopsUser($file_arr[$f]->getVar('file_uid'));
             $poster_image = XOOPS_ROOT_PATH . '/uploads/' . $poster->getVar('user_avatar');
             if (file_exists($poster_image) && $poster->getVar('user_avatar') != ''
-                && $poster->getVar('user_avatar') != 'blank.gif'
+                && $poster->getVar('user_avatar') != 'blank.png'
             ) {
                 $file['userimg'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $poster->getVar('user_avatar') . "' height='60px' title=" . $poster->getVar('uname') . " style='border: 1px solid #CCC;' alt=" . $poster->getVar('uname') . '>';
             } else {
@@ -281,8 +282,8 @@ switch ($op) {
             //echo $file['moyen'] = "<img src='".TDMPICTURE_IMAGES_URL."rate".$moyen.".png'/>";
             //}
             //favorie
-            if ($file['counts'] >= $xoopsModuleConfig['tdmpicture_favourite']) {
-                $file['favourite'] = "<img src='" . TDMPICTURE_IMAGES_URL . "flag.png'/>";
+            if ($file['counts'] >= $helper->getConfig('tdmpicture_favourite')) {
+                $file['favourite'] = "<img src='" . TDMPICTURE_IMAGES_URL . "/flag.png'/>";
             } else {
                 $file['favourite'] = '';
             }
@@ -320,8 +321,8 @@ if (isset($xoTheme) && is_object($xoTheme)) {
     $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($meta_desc));
     $xoTheme->addMeta('meta', 'description', $meta_desc);
 } else {    // Compatibility for old Xoops versions
-    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($xoopsModuleConfig['tdmpicture_keywords']));
-    $xoopsTpl->assign('xoops_meta_description', $xoopsModuleConfig['tdmpicture_description']);
+    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($helper->getConfig('tdmpicture_keywords')));
+    $xoopsTpl->assign('xoops_meta_description', $helper->getConfig('tdmpicture_description'));
 }
 //fonction commentaire
 include XOOPS_ROOT_PATH . '/include/comment_view.php';

@@ -1,6 +1,7 @@
 <?php
 
 use Xmf\Module\Admin;
+use Xmf\Module\Helper;
 
 /**
  * ****************************************************************************
@@ -20,7 +21,6 @@ use Xmf\Module\Admin;
  * ****************************************************************************
  */
 
-$moduleDirName = basename(dirname(__DIR__));
 include_once __DIR__ . '/../../../include/cp_header.php';
 include_once __DIR__ . '/../class/utilities.php';
 include_once __DIR__ . '/../include/common.php';
@@ -28,6 +28,9 @@ include_once __DIR__ . '/../include/common.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once XOOPS_ROOT_PATH . '/class/tree.php';
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+
+$moduleDirName = basename(dirname(__DIR__));
+$helper = Helper::getHelper($moduleDirName);
 
 global $xoopsModule;
 $pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);

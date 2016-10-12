@@ -1,4 +1,7 @@
 <?php
+
+//use Xmf\Module\Helper;
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -53,9 +56,9 @@ switch ($op) {
 
         //upload
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-        $uploaddir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/upload/cat/';
-        $mimetype  = explode('|', $xoopsModuleConfig['tdmpicture_mimetype']);
-        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $xoopsModuleConfig['tdmpicture_mimemax']);
+        $uploaddir = constant($modir . '_UPLOAD_PATH') . '/cat/';
+        $mimetype  = explode('|', $helper->getConfig('tdmpicture_mimetype'));
+        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $helper->getConfig('tdmpicture_mimemax'));
 
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('picture_');
@@ -131,7 +134,7 @@ switch ($op) {
             $mytree    = new XoopsObjectTree($arr, 'cat_id', 'cat_pid');
             $treechild = $mytree->getAllChild($obj->getVar('cat_id'));
             foreach ($treechild as $child) {
-                $ret =& $catHandler->get($child->getVar('cat_id'));
+                $ret = $catHandler->get($child->getVar('cat_id'));
                 $catHandler->delete($ret);
             }
 
@@ -215,7 +218,7 @@ switch ($op) {
             echo '</tr>';
             $class              = 'odd';
             $mytree             = new TDMObjectTree($assoc_cat, 'cat_id', 'cat_pid');
-            $category_ArrayTree = $mytree->makeArrayTree('', '<img src="' . TDMPICTURE_IMAGES_URL . 'decos/arrow.gif">');
+            $category_ArrayTree = $mytree->makeArrayTree('', '<img src="' . TDMPICTURE_IMAGES_URL . '/decos/arrow.gif">');
             foreach (array_keys($category_ArrayTree) as $i) {
                 $class     = ($class === 'even') ? 'odd' : 'even';
                 $cat_id    = $assoc_cat[$i]->getVar('cat_id');

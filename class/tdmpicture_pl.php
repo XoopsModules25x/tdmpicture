@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Module\Helper;
+
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -48,8 +51,9 @@ class TDMPicture_pl extends XoopsObject
      */
     public function getForm($action = false)
     {
-        global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsDB, $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
+        $helper = Helper::getHelper($moduleDirName);
 
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
@@ -78,7 +82,7 @@ class TDMPicture_pl extends XoopsObject
         for ($i = 1; $i < 5; ++$i) {
             $form->insertBreak('<div align="center"></div>', 'odd');
             $form->addElement(new XoopsFormText(_AM_TDMSOUND_TITLE, 'file_title[]', 100, 255, $this->getVar('filecat_title')));
-            $form->addElement(new XoopsFormFile(_AM_TDMSOUND_UPLOAD, 'attachedfile' . $i, $xoopsModuleConfig['mimemax']));
+            $form->addElement(new XoopsFormFile(_AM_TDMSOUND_UPLOAD, 'attachedfile' . $i, $helper->getConfig('mimemax')));
         }
 
         $form->addElement(new XoopsFormRadioYN(_AM_TDMSOUND_DISPLAYUSER, 'pl_display', $this->getVar('plcat_display'), _YES, _NO));

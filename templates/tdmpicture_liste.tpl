@@ -21,14 +21,14 @@
     <br class="clear"/>
     <div class="TDMNav TDMNav outer odd">
         <{if $xoops_userid}><a href="<{$smarty.const.TDMPICTURE_URL}>/user.php?ut=<{$xoops_userid}>"><img
-                    src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>photo.png"
+                    src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/photo.png"
                     title="<{$smarty.const._MD_TDMPICTURE_VIEWMYALBUM}>"></a><{/if}>
         <{if $perm_submit}><a href="<{$smarty.const.TDMPICTURE_URL}>/submit.php"><img
-                    src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>upload.png"
+                    src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/upload.png"
                     title="<{$smarty.const._MD_TDMPICTURE_UPLOAD}>">
             </a><{/if}>
         <{if $perm_cat}><a href="<{$smarty.const.TDMPICTURE_URL}>/submit.php?op=cat"><img
-                    src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>uploadcat.png"
+                    src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/uploadcat.png"
                     title="<{$smarty.const._MD_TDMPICTURE_UPLOADCAT}>">
             </a><{/if}>
     </div>

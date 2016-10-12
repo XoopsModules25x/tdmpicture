@@ -18,11 +18,12 @@
  */
 
 require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+require_once __DIR__ . '/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
 $modir = strtoupper($moduleDirName);
-
+/*
 if (!defined($modir . '_DIRNAME')) {
     define($modir . '_DIRNAME', $moduleDirName);
     define($modir . '_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($modir . '_DIRNAME'));
@@ -34,12 +35,12 @@ if (!defined($modir . '_DIRNAME')) {
 
 // Define here the place where main upload path
 
-//$img_dir = $GLOBALS['xoopsModuleConfig']['uploaddir'];
+//$img_dir = $helper->getConfig('uploaddir');
 
 define($modir . '_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . constant($modir . '_DIRNAME')); // WITHOUT Trailing slash
 //define("ADSLIGHT_UPLOAD_PATH", $img_dir); // WITHOUT Trailing slash
 define($modir . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . constant($modir . '_DIRNAME')); // WITHOUT Trailing slash
-
+*/
 //Configurator
 return array(
     'name'          => 'Module Configurator',
@@ -47,10 +48,12 @@ return array(
         constant($modir . '_UPLOAD_PATH'),
         constant($modir . '_UPLOAD_PATH') . '/photo',
         constant($modir . '_UPLOAD_PATH') . '/thumb',
+        constant($modir . '_UPLOAD_PATH') . '/cat',
     ),
     'copyFiles'     => array(
         constant($modir . '_UPLOAD_PATH') . '/photo',
         constant($modir . '_UPLOAD_PATH') . '/thumb',
+        constant($modir . '_UPLOAD_PATH') . '/cat',
     ),
 
     'templateFolders' => array(

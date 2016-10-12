@@ -83,7 +83,7 @@ class TdmCatObjectTree extends XoopsObjectTree
         $prefix_orig,
         $prefix_curr = ''
     ) {
-        global $xoopsModule, $xoopsModuleConfig, $cat_display, $cat_cel, $groups, $tris, $order;
+        global $xoopsModule, $cat_display, $cat_cel, $groups, $tris, $order;
 
         $gpermHandler = xoops_getHandler('groupperm');
         $parent        = '';
@@ -99,15 +99,15 @@ class TdmCatObjectTree extends XoopsObjectTree
             $criteria->add(new Criteria('file_cat', $this->tree[$key]['obj']->getVar('cat_id')));
             $criteria->add(new Criteria('file_display', 1));
             $GLOBALS['count'] = $count = $itemHandler->getCount($criteria);
-            //$cat_link = tdmspot_seo_genUrl( $xoopsModuleConfig['tdmspot_seo_cat'], $this->tree[$key]['obj']->getVar('id'), $this->tree[$key]['obj']->getVar('title'), $start, $limit, $tris );
+            //$cat_link = tdmspot_seo_genUrl( $helper->getConfig('tdmspot_seo_cat'), $this->tree[$key]['obj']->getVar('id'), $this->tree[$key]['obj']->getVar('title'), $start, $limit, $tris );
             //$cat_link = TDMPICTURE_URL."/viewcat.php?ct=".$this->tree[$key]['obj']->getVar('cat_id')."&tris=".$tris."&order=".$order;
             $cat_link = TDMPICTURE_URL . '/viewcat.php?ct=' . $this->tree[$key]['obj']->getVar('cat_id');
             //recherche image
             //$imgpath = TDMPICTURE_CAT_PATH  . $this->tree[$key]['obj']->getVar('cat_img');
-            //if (file_exists($imgpath) && $this->tree[$key]['obj']->getVar('cat_img') != "blank.gif") {
-            //$picture = '<a href ="'.$cat_link.'" title="'. $this->tree[$key]['obj']->getVar('cat_title').'"><img src="' . TDMPICTURE_CAT_URL .  $this->tree[$key]['obj']->getVar('cat_img').'" class="img" width="'.$xoopsModuleConfig['tdmpicture_cat_width'].'"  height="'.$xoopsModuleConfig['tdmpicture_cat_height'].'"></a>';
+            //if (file_exists($imgpath) && $this->tree[$key]['obj']->getVar('cat_img') != "blank.png") {
+            //$picture = '<a href ="'.$cat_link.'" title="'. $this->tree[$key]['obj']->getVar('cat_title').'"><img src="' . TDMPICTURE_CAT_URL .  $this->tree[$key]['obj']->getVar('cat_img').'" class="img" width="'.$helper->getConfig('tdmpicture_cat_width').'"  height="'.$helper->getConfig('tdmpicture_cat_height').'"></a>';
             //} else {
-            //$picture = '<a href ="'.$cat_link.'" title="'. $this->tree[$key]['obj']->getVar('cat_title').'"><img src="' . TDMPICTURE_CAT_URL . 'no_picture.png" class="img" width="'.$xoopsModuleConfig['tdmpicture_cat_width'].'"  height="'.$xoopsModuleConfig['tdmpicture_cat_height'].'"></a>';
+            //$picture = '<a href ="'.$cat_link.'" title="'. $this->tree[$key]['obj']->getVar('cat_title').'"><img src="' . TDMPICTURE_CAT_URL . 'no_picture.png" class="img" width="'.$helper->getConfig('tdmpicture_cat_width').'"  height="'.$helper->getConfig('tdmpicture_cat_height').'"></a>';
             //}
 
             if (empty($prefix_curr)) {
@@ -170,7 +170,7 @@ class TdmCatObjectTree extends XoopsObjectTree
      */
     public function _makeSelBoxOptions($fieldName, $selected, $key, &$ret, $perm, $prefix_orig, $prefix_curr = '')
     {
-        global $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule, $xoopsModuleConfig;
+        global $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule;
 
         //perm
         $gpermHandler = xoops_getHandler('groupperm');
@@ -185,7 +185,7 @@ class TdmCatObjectTree extends XoopsObjectTree
         if ($key > 0) {
             $value = $this->tree[$key]['obj']->getVar($this->myId);
             //$url = "viewcat.php?ct=".$this->tree[$key]['obj']->getVar($this->myId)."&tris=".$tris."&limit=".$limit;
-            //$value = tdmspot_seo_genUrl( $xoopsModuleConfig['tdmspot_seo_cat'], $this->tree[$key]['obj']->getVar('id'), $this->tree[$key]['obj']->getVar('title'), $start, $limit, $tris );
+            //$value = tdmspot_seo_genUrl( $helper->getConfig('tdmspot_seo_cat'), $this->tree[$key]['obj']->getVar('id'), $this->tree[$key]['obj']->getVar('title'), $start, $limit, $tris );
 
             if (!empty($perm) && $gpermHandler->checkRight($perm, $value, $groups, $xoopsModule->getVar('mid'))) {
                 $ret .= '<option value="' . $value . '"';
@@ -215,7 +215,7 @@ class TdmCatObjectTree extends XoopsObjectTree
      */
     public function _makeCatBoxOptions2($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '', $i = 0)
     {
-        global $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule, $xoopsModuleConfig, $count, $xoopsTpl;
+        global $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule, $count, $xoopsTpl;
 
         //perm
         $gpermHandler = xoops_getHandler('groupperm');
@@ -230,7 +230,7 @@ class TdmCatObjectTree extends XoopsObjectTree
         if ($key > 0 && $this->tree[$key]['obj']->getVar('cat_pid') != 0) {
             $value = $this->tree[$key]['obj']->getVar($this->myId);
             $url   = 'viewcat.php?ct=' . $this->tree[$key]['obj']->getVar($this->myId) . '&tris=' . $tris . '&limit=' . $limit;
-            //$value = tdmspot_seo_genUrl( $xoopsModuleConfig['tdmspot_seo_cat'], $this->tree[$key]['obj']->getVar('id'), $this->tree[$key]['obj']->getVar('title'), $start, $limit, $tris );
+            //$value = tdmspot_seo_genUrl( $helper->getConfig('tdmspot_seo_cat'), $this->tree[$key]['obj']->getVar('id'), $this->tree[$key]['obj']->getVar('title'), $start, $limit, $tris );
 
             if ($value == $selected) {
                 //$ret .=  '<li class=last><a href ="'.$cat_link.'" title="('.$count.')">'. $cat_title. '</a></li>';
@@ -275,7 +275,7 @@ class TdmCatObjectTree extends XoopsObjectTree
      */
     public function makeSelTris($url, $cat, $tris, $order)
     {
-        global $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule, $xoopsModuleConfig;
+        global $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule;
 
         //option du tris / nom de champ sql => nom afficher //
         $option = array(
@@ -296,9 +296,9 @@ class TdmCatObjectTree extends XoopsObjectTree
         }
         $ret .= '</select>';
         if ($order == 'desc') {
-            $ret .= '<a href=' . $url . '?' . $cat . '&tris=' . $tris . '&order=asc title=' . _MD_TDMPICTURE_ASC . '><img src=' . TDMPICTURE_IMAGES_URL . 'asc.png></a>';
+            $ret .= '<a href=' . $url . '?' . $cat . '&tris=' . $tris . '&order=asc title=' . _MD_TDMPICTURE_ASC . '><img src=' . TDMPICTURE_IMAGES_URL . '/asc.png></a>';
         } else {
-            $ret .= '<a href=' . $url . '?' . $cat . '&tris=' . $tris . '&order=desc title=' . _MD_TDMPICTURE_DESC . ' ><img src=' . TDMPICTURE_IMAGES_URL . 'desc.png></a>';
+            $ret .= '<a href=' . $url . '?' . $cat . '&tris=' . $tris . '&order=desc title=' . _MD_TDMPICTURE_DESC . ' ><img src=' . TDMPICTURE_IMAGES_URL . '/desc.png></a>';
         }
 
         return $ret;
@@ -315,7 +315,7 @@ class TdmCatObjectTree extends XoopsObjectTree
      */
     public function makeCatBox($itemHandler, $fieldName, $prefix = '-', $selected = '', $key = 0)
     {
-        global $cat_display, $navuser, $xoopsModule, $xoopsModuleConfig;
+        global $cat_display, $navuser, $xoopsModule;
 
         $ret = '<div class="breadCrumbHolder module">
         <div id="breadCrumb" class="breadCrumb module outer">

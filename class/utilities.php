@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use Xmf\Module\Helper;
 
 /**
  * TdmPictureUtilities Class
@@ -58,6 +59,8 @@ class TdmPictureUtilities
     {
 
         global $xoopsModule;
+        $moduleDirName = basename(dirname(__DIR__));
+        $helper = Helper::getHelper($moduleDirName);
         $options = array();
         $isAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
 
@@ -69,9 +72,9 @@ class TdmPictureUtilities
             $options['width'] = $width;
             $options['height'] = $height;
             if ($isAdmin) {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new XoopsFormEditor(ucfirst($name), $helper->getConfig('adslightAdminUser'), $options, $nohtml = false, $onfailure = 'textarea');
             } else {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new XoopsFormEditor(ucfirst($name), $helper->getConfig('adslightEditorUser'), $options, $nohtml = false, $onfailure = 'textarea');
             }
         } else {
             $myEditor = new XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');
@@ -425,7 +428,7 @@ class TdmPictureUtilities
      */
     public static function switchselect($text, $form_sort)
     {
-        global $start, $order, $file_cat, $sort, $xoopsModule, $xoopsModuleConfig;
+        global $start, $order, $file_cat, $sort, $xoopsModule;
 
         $select_view = '<form name="form_switch" id="form_switch" action="' . $_SERVER['REQUEST_URI'] . '" method="post"><span style="font-weight: bold;">' . $text . '</span>';
         //$sorts =  $sort ==  'asc' ? 'desc' : 'asc';
@@ -546,7 +549,7 @@ class TdmPictureUtilities
     {
         include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-        global $xoopsTpl, $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsTpl, $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule;
         //perm
         $gpermHandler = xoops_getHandler('groupperm');
 
@@ -574,7 +577,7 @@ class TdmPictureUtilities
     //fonction deplacer
     //function tdmpicture_trisselect($cat, $tris) {
 
-    //global $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule, $xoopsModuleConfig;
+    //global $start, $tris, $limit, $groups, $xoopsUser, $xoopsModule;
     //$catHandler = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
     //$option = array('file_title' => _MD_TDMPICTURE_TRITITLE , 'file_indate' => _MD_TDMPICTURE_TRIDATE, 'file_counts' => _MD_TDMPICTURE_TRICOUNTS, 'file_hits' => _MD_TDMPICTURE_TRIHITS, 'file_comments' => _MD_TDMPICTURE_TRICOMMENT);
     //$select_tris = '<select name="tris" onchange="window.document.location=this.options[this.selectedIndex].value;">';
@@ -598,7 +601,7 @@ class TdmPictureUtilities
      */
     public static function selectView($cat, $limit)
     {
-        global $start, $tris, $xoopsModule, $xoopsModuleConfig;
+        global $start, $tris, $xoopsModule;
         $option = array('10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '100' => 100);
         $select_view = '<select name="limit" onchange="window.document.location=this.options[this.selectedIndex].value;">';
         //trouve le nom de la cat

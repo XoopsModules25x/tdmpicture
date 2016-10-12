@@ -1,9 +1,12 @@
 <?php
-// $Id: comment_post.php 9326 2012-04-14 21:53:58Z beckmi $
+
+use Xmf\Module\Helper;
+
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -24,19 +27,19 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-include_once '../../mainfile.php';
+include __DIR__ . '/../../mainfile.php';
 
 // We verify that the user can post comments **********************************
-if(!isset($xoopsModuleConfig)) {
+if (!isset($GLOBALS['xoopsModuleConfig'])) {
     die();
 }
 
-if($xoopsModuleConfig['com_rule'] == 0) {    // Comments are deactivate
+if ($helper->getConfig('com_rule'] == 0) {    // Comments are deactivate
     die();
 }
 
-if($xoopsModuleConfig['com_anonpost'] == 0 && !is_object($xoopsUser)) {    // Anonymous users can't post
+if ($helper->getConfig('com_anonpost'] == 0 && !is_object($xoopsUser)) {    // Anonymous users can't post
     die();
 }
 // ****************************************************************************
-include_once XOOPS_ROOT_PATH.'/include/comment_post.php';
+include_once XOOPS_ROOT_PATH . '/include/comment_post.php';

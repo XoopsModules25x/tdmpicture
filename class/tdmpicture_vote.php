@@ -6,48 +6,46 @@
  *
  * Cette licence, contient des limitations!!!
  *
- * 1. Vous devez posséder une permission d'exécuter le logiciel, pour n'importe quel usage.
- * 2. Vous ne devez pas l' étudier,
+ * 1. Vous devez possÃ©der une permission d'exÃ©cuter le logiciel, pour n'importe quel usage.
+ * 2. Vous ne devez pas l' Ã©tudier,
  * 3. Vous ne devez pas le redistribuer ni en faire des copies,
- * 4. Vous n'avez pas la liberté de l'améliorer et de rendre publiques les modifications
+ * 4. Vous n'avez pas la libertÃ© de l'amÃ©liorer et de rendre publiques les modifications
  *
  * @license     TDMFR PRO license
- * @author		TDMFR ; TEAM DEV MODULE
+ * @author      TDMFR ; TEAM DEV MODULE
  *
  * ****************************************************************************
  */
-
-if (!defined("XOOPS_ROOT_PATH")) {
-    die("XOOPS root path not defined");
-}
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 class TDMPicture_vote extends XoopsObject
 {
-
-// constructor
-    function __construct()
+    // constructor
+    /**
+     * TDMPicture_vote constructor.
+     */
+    public function __construct()
     {
         parent::__construct();
-        $this->initVar("vote_id",XOBJ_DTYPE_INT,null,false,10);
-        $this->initVar("vote_file",XOBJ_DTYPE_INT,null,false,10);
-        $this->initVar("vote_album",XOBJ_DTYPE_INT,null,false,10);
-        $this->initVar("vote_artiste",XOBJ_DTYPE_INT,null,false,10);
-        $this->initVar("vote_ip",XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('vote_id', XOBJ_DTYPE_INT, null, false, 10);
+        $this->initVar('vote_file', XOBJ_DTYPE_INT, null, false, 10);
+        $this->initVar('vote_album', XOBJ_DTYPE_INT, null, false, 10);
+        $this->initVar('vote_artiste', XOBJ_DTYPE_INT, null, false, 10);
+        $this->initVar('vote_ip', XOBJ_DTYPE_TXTBOX, null, false);
     }
-
-      function TDMPicture_vote()
-    {
-        $this->__construct();
-    }
-
 }
 
+/**
+ * Class TDMPicturetdmpicture_voteHandler
+ */
 class TDMPicturetdmpicture_voteHandler extends XoopsPersistableObjectHandler
 {
-
-    function __construct(&$db)
+    /**
+     * TDMPicturetdmpicture_voteHandler constructor.
+     * @param XoopsDatabase $db
+     */
+    public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, "tdmpicture_vote", 'TDMPicture_vote', 'vote_id', 'vote_ip');
+        parent::__construct($db, 'tdmpicture_vote', 'TDMPicture_vote', 'vote_id', 'vote_ip');
     }
-
 }

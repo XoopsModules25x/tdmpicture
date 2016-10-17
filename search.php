@@ -71,8 +71,8 @@ if (isset($_REQUEST['limit'])) {
     $criteria_2->setLimit($_REQUEST['limit']);
     $limit = $_REQUEST['limit'];
 } else {
-    $criteria_2->setLimit($helper->getConfig('tdmpicture_page'));
-    $limit = $helper->getConfig('tdmpicture_page');
+    $criteria_2->setLimit($moduleHelper->getConfig('tdmpicture_page'));
+    $limit = $moduleHelper->getConfig('tdmpicture_page');
 }
 if (isset($_REQUEST['start'])) {
     $criteria_2->setStart($_REQUEST['start']);
@@ -135,10 +135,10 @@ TdmPictureUtilities::header();
 $xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($xoopsModule->name()));
 
 if (isset($xoTheme) && is_object($xoTheme)) {
-    $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($helper->getConfig('tdmpicture_keywords')));
-    $xoTheme->addMeta('meta', 'description', $helper->getConfig('tdmpicture_description'));
+    $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($moduleHelper->getConfig('tdmpicture_keywords')));
+    $xoTheme->addMeta('meta', 'description', $moduleHelper->getConfig('tdmpicture_description'));
 } else {    // Compatibility for old Xoops versions
-    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($helper->getConfig('tdmpicture_keywords')));
-    $xoopsTpl->assign('xoops_meta_description', $helper->getConfig('tdmpicture_description'));
+    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($moduleHelper->getConfig('tdmpicture_keywords')));
+    $xoopsTpl->assign('xoops_meta_description', $moduleHelper->getConfig('tdmpicture_description'));
 }
 include XOOPS_ROOT_PATH . '/footer.php';

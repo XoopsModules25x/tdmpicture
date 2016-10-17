@@ -52,7 +52,7 @@ class TDMPicture_cat extends XoopsObject
     {
         global $xoopsUser, $xoopsDB, $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
-        $helper = Helper::getHelper($moduleDirName);
+        $moduleHelper = Helper::getHelper($moduleDirName);
 
         if (is_object($xoopsUser)) {
             $groups = $xoopsUser->getGroups();
@@ -102,12 +102,12 @@ class TDMPicture_cat extends XoopsObject
         $editor_configs['cols']   = 80;
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
-        $editor_configs['editor'] = $helper->getConfig('tdmpicture_editor');
+        $editor_configs['editor'] = $moduleHelper->getConfig('tdmpicture_editor');
         $form->addElement(new XoopsFormEditor(_MD_TDMPICTURE_TEXT, 'cat_text', $editor_configs), false);
 
         //upload
         $img            = $this->getVar('cat_img') ?: 'blank.png';
-        $uploadirectory = $helper->getConfig('tdm_upload_path') . '/cat';
+        $uploadirectory = $moduleHelper->getConfig('tdm_upload_path') . '/cat';
         $imgtray        = new XoopsFormElementTray(_MD_TDMPICTURE_IMG, '<br>');
         $imgpath        = sprintf(_MD_TDMPICTURE_PATH, $uploadirectory);
         $imageselect    = new XoopsFormSelect($imgpath, 'img', $img);
@@ -120,7 +120,7 @@ class TDMPicture_cat extends XoopsObject
         $imgtray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_URL . '/' . $uploadirectory . '/' . $img . "' name='image3' id='image3' alt='' />"));
 
         $fileseltray = new XoopsFormElementTray('', '<br>');
-        $fileseltray->addElement(new XoopsFormFile(_MD_TDMPICTURE_UPLOAD, 'attachedfile', $helper->getConfig('tdmpicture_mimemax')), false);
+        $fileseltray->addElement(new XoopsFormFile(_MD_TDMPICTURE_UPLOAD, 'attachedfile', $moduleHelper->getConfig('tdmpicture_mimemax')), false);
         $fileseltray->addElement(new XoopsFormLabel(''), false);
         $imgtray->addElement($fileseltray);
         $form->addElement($imgtray);

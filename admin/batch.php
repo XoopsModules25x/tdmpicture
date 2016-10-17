@@ -24,7 +24,7 @@ use Xmf\Module\Helper;
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $moduleDirName = basename(dirname(__DIR__));
-$helper = Helper::getHelper($moduleDirName);
+$moduleHelper = Helper::getHelper($moduleDirName);
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 
 $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
@@ -194,7 +194,7 @@ switch ($op) {
         $editor_configs['cols']   = 80;
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
-        $editor_configs['editor'] = $helper->getConfig('tdmpicture_editor');
+        $editor_configs['editor'] = $moduleHelper->getConfig('tdmpicture_editor');
         $form->addElement(new XoopsFormEditor(_MD_TDMPICTURE_TEXT, 'file_text', $editor_configs), false);
 
         //

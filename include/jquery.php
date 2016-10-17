@@ -131,8 +131,8 @@ switch ($op) {
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
         $uploaddir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/upload/';
-        $mimetype  = explode('|', $helper->getConfig('tdmpicture_mimetype'));
-        $uploader  = new XoopsMediaUploader(TDMPICTURE_UPLOADS_PATH, $mimetype, $helper->getConfig('tdmpicture_mimemax'), null, null);
+        $mimetype  = explode('|', $moduleHelper->getConfig('tdmpicture_mimetype'));
+        $uploader  = new XoopsMediaUploader(TDMPICTURE_UPLOADS_PATH, $mimetype, $moduleHelper->getConfig('tdmpicture_mimemax'), null, null);
 
         $obj = $fileHandler->create();
         $obj->setVar('file_cat', $_REQUEST['file_cat']);
@@ -166,9 +166,9 @@ switch ($op) {
                     //thumb
                     include_once TDMPICTURE_ROOT_PATH . '/class/thumbnail.inc.php';
                     $thumb = new Thumbnail(TDMPICTURE_UPLOADS_PATH . $uploader->getSavedFileName());
-                    $thumb->resize($helper->getConfig('tdmpicture_thumb_width'), $helper->getConfig('tdmpicture_thumb_heigth'));
-                    $thumb->save(TDMPICTURE_THUMB_PATH . $uploader->getSavedFileName(), $helper->getConfig('tdmpicture_thumb_quality'));
-                    //$thumb->save($uploaddir.'thumb/'.$uploader->getSavedFileName(),$helper->getConfig('TDMPicture_thumb_quality'));
+                    $thumb->resize($moduleHelper->getConfig('tdmpicture_thumb_width'), $moduleHelper->getConfig('tdmpicture_thumb_heigth'));
+                    $thumb->save(TDMPICTURE_THUMB_PATH . $uploader->getSavedFileName(), $moduleHelper->getConfig('tdmpicture_thumb_quality'));
+                    //$thumb->save($uploaddir.'thumb/'.$uploader->getSavedFileName(),$moduleHelper->getConfig('TDMPicture_thumb_quality'));
                     //$msgError = TDMPICTURE_UPLOADS_PATH;
                     $fileHandler->insert($obj);
                 }

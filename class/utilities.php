@@ -60,7 +60,7 @@ class TdmPictureUtilities
 
         global $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
-        $helper = Helper::getHelper($moduleDirName);
+        $moduleHelper = Helper::getHelper($moduleDirName);
         $options = array();
         $isAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
 
@@ -72,9 +72,9 @@ class TdmPictureUtilities
             $options['width'] = $width;
             $options['height'] = $height;
             if ($isAdmin) {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $helper->getConfig('adslightAdminUser'), $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new XoopsFormEditor(ucfirst($name), $moduleHelper->getConfig('adslightAdminUser'), $options, $nohtml = false, $onfailure = 'textarea');
             } else {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $helper->getConfig('adslightEditorUser'), $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new XoopsFormEditor(ucfirst($name), $moduleHelper->getConfig('adslightEditorUser'), $options, $nohtml = false, $onfailure = 'textarea');
             }
         } else {
             $myEditor = new XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');

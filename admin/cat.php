@@ -57,8 +57,8 @@ switch ($op) {
         //upload
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploaddir = constant($modir . '_UPLOAD_PATH') . '/cat/';
-        $mimetype  = explode('|', $helper->getConfig('tdmpicture_mimetype'));
-        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $helper->getConfig('tdmpicture_mimemax'));
+        $mimetype  = explode('|', $moduleHelper->getConfig('tdmpicture_mimetype'));
+        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $moduleHelper->getConfig('tdmpicture_mimemax'));
 
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('picture_');

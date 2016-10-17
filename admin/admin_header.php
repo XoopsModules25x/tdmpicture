@@ -1,11 +1,11 @@
 <?php
 
-use Xmf\Module\Admin;
+//use Xmf\Module\Admin;
 use Xmf\Module\Helper;
 
 /**
  * ****************************************************************************
- *  - TDMCreate By TDM   - TEAM DEV MODULE FOR XOOPS
+ *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
  *  - Licence GPL Copyright (c)  (http://xoops.org)
  *
  * You may not change or alter any portion of this comment or credits
@@ -30,19 +30,19 @@ include_once XOOPS_ROOT_PATH . '/class/tree.php';
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-$helper = Helper::getHelper($moduleDirName);
+$moduleHelper = Helper::getHelper($moduleDirName);
 
 global $xoopsModule;
 $pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
 $pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
-//$pathModuleAdmin =& $xoopsModule->getInfo('dirmoduleadmin');
-
-//include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
+$pathModIcon32 = XOOPS_URL . '/' . $moduleHelper->getConfig('modicons32');
 
 //Load languages
 xoops_loadLanguage('admin', $xoopsModule->getVar('dirname'));
 xoops_loadLanguage('modinfo', $xoopsModule->getVar('dirname'));
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 
+
+/** @var Xmf\Module\Admin $adminObject */
+$adminObject =  \Xmf\Module\Admin::getInstance();
 $myts = MyTextSanitizer::getInstance();
-$adminObject = Admin::getInstance();

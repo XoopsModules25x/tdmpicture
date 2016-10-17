@@ -24,7 +24,7 @@ include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $moduleDirName = basename(dirname(__DIR__));
-$helper = Helper::getHelper($moduleDirName);
+$moduleHelper = Helper::getHelper($moduleDirName);
 
 TdmPictureUtilities::adminheader();
 $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
@@ -85,8 +85,8 @@ switch ($op) {
         $path = $obj->getFilePath();
 
         @chmod($path['image_path'], 0755);
-        $mimetype = explode('|', $helper->getConfig('tdmpicture_mimetype'));
-        $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $helper->getConfig('tdmpicture_mimemax'), null, null);
+        $mimetype = explode('|', $moduleHelper->getConfig('tdmpicture_mimetype'));
+        $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $moduleHelper->getConfig('tdmpicture_mimemax'), null, null);
 
         //variable commune
         $obj->setVar('file_cat', $_REQUEST['file_cat']);
@@ -123,7 +123,7 @@ switch ($op) {
                     if (!empty($_REQUEST['resize'])) {
                         $size = explode('x', $_REQUEST['resize']);
                         $photo->adaptiveResize($size[0], $size[1]);
-                        $photo->save($file_path['image_path'], $helper->getConfig('tdmpicture_thumb_quality'));
+                        $photo->save($file_path['image_path'], $moduleHelper->getConfig('tdmpicture_thumb_quality'));
                     }
 
                     $obj->setVar('file_res_x', $photo->getCurrentWidth());

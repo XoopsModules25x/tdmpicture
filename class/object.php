@@ -45,7 +45,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
         $this->table     = $db->prefix($tablename);
         $this->keyName   = $keyname;
         $this->className = $classname;
-        if ($idenfierName != false) {
+        if ($idenfierName !== false) {
             $this->identifierName = $idenfierName;
         }
     }
@@ -172,16 +172,16 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
      *
-     * @param object $criteria {@link CriteriaElement} conditions to be met
-     * @param int    $limit    Max number of objects to fetch
-     * @param int    $start    Which record to start at
+     * @param CriteriaElement $criteria {@link CriteriaElement} conditions to be met
+     * @param int             $limit    Max number of objects to fetch
+     * @param int             $start    Which record to start at
      *
      * @return array
      */
-    public function getList($criteria = null, $limit = 0, $start = 0)
+    public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $ret = array();
-        if ($criteria == null) {
+        if ($criteria === null) {
             $criteria = new CriteriaCompo();
         }
 
@@ -242,7 +242,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
         if (!$result) {
             return 0;
         }
-        if ($groupby == false) {
+        if ($groupby === false) {
             list($count) = $this->db->fetchRow($result);
 
             return $count;
@@ -275,7 +275,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
             $whereclause = $this->keyName . ' = ' . $obj->getVar($this->keyName);
         }
         $sql = 'DELETE FROM ' . $this->table . ' WHERE ' . $whereclause;
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -298,7 +298,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
 
     public function insert($obj, $force = false, $checkObject = true)
     {
-        if ($checkObject != false) {
+        if ($checkObject !== false) {
             if (!is_object($obj)) {
                 var_dump($obj);
 
@@ -337,7 +337,8 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
                     $cleanvars[$this->keyName] = $this->db->genId($this->table . '_' . $this->keyName . '_seq');
                 }
             }
-            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(',', array_keys($cleanvars)) . ') VALUES (' . implode(',', array_values($cleanvars)) . ')';
+            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(',', array_keys($cleanvars)) . ') VALUES (' . implode(',', array_values($cleanvars))
+                   . ')';
         } else {
             $sql = 'UPDATE ' . $this->table . ' SET';
             foreach ($cleanvars as $key => $value) {
@@ -366,7 +367,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
             }
             $sql .= ' WHERE ' . $whereclause;
         }
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -384,13 +385,13 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Change a value for objects with a certain criteria
      *
-     * @param  string $fieldname  Name of the field
-     * @param  string $fieldvalue Value to write
-     * @param  object $criteria   {@link CriteriaElement}
-     * @param bool    $force
+     * @param  string          $fieldname  Name of the field
+     * @param  string|array    $fieldvalue Value to write
+     * @param  CriteriaElement $criteria   {@link CriteriaElement}
+     * @param bool             $force
      * @return bool
      */
-    public function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
+    public function updateAll($fieldname, $fieldvalue, CriteriaElement $criteria = null, $force = false)
     {
         $set_clause = $fieldname . ' = ';
         if (is_numeric($fieldvalue)) {
@@ -404,7 +405,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);

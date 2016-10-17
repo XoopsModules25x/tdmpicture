@@ -210,7 +210,8 @@ switch ($op) {
 
         //navigation
         if ($numfile > $moduleHelper->getConfig('tdmpicture_page')) {
-            $pagenav = new XoopsPageNav($numfile, $moduleHelper->getConfig('tdmpicture_page'), $start, 'start', '&tris=' . $tris . '&order=' . $order);
+            $pagenav = new XoopsPageNav($numfile, $moduleHelper->getConfig('tdmpicture_page'), $start, 'start',
+                                        '&tris=' . $tris . '&order=' . $order);
             $xoopsTpl->assign('nav_page', $pagenav->renderNav(2));
         }
 

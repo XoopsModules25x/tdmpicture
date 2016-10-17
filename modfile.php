@@ -108,7 +108,10 @@ switch ($op) {
                 }
             }
         } else {
-            xoops_confirm(array('ok' => 1, 'file_id' => $_REQUEST['file_id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], _MD_TDMPICTURE_FORMSUREDEL);
+            xoops_confirm(array('ok'      => 1,
+                                'file_id' => $_REQUEST['file_id'],
+                                'op'      => 'delete'
+                          ), $_SERVER['REQUEST_URI'], _MD_TDMPICTURE_FORMSUREDEL);
         }
         break;
 

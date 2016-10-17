@@ -27,7 +27,7 @@ xoops_cp_header();
 /** @var TDMPicturetdmpicture_fileHandler $fileHandler */
 $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
 /** @var TDMPicturetdmpicture_catHandler $catHandler */
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$catHandler = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
 
 $myts = MyTextSanitizer::getInstance();
 $op   = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
@@ -84,9 +84,9 @@ switch ($op) {
         if ($catHandler->insert($obj)) {
 
             //permission
-            $perm_id       = isset($_REQUEST['cat_id']) ? $_REQUEST['cat_id'] : $obj->getVar('cat_id');
+            $perm_id      = isset($_REQUEST['cat_id']) ? $_REQUEST['cat_id'] : $obj->getVar('cat_id');
             $gpermHandler = xoops_getHandler('groupperm');
-            $criteria      = new CriteriaCompo();
+            $criteria     = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $perm_id, '='));
             $criteria->add(new Criteria('gperm_modid', $xoopsModule->getVar('mid'), '='));
             $criteria->add(new Criteria('gperm_name', 'tdmpicture_catview', '='));
@@ -108,7 +108,7 @@ switch ($op) {
 
     case 'edit':
         //admin menu
-//        $adminObject = new ModuleAdmin();
+        //        $adminObject = new ModuleAdmin();
         echo $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_AM_TDMPICTURE_ADD_CAT, 'cat.php?op=new_cat', 'add');
         $adminObject->addItemButton(_AM_TDMPICTURE_LIST_CAT, 'cat.php?op=list', 'list');
@@ -145,10 +145,13 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-//            $adminObject = new ModuleAdmin();
+            //            $adminObject = new ModuleAdmin();
             echo $adminObject->displayNavigation(basename(__FILE__));
 
-            xoops_confirm(array('ok' => 1, 'cat_id' => $_REQUEST['cat_id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_TDMPICTURE_FORMSUREDELCAT, $obj->getVar('cat_title')));
+            xoops_confirm(array('ok'     => 1,
+                                'cat_id' => $_REQUEST['cat_id'],
+                                'op'     => 'delete'
+                          ), $_SERVER['REQUEST_URI'], sprintf(_AM_TDMPICTURE_FORMSUREDELCAT, $obj->getVar('cat_title')));
         }
         break;
 
@@ -164,7 +167,7 @@ switch ($op) {
     default:
 
         //menu admin
-//        $adminObject = new ModuleAdmin();
+        //        $adminObject = new ModuleAdmin();
         echo $adminObject->displayNavigation(basename(__FILE__));
         if ($cat_waiting != 0 && !isset($_REQUEST['cat_display'])) {
             $waitString = _AM_TDMPICTURE_BUTTON_CAT_WAITING . $cat_waiting;
@@ -226,10 +229,16 @@ switch ($op) {
                 $cat_pid   = $assoc_cat[$i]->getVar('cat_pid');
                 $cat_title = $myts->displayTarea($assoc_cat[$i]->getVar('cat_title'));
 
-                $display   = $assoc_cat[$i]->getVar('cat_display') == 1 ? "<a href='cat.php?op=update&cat_id=" . $cat_id . "'><img src='" . $pathIcon16 . "/1.png' border='0'></a>" : "<a href='cat.php?op=update&cat_id=" . $cat_id . "'><img alt='"
-                                                                                                                                                                                      . _AM_TDMPICTURE_UPDATE . "' title='" . _AM_TDMPICTURE_UPDATE
-                                                                                                                                                                                      . "' src='" . $pathIcon16 . "/0.png' border='0'></a>";
-                $principal = $assoc_cat[$i]->getVar('cat_index') == 1 ? "<img src='" . $pathIcon16 . "/1.png' border='0'>" : "<img src='" . $pathIcon16 . "/0.png' border='0'>";
+                $display   = $assoc_cat[$i]->getVar('cat_display') == 1 ? "<a href='cat.php?op=update&cat_id=" . $cat_id . "'><img src='"
+                                                                          . $pathIcon16
+                                                                          . "/1.png' border='0'></a>" : "<a href='cat.php?op=update&cat_id=" . $cat_id
+                                                                                                        . "'><img alt='" . _AM_TDMPICTURE_UPDATE
+                                                                                                        . "' title='" . _AM_TDMPICTURE_UPDATE
+                                                                                                        . "' src='" . $pathIcon16
+                                                                                                        . "/0.png' border='0'></a>";
+                $principal = $assoc_cat[$i]->getVar('cat_index') == 1 ? "<img src='" . $pathIcon16 . "/1.png' border='0'>" : "<img src='"
+                                                                                                                             . $pathIcon16
+                                                                                                                             . "/0.png' border='0'>";
                 //on test l'existance de l'image
                 $imgpath = TDMPICTURE_CAT_PATH . $assoc_cat[$i]->getVar('cat_img');
                 if (file_exists($imgpath)) {
@@ -246,8 +255,10 @@ switch ($op) {
                 echo '<td align="center" width="5%" style="vertical-align:middle;">' . $display . '</td>';
                 echo '<td align="center" width="5%" style="vertical-align:middle;">' . $principal . '</td>';
                 echo '<td align="center" width="10%" style="vertical-align:middle;">';
-                echo '<a href="cat.php?op=edit&cat_id=' . $cat_id . '"><img src=' . $pathIcon16 . '/edit.png border="0" alt="' . _AM_TDMPICTURE_MODIFY . '" title="' . _AM_TDMPICTURE_MODIFY . '"></a>';
-                echo '<a href="cat.php?op=delete&cat_id=' . $cat_id . '"><img src=' . $pathIcon16 . '/delete.png border="0" alt="' . _AM_TDMPICTURE_DELETE . '" title="' . _AM_TDMPICTURE_DELETE . '"></a>';
+                echo '<a href="cat.php?op=edit&cat_id=' . $cat_id . '"><img src=' . $pathIcon16 . '/edit.png border="0" alt="' . _AM_TDMPICTURE_MODIFY
+                     . '" title="' . _AM_TDMPICTURE_MODIFY . '"></a>';
+                echo '<a href="cat.php?op=delete&cat_id=' . $cat_id . '"><img src=' . $pathIcon16 . '/delete.png border="0" alt="'
+                     . _AM_TDMPICTURE_DELETE . '" title="' . _AM_TDMPICTURE_DELETE . '"></a>';
                 echo '</td>';
                 echo '</tr>';
             }
@@ -262,7 +273,7 @@ switch ($op) {
     // vue cr�ation
     case 'new_cat':
         //menu admin
-//        $adminObject = new ModuleAdmin();
+        //        $adminObject = new ModuleAdmin();
         echo $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_AM_TDMPICTURE_LIST_CAT, 'cat.php?op=list', 'list');
         echo $adminObject->renderButton('left');

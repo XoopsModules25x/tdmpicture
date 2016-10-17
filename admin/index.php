@@ -40,31 +40,35 @@ $file_waiting = $fileHandler->getCount($criteria);
 //apelle du menu admin
 //test dossier
 // dossier dans uploads
-$folder = array(TDMPICTURE_UPLOADS_PATH, TDMPICTURE_THUMB_PATH, TDMPICTURE_CAT_PATH);
+$folder = array(
+    TDMPICTURE_UPLOADS_PATH,
+    TDMPICTURE_THUMB_PATH,
+    TDMPICTURE_CAT_PATH
+);
 //test GD
 if (!extension_loaded('gd')) {
     if (!dl('gd.so')) {
-        $veriffile = '<span style="color: red;"><img src="'.$pathIcon16.'0.png"> ' . _AM_TDMPICTURE_MANAGE_GDERROR . '</a>';
+        $veriffile = '<span style="color: red;"><img src="' . $pathIcon16 . '0.png"> ' . _AM_TDMPICTURE_MANAGE_GDERROR . '</a>';
     }
 } else {
-    $veriffile = '<span style="color: green;"><img src="'.$pathIcon16.'1.png" >' . _AM_TDMPICTURE_MANAGE_GDOK . '</span>';
+    $veriffile = '<span style="color: green;"><img src="' . $pathIcon16 . '1.png" >' . _AM_TDMPICTURE_MANAGE_GDOK . '</span>';
 }
 
 //$adminObject = new ModuleAdmin();
 $adminObject->addInfoBox(_AM_TDMPICTURE_MANAGE_CAT);
-$adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_CAT,  $numcat ));
+$adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_CAT, $numcat));
 if ($cat_waiting == 0) {
-    $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_CAT_WAITING, '<span class="green">' . 0 . '</span>'),'','green');
+    $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_CAT_WAITING, '<span class="green">' . 0 . '</span>'), '', 'green');
 } else {
-    $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_CAT_WAITING, '<span class="red">' . $cat_waiting . '</span>'),'','red');
+    $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_CAT_WAITING, '<span class="red">' . $cat_waiting . '</span>'), '', 'red');
 }
 
 $adminObject->addInfoBox(_AM_TDMPICTURE_MANAGE_FILE);
-$adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_FILE,  $numfile));
+$adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_FILE, $numfile));
 if ($file_waiting == 0) {
-    $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_FILE_WAITING, '<span class="green">' . 0 . '</span>'),'','green');
+    $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_FILE_WAITING, '<span class="green">' . 0 . '</span>'), '', 'green');
 } else {
-    $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_FILE_WAITING, '<span class="red">' . $file_waiting . '</span>'),'','red');
+    $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_FILE_WAITING, '<span class="red">' . $file_waiting . '</span>'), '', 'red');
 }
 
 //foreach (array_keys($folder) as $i) {
@@ -72,7 +76,6 @@ if ($file_waiting == 0) {
 //    $adminObject->addConfigBoxLine(array($folder[$i], '777'), 'chmod');
 //}
 $adminObject->addConfigBoxLine($veriffile);
-
 
 $configurator = include __DIR__ . '/../include/config.php';
 $classUtilities = ucfirst($moduleDirName) . 'Utilities';

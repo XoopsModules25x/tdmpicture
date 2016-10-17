@@ -53,7 +53,8 @@ switch ($op) {
 
         $sq2   = 'INSERT INTO ' . $xoopsDB->prefix('xoopscomments')
                  . ' (com_pid, com_rootid, com_modid, com_itemid, com_icon, com_created, com_modified, com_uid, com_ip, com_title, com_text, com_sig, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) SELECT com_pid, com_rootid, '
-                 . $xoopsModule->getvar('mid') . ' , com_itemid, com_icon, com_created, com_modified, com_uid, com_ip, com_title, com_text, com_sig, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr FROM '
+                 . $xoopsModule->getVar('mid')
+                 . ' , com_itemid, com_icon, com_created, com_modified, com_uid, com_ip, com_title, com_text, com_sig, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr FROM '
                  . $xoopsDB->prefix('xoopscomments') . " WHERE com_modid='" . $src_mid . "'";
         $error = $xoopsDB->queryF($sq2);
         //  INSERT INTO la_table(id, nom, prenom ...)
@@ -75,7 +76,7 @@ switch ($op) {
          */
         function parcourirArborescence($repertoire)
         {
-            if (@ $dh = opendir($repertoire)) {
+            if (@ $dh == opendir($repertoire)) {
                 while (($fichier = readdir($dh)) != false) {
                     if ($fichier === '.') {
                         continue; // Skip it
@@ -112,8 +113,9 @@ switch ($op) {
 
         global $xoopsConfig, $xoopsDB, $xoopsUser, $xoopsModule;
 
-        $aboutAdmin      = new ModuleAdmin();
-        $file_protection = 'Tatane, Xoopsfr<br><br>
+        $aboutAdmin = new ModuleAdmin();
+        $file_protection
+                    = 'Tatane, Xoopsfr<br><br>
 Cesagonchu, Xoopsfr<br><br>Grosdunord, Xoopsfr<br><br>Phira, Xoopsfr<br>';
         $aboutAdmin->addInfoBox(_AM_TDMPICTURE_NOTE);
         $aboutAdmin->addInfoBoxLine(_AM_TDMPICTURE_NOTE, _AM_TDMPICTURE_NOTEDESC, '', '', 'information');
@@ -137,21 +139,24 @@ Cesagonchu, Xoopsfr<br><br>Grosdunord, Xoopsfr<br><br>Phira, Xoopsfr<br>';
 
         <br>';
         if ($contact > 0) {
-            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $contact['Name'] . ' : ' . TdmPictureUtilities::prettySize($contact['Data_length'] + $contact['Index_length'])
+            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $contact['Name'] . ' : '
+                 . TdmPictureUtilities::prettySize($contact['Data_length'] + $contact['Index_length'])
                  . '  | <b><a href="import.php?op=import&base=myalbum_photos">' . _AM_TDMPICTURE_IMPORT . '</a></b>';
         } else {
             echo '<b><span style="color: red; padding-left: 20px;"><img src="./../assets/images/off.gif"> ' . _AM_IMPORT_NONE . '</a></span></b>';
         }
         echo '<br>';
         if ($cat > 0) {
-            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $cat['Name'] . ' : ' . TdmPictureUtilities::prettySize($cat['Data_length'] + $cat['Index_length'])
+            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $cat['Name'] . ' : '
+                 . TdmPictureUtilities::prettySize($cat['Data_length'] + $cat['Index_length'])
                  . '  | <b><a href="import.php?op=import&base=myalbum_cat">' . _AM_TDMPICTURE_IMPORT . '</a></b>';
         } else {
             echo '<b><span style="color: red; padding-left: 20px;"><img src="./../assets/images/off.gif"> ' . _AM_IMPORT_NONE . '</a></span></b>';
         }
         echo '<br>';
         if ($com > 0) {
-            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $com['Name'] . ' : ' . TdmPictureUtilities::prettySize($com['Data_length'] + $com['Index_length'])
+            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $com['Name'] . ' : '
+                 . TdmPictureUtilities::prettySize($com['Data_length'] + $com['Index_length'])
                  . '  | <b><a href="import.php?op=comment&module=myalbum">' . _AM_TDMPICTURE_IMPORT . '</a></b>';
         } else {
             echo '<b><span style="color: red; padding-left: 20px;"><img src="./../assets/images/off.gif"> ' . _AM_IMPORT_NONE . '</a></span></b>';
@@ -176,21 +181,24 @@ Cesagonchu, Xoopsfr<br><br>Grosdunord, Xoopsfr<br><br>Phira, Xoopsfr<br>';
 
         <br>';
         if ($contact > 0) {
-            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $contact['Name'] . ' : ' . TdmPictureUtilities::prettySize($contact['Data_length'] + $contact['Index_length'])
+            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $contact['Name'] . ' : '
+                 . TdmPictureUtilities::prettySize($contact['Data_length'] + $contact['Index_length'])
                  . '  | <b><a href="import.php?op=import&base=extgallery_publicphoto">' . _AM_TDMPICTURE_IMPORT . '</a></b>';
         } else {
             echo '<b><span style="color: red; padding-left: 20px;"><img src="./../assets/images/off.gif"> ' . _AM_IMPORT_NONE . '</a></span></b>';
         }
         echo '<br>';
         if ($cat > 0) {
-            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $cat['Name'] . ' : ' . TdmPictureUtilities::prettySize($cat['Data_length'] + $cat['Index_length'])
+            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $cat['Name'] . ' : '
+                 . TdmPictureUtilities::prettySize($cat['Data_length'] + $cat['Index_length'])
                  . '  | <b><a href="import.php?op=import&base=extgallery_publiccat">' . _AM_TDMPICTURE_IMPORT . '</a></b>';
         } else {
             echo '<b><span style="color: red; padding-left: 20px;"><img src="./../assets/images/off.gif"> ' . _AM_IMPORT_NONE . '</a></span></b>';
         }
         echo '<br>';
         if ($com > 0) {
-            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $com['Name'] . ' : ' . TdmPictureUtilities::prettySize($com['Data_length'] + $com['Index_length'])
+            echo '<b><span style="color: green; padding-left: 20px;"><img src="./../assets/images/on.gif" > ' . $com['Name'] . ' : '
+                 . TdmPictureUtilities::prettySize($com['Data_length'] + $com['Index_length'])
                  . '  | <b><a href="import.php?op=comment&module=extgallery">' . _AM_TDMPICTURE_IMPORT . '</a></b>';
         } else {
             echo '<b><span style="color: red; padding-left: 20px;"><img src="./../assets/images/off.gif"> ' . _AM_IMPORT_NONE . '</a></span></b>';
@@ -235,7 +243,8 @@ function import_liste($liste)
     `file_title`, `file_text`, `file_type`, `file_display`, `file_hits`, `file_dl`, `file_votes`,
     `file_counts`, `file_indate`, `file_uid`, `file_size`, `file_res_x`, `file_res_y`, `file_comments`, `file_ext`)
     SELECT  `photo_id`, `cat_id` , `photo_name`, `photo_desc`, `photo_title`,   NULL, `photo_approved`, `photo_hits`, NULL,
-    `photo_nbrating`, `photo_rating`, `photo_date`, `uid`,  `photo_size`, `photo_res_x` ,   `photo_res_y`, `photo_comment`, 2   FROM ' . $xoopsDB->prefix('extgallery_publicphoto') . '';
+    `photo_nbrating`, `photo_rating`, `photo_date`, `uid`,  `photo_size`, `photo_res_x` ,   `photo_res_y`, `photo_comment`, 2   FROM '
+                                     . $xoopsDB->prefix('extgallery_publicphoto') . '';
             $import['conf_path']   = 'tdm_extgallery_path';
             $import['conf_thumbs'] = 'tdm_extgallery_thumb';
             break;

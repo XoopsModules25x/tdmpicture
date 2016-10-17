@@ -44,7 +44,7 @@ include_once XOOPS_ROOT_PATH . '/modules/tdmpicture/class/utilities.php';
 global $xoopsDB, $xoopsConfig;
 
 $moduleDirName = basename(dirname(__DIR__));
-$moduleHelper = Helper::getHelper($moduleDirName);
+$moduleHelper  = Helper::getHelper($moduleDirName);
 
 if (file_exists(XOOPS_ROOT_PATH . '/modules/tdmpicture/language/' . $xoopsConfig['language'] . '/admin.php')) {
     include_once XOOPS_ROOT_PATH . '/modules/tdmpicture/language/' . $xoopsConfig['language'] . '/admin.php';
@@ -99,13 +99,26 @@ switch ($option) {
         $pdf->AddCol('member_phone', 24, $pdf_data['member_phone'], 'L');
         $pdf->AddCol('status_name', 32, $pdf_data['status_name'], 'L');
         $prop = array(
-            'HeaderColor' => array(255, 150, 100),
-            'color1'      => array(210, 245, 255),
-            'color2'      => array(255, 255, 210),
+            'HeaderColor' => array(
+                255,
+                150,
+                100
+            ),
+            'color1'      => array(
+                210,
+                245,
+                255
+            ),
+            'color2'      => array(
+                255,
+                255,
+                210
+            ),
             'padding'     => 2
         );
 
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
+                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
                     . ' S WHERE S.status_id=M.member_status AND M.member_office = "1" ORDER BY S.status_order limit 0,10', $prop);
 
         $pdf->TitreChapitre($myts->displayTarea($pdf_data['composition_list_admin']));
@@ -118,9 +131,21 @@ switch ($option) {
         $pdf->AddCol('member_phone', 24, $pdf_data['member_phone'], 'L');
         $pdf->AddCol('status_name', 32, $pdf_data['status_name'], 'L');
         $prop = array(
-            'HeaderColor' => array(255, 150, 100),
-            'color1'      => array(210, 245, 255),
-            'color2'      => array(255, 255, 210),
+            'HeaderColor' => array(
+                255,
+                150,
+                100
+            ),
+            'color1'      => array(
+                210,
+                245,
+                255
+            ),
+            'color2'      => array(
+                255,
+                255,
+                210
+            ),
             'padding'     => 2
         );
 
@@ -128,7 +153,8 @@ switch ($option) {
         $criteria->add(new Criteria('member_waiting', 1,'='));
         $criteria->setOrder('ASC');
         $assoc_arr = $memberHandler->getObjects($criteria);*/
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
+                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
                     . ' S WHERE S.status_id=M.member_status AND M.member_office = "0" ORDER BY S.status_order limit 0,10', $prop);
         $pdf->Output();
 
@@ -152,13 +178,26 @@ switch ($option) {
         $pdf->AddCol('member_phone', 24, $pdf_data['member_phone'], 'L');
         $pdf->AddCol('status_name', 32, $pdf_data['status_name'], 'L');
         $prop = array(
-            'HeaderColor' => array(255, 150, 100),
-            'color1'      => array(210, 245, 255),
-            'color2'      => array(255, 255, 210),
+            'HeaderColor' => array(
+                255,
+                150,
+                100
+            ),
+            'color1'      => array(
+                210,
+                245,
+                255
+            ),
+            'color2'      => array(
+                255,
+                255,
+                210
+            ),
             'padding'     => 1
         );
 
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
+                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
                     . ' S WHERE S.status_id=M.member_status ORDER BY S.status_order limit 0,10', $prop);
         $pdf->Output();
 
@@ -205,7 +244,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 210; ++$j) {
                                 if ((210 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
+                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -243,7 +283,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 297; ++$j) {
                                 if ((297 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
+                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -284,7 +325,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 297; ++$j) {
                                 if ((297 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
+                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -323,7 +365,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 420; ++$j) {
                                 if ((420 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
+                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -361,7 +404,7 @@ switch ($option) {
     //pdf pour les newsletter
     case 'list_newsletter':
         $newsletterHandler = xoops_getModuleHandler('tdmassoc_newsletter', 'tdmpicture');
-        $newsletter         = $newsletterHandler->get($_REQUEST['newsletter_id']);
+        $newsletter        = $newsletterHandler->get($_REQUEST['newsletter_id']);
 
         $newsletter_head   = utf8_decode(Chars($newsletter->getVar('newsletter_head')));
         $newsletter_text   = utf8_decode(Chars($newsletter->getVar('newsletter_text')));
@@ -405,16 +448,29 @@ switch ($option) {
         $titre = $newsletter->getVar('newsletter_title');
         $pdf->AddPage();
         $prop = array(
-            'HeaderColor' => array(255, 150, 100),
-            'color1'      => array(210, 245, 255),
-            'color2'      => array(255, 255, 210),
+            'HeaderColor' => array(
+                255,
+                150,
+                100
+            ),
+            'color1'      => array(
+                210,
+                245,
+                255
+            ),
+            'color2'      => array(
+                255,
+                255,
+                210
+            ),
             'padding'     => 2
         );
         /*$criteria = new CriteriaCompo();
         $criteria->add(new Criteria('member_waiting', 1,'='));
         $criteria->setOrder('ASC');
         $assoc_arr = $memberHandler->getObjects($criteria);*/
-        $pdf->Table('SELECT newsletter_head FROM ' . $xoopsDB->prefix('tdmassoc_newsletter') . ' WHERE newsletter_id = ' . $_REQUEST['newsletter_id'] . ' limit 0,10', $prop);
+        $pdf->Table('SELECT newsletter_head FROM ' . $xoopsDB->prefix('tdmassoc_newsletter') . ' WHERE newsletter_id = ' . $_REQUEST['newsletter_id']
+                    . ' limit 0,10', $prop);
         $pdf->Output();
 
         break;
@@ -424,13 +480,13 @@ switch ($option) {
 
         $productHandler = xoops_getModuleHandler('tdmassoc_product', 'tdmpicture');
         $stockHandler   = xoops_getModuleHandler('tdmassoc_stock', 'tdmpicture');
-        $product         = $productHandler->get($_REQUEST['product_id']);
-        $product_ref     = utf8_decode(Chars($product->getVar('product_ref')));
-        $product_tva     = $product->getVar('product_tva');
-        $product_text    = utf8_decode(Chars($product->getVar('product_text')));
-        $product_indate  = formatTimestamp($product->getVar('product_indate'), 'm');
-        $num             = $product->getVar('product_cid');
-        $cat             = array(
+        $product        = $productHandler->get($_REQUEST['product_id']);
+        $product_ref    = utf8_decode(Chars($product->getVar('product_ref')));
+        $product_tva    = $product->getVar('product_tva');
+        $product_text   = utf8_decode(Chars($product->getVar('product_text')));
+        $product_indate = formatTimestamp($product->getVar('product_indate'), 'm');
+        $num            = $product->getVar('product_cid');
+        $cat            = array(
             '1' => _AM_TDMPICTURE_PRODUCTCAT_ACHAT,
             '2' => _AM_TDMPICTURE_PRODUCTCAT_VENTE,
             '3' => _AM_TDMPICTURE_PRODUCTCAT_LOCATION,
@@ -489,7 +545,14 @@ switch ($option) {
 
         $pdf->Ln(20);
         //Tableau Largeurs des colonnes
-        $w = array(40, 50, 30, 25, 25, 20);
+        $w = array(
+            40,
+            50,
+            30,
+            25,
+            25,
+            20
+        );
 
         //En-tête
         $pdf->SetFont('Arial', '', 8);
@@ -566,8 +629,8 @@ switch ($option) {
     case 'list_stock':
         $stockHandler   = xoops_getModuleHandler('tdmassoc_stock', 'tdmpicture');
         $productHandler = xoops_getModuleHandler('tdmassoc_product', 'tdmpicture');
-        $stock           = $stockHandler->get($_REQUEST['stock_id']);
-        $product         = $productHandler->get($stock->getVar('stock_product'));
+        $stock          = $stockHandler->get($_REQUEST['stock_id']);
+        $product        = $productHandler->get($stock->getVar('stock_product'));
 
         //travail les reponse
         $stock_title  = utf8_decode(Chars($stock->getVar('stock_title')));
@@ -621,7 +684,14 @@ switch ($option) {
 
         $pdf->Ln(20);
         //Tableau Largeurs des colonnes
-        $w = array(40, 50, 30, 25, 25, 20);
+        $w = array(
+            40,
+            50,
+            30,
+            25,
+            25,
+            20
+        );
 
         //En-tête
         $pdf->SetFont('Arial', '', 8);
@@ -780,5 +850,14 @@ function Chars($text)
                             '/<br \/>/i',
                             '/&agrave;/i',
                             '/&#8364;/i'
-                        ), array("'", 'é', 'è', 'à', '"', "\n", 'à', '€'), $text);
+                        ), array(
+                            "'",
+                            'é',
+                            'è',
+                            'à',
+                            '"',
+                            "\n",
+                            'à',
+                            '€'
+                        ), $text);
 }

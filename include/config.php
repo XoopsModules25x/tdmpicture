@@ -20,7 +20,7 @@
 //require_once __DIR__ . '/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-$upperDirName = strtoupper($moduleDirName);
+$upperDirName  = strtoupper($moduleDirName);
 /*
 if (!defined($upperDirName . '_DIRNAME')) {
     define($upperDirName . '_DIRNAME', $moduleDirName);
@@ -71,7 +71,8 @@ return array(
 );
 
 // module information
-$modCopyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
+$modCopyright
+    = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($upperDirName . '_AUTHOR_LOGOIMG') . "' alt='XOOPS Project' /></a>";
 
 //

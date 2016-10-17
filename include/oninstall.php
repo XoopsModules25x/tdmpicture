@@ -50,9 +50,9 @@ function xoops_module_pre_install_tdmpicture(XoopsModule $module)
 /**
  *
  * Performs tasks required during installation of the module
- * @param XoopsModule $module {@link XoopsModule}
- *
+ * @param XoopsModule $xoopsModule
  * @return bool true if installation successful, false if not
+ *
  */
 function xoops_module_install_tdmpicture(XoopsModule $xoopsModule)
 {
@@ -87,7 +87,8 @@ function xoops_module_install_tdmpicture(XoopsModule $xoopsModule)
     }
 
     //delete .html entries from the tpl table
-    $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+    $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n')
+           . "' AND `tpl_file` LIKE '%.html%'";
     $xoopsDB->queryF($sql);
 
     return true;

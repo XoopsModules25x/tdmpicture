@@ -52,7 +52,7 @@ class TDMPicture_cat extends XoopsObject
     {
         global $xoopsUser, $xoopsDB, $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
-        $moduleHelper = Helper::getHelper($moduleDirName);
+        $moduleHelper  = Helper::getHelper($moduleDirName);
 
         if (is_object($xoopsUser)) {
             $groups = $xoopsUser->getGroups();
@@ -92,7 +92,8 @@ class TDMPicture_cat extends XoopsObject
 
         $arr    = $catHandler->getall($criteriaUser);
         $mytree = new XoopsObjectTree($arr, 'cat_id', 'cat_pid');
-        $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_PARENT, $mytree->makeSelBox('cat_pid', 'cat_title', '-', $this->getVar('cat_pid'), true)));
+        $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_PARENT,
+                                             $mytree->makeSelBox('cat_pid', 'cat_title', '-', $this->getVar('cat_pid'), true)));
 
         //editor
         $editor_configs           = array();
@@ -117,7 +118,8 @@ class TDMPicture_cat extends XoopsObject
         }
         $imageselect->setExtra("onchange='showImgSelected(\"image3\", \"img\", \"" . $uploadirectory . "\", \"\", \"" . XOOPS_URL . "\")'");
         $imgtray->addElement($imageselect, false);
-        $imgtray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_URL . '/' . $uploadirectory . '/' . $img . "' name='image3' id='image3' alt='' />"));
+        $imgtray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_URL . '/' . $uploadirectory . '/' . $img
+                                                    . "' name='image3' id='image3' alt='' />"));
 
         $fileseltray = new XoopsFormElementTray('', '<br>');
         $fileseltray->addElement(new XoopsFormFile(_MD_TDMPICTURE_UPLOAD, 'attachedfile', $moduleHelper->getConfig('tdmpicture_mimemax')), false);
@@ -137,13 +139,14 @@ class TDMPicture_cat extends XoopsObject
             $groups = XOOPS_GROUP_ANONYMOUS;
         }
         $memberHandler = xoops_getHandler('member');
-        $group_list     = $memberHandler->getGroupList();
+        $group_list    = $memberHandler->getGroupList();
         $gpermHandler  = xoops_getHandler('groupperm');
-        $full_list      = array_keys($group_list);
+        $full_list     = array_keys($group_list);
 
         if ($gpermHandler->checkRight('tdmpicture_view', 1048, $groups, $xoopsModule->getVar('mid'))) {
             if (!$this->isNew()) { // Edit mode
-                $groups_ids                    = $gpermHandler->getGroupIds('tdmpicture_catview', $this->getVar('cat_id'), $xoopsModule->getVar('mid'));
+                $groups_ids                    = $gpermHandler->getGroupIds('tdmpicture_catview', $this->getVar('cat_id'),
+                                                                            $xoopsModule->getVar('mid'));
                 $groups_ids                    = array_values($groups_ids);
                 $groups_news_can_view_checkbox = new XoopsFormCheckBox(_MD_TDMPICTURE_PERM_2, 'groups_view[]', $groups_ids);
             } else { // Creation mode

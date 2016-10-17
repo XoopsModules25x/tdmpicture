@@ -26,7 +26,7 @@ $modversion = array(
     'description'         => _MI_TDMPICTURE_DESC,
     'version'             => 1.08,
     'module_status'       => 'RC 1',
-    'release_date'        => '2016/10/10',
+    'release_date'        => '2016/10/14',
     //yyyy/mm/dd
     //    'release'             => '2015-04-04',
     'official'            => 1,
@@ -54,9 +54,9 @@ $modversion = array(
     'iconbig'             => 'assets/images/iconbig.png',
     'dirname'             => $moduleDirName,
     //Frameworks
-//    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
-//    'sysicons16'          => 'Frameworks/moduleclasses/icons/16',
-//    'sysicons32'          => 'Frameworks/moduleclasses/icons/32',
+    //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
+    //    'sysicons16'          => 'Frameworks/moduleclasses/icons/16',
+    //    'sysicons32'          => 'Frameworks/moduleclasses/icons/32',
     // Local path icons
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',

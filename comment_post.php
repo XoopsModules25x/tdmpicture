@@ -34,11 +34,11 @@ if (!isset($GLOBALS['xoopsModuleConfig'])) {
     die();
 }
 
-if ($moduleHelper->getConfig('com_rule'] == 0) {    // Comments are deactivate
+if ($moduleHelper->getConfig(['com_rule'] == 0)) {    // Comments are deactivate
     die();
 }
 
-if ($moduleHelper->getConfig('com_anonpost'] == 0 && !is_object($xoopsUser)) {    // Anonymous users can't post
+if ($moduleHelper->getConfig(['com_anonpost'] == 0 && !is_object($xoopsUser))) {    // Anonymous users can't post
     die();
 }
 // ****************************************************************************

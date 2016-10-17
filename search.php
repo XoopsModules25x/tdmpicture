@@ -112,10 +112,12 @@ foreach (array_keys($file_arr) as $i) {
 
         //poster
         $poster_image = XOOPS_ROOT_PATH . '/uploads/' . $members->getVar('user_avatar');
-        if (file_exists($poster_image) && $members->getVar('user_avatar') != 'blank.png') {
-            $file['user_img'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $members->getVar('user_avatar') . "' height='60px' title=" . $members->getVar('uname') . " style='border: 1px solid #CCC;' alt=" . $members->getVar('uname') . '>';
+        if (file_exists($poster_image) && $members->getVar('user_avatar') !== 'blank.png') {
+            $file['user_img'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $members->getVar('user_avatar') . "' height='60px' title="
+                                . $members->getVar('uname') . " style='border: 1px solid #CCC;' alt=" . $members->getVar('uname') . '>';
         } else {
-            $file['user_img'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
+            $file['user_img'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL
+                                . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
         }
     }
 

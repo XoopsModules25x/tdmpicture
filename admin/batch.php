@@ -1,6 +1,5 @@
 <?php
 
-
 use Xmf\Module\Helper;
 
 /**
@@ -24,7 +23,7 @@ use Xmf\Module\Helper;
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $moduleDirName = basename(dirname(__DIR__));
-$moduleHelper = Helper::getHelper($moduleDirName);
+$moduleHelper  = Helper::getHelper($moduleDirName);
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 
 $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
@@ -39,7 +38,7 @@ switch ($op) {
     case 'batch':
         global $xoopsConfig, $xoopsDB, $xoopsUser, $xoopsModule;
 
-        if (get_cfg_var('max_execution_time') == null) {
+        if (get_cfg_var('max_execution_time') === null) {
             $maxExecTime = 10;
         } else {
             $maxExecTime = get_cfg_var('max_execution_time');
@@ -245,7 +244,8 @@ function import_liste($liste)
     `file_title`, `file_text`, `file_type`, `file_display`, `file_hits`, `file_dl`, `file_votes`,
     `file_counts`, `file_indate`, `file_uid`, `file_size`, `file_res_x`, `file_res_y`, `file_comments`, `file_ext`)
     SELECT  `photo_id`, `cat_id` , `photo_name`, `photo_desc`, `photo_title`,   NULL, `photo_approved`, `photo_hits`, NULL,
-    `photo_nbrating`, `photo_rating`, `photo_date`, `uid`,  `photo_size`, `photo_res_x` ,   `photo_res_y`, `photo_comment`, 2   FROM ' . $xoopsDB->prefix('extgallery_publicphoto') . '';
+    `photo_nbrating`, `photo_rating`, `photo_date`, `uid`,  `photo_size`, `photo_res_x` ,   `photo_res_y`, `photo_comment`, 2   FROM '
+                                     . $xoopsDB->prefix('extgallery_publicphoto') . '';
             $import['conf_path']   = 'tdm_extgallery_path';
             $import['conf_thumbs'] = 'tdm_extgallery_thumb';
             break;

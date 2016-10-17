@@ -169,9 +169,12 @@ switch ($op) {
             if (file_exists($array_thumbs_path[$pos - 1])) {
                 $previmg = '<img src=' . $array_thumbs[$pos - 1] . " class='detail_img'>";
                 if (!empty($post_ut)) {
-                    $prev_page = "<a title='" . $array_titles[$pos - 1] . "' href='viewfile.php?st=" . $array_ids[$pos - 1] . '&ut=' . $array_uts[$pos - 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $previmg . '</a>';
+                    $prev_page = "<a title='" . $array_titles[$pos - 1] . "' href='viewfile.php?st=" . $array_ids[$pos - 1] . '&ut=' . $array_uts[$pos
+                                                                                                                                                  - 1]
+                                 . '&tris=' . $tris . '&order=' . $order . "'>" . $previmg . '</a>';
                 } else {
-                    $prev_page = "<a title='" . $array_titles[$pos - 1] . "' href='viewfile.php?st=" . $array_ids[$pos - 1] . '&ct=' . $array_cats[$pos - 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $previmg . '</a>';
+                    $prev_page = "<a title='" . $array_titles[$pos - 1] . "' href='viewfile.php?st=" . $array_ids[$pos - 1] . '&ct='
+                                 . $array_cats[$pos - 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $previmg . '</a>';
                 }
                 $xoopsTpl->assign('prev_page', $prev_page);
             }
@@ -181,9 +184,12 @@ switch ($op) {
             if (file_exists($array_thumbs_path[$pos + 1])) {
                 $nextimg = '<img src=' . $array_thumbs[$pos + 1] . " class='detail_img'>";
                 if (!empty($post_ut)) {
-                    $next_page = "<a title='" . $array_titles[$pos + 1] . "' href='viewfile.php?st=" . $array_ids[$pos + 1] . '&ut=' . $array_uts[$pos + 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $nextimg . '</a>';
+                    $next_page = "<a title='" . $array_titles[$pos + 1] . "' href='viewfile.php?st=" . $array_ids[$pos + 1] . '&ut=' . $array_uts[$pos
+                                                                                                                                                  + 1]
+                                 . '&tris=' . $tris . '&order=' . $order . "'>" . $nextimg . '</a>';
                 } else {
-                    $next_page = "<a title='" . $array_titles[$pos + 1] . "' href='viewfile.php?st=" . $array_ids[$pos + 1] . '&ct=' . $array_cats[$pos + 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $nextimg . '</a>';
+                    $next_page = "<a title='" . $array_titles[$pos + 1] . "' href='viewfile.php?st=" . $array_ids[$pos + 1] . '&ct='
+                                 . $array_cats[$pos + 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $nextimg . '</a>';
                 }
                 $xoopsTpl->assign('next_page', $next_page);
             }
@@ -252,11 +258,13 @@ switch ($op) {
             $poster       = new XoopsUser($file_arr[$f]->getVar('file_uid'));
             $poster_image = XOOPS_ROOT_PATH . '/uploads/' . $poster->getVar('user_avatar');
             if (file_exists($poster_image) && $poster->getVar('user_avatar') != ''
-                && $poster->getVar('user_avatar') != 'blank.png'
+                && $poster->getVar('user_avatar') !== 'blank.png'
             ) {
-                $file['userimg'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $poster->getVar('user_avatar') . "' height='60px' title=" . $poster->getVar('uname') . " style='border: 1px solid #CCC;' alt=" . $poster->getVar('uname') . '>';
+                $file['userimg'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $poster->getVar('user_avatar') . "' height='60px' title="
+                                   . $poster->getVar('uname') . " style='border: 1px solid #CCC;' alt=" . $poster->getVar('uname') . '>';
             } else {
-                $file['userimg'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
+                $file['userimg'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL
+                                   . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
             }
             //
             $file['postername'] = XoopsUser::getUnameFromId($file_arr[$f]->getVar('file_uid'));

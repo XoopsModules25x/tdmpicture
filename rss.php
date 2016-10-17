@@ -81,8 +81,10 @@ if (!$tpl->is_cached('db:tdmpicture_rss.tpl')) {
         $tpitem['text'] = $item_arr[$i]->getVar('file_text');
 
         $tpitem['indate'] = formatTimestamp($item_arr[$i]->getVar('file_indate'), 'm');
-        $tpitem['link']   = XOOPS_URL . '/modules/TDMPicture/viewfile.php?st=' . $item_arr[$i]->getVar('file_id') . '&amp;ct=' . $item_arr[$i]->getVar('file_cat');
-        $tpitem['guid']   = XOOPS_URL . '/modules/TDMPicture/viewfile.php?st=' . $item_arr[$i]->getVar('file_id') . '&amp;ct=' . $item_arr[$i]->getVar('file_cat');
+        $tpitem['link']   = XOOPS_URL . '/modules/TDMPicture/viewfile.php?st=' . $item_arr[$i]->getVar('file_id') . '&amp;ct='
+                            . $item_arr[$i]->getVar('file_cat');
+        $tpitem['guid']   = XOOPS_URL . '/modules/TDMPicture/viewfile.php?st=' . $item_arr[$i]->getVar('file_id') . '&amp;ct='
+                            . $item_arr[$i]->getVar('file_cat');
 
         $tpl->append('tpitem', $tpitem);
     }

@@ -30,11 +30,11 @@ include_once XOOPS_ROOT_PATH . '/class/tree.php';
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-$moduleHelper = Helper::getHelper($moduleDirName);
+$moduleHelper  = Helper::getHelper($moduleDirName);
 
 global $xoopsModule;
-$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
 $pathModIcon32 = XOOPS_URL . '/' . $moduleHelper->getConfig('modicons32');
 
 //Load languages
@@ -42,7 +42,6 @@ xoops_loadLanguage('admin', $xoopsModule->getVar('dirname'));
 xoops_loadLanguage('modinfo', $xoopsModule->getVar('dirname'));
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 
-
 /** @var Xmf\Module\Admin $adminObject */
-$adminObject =  \Xmf\Module\Admin::getInstance();
-$myts = MyTextSanitizer::getInstance();
+$adminObject = \Xmf\Module\Admin::getInstance();
+$myts        = MyTextSanitizer::getInstance();

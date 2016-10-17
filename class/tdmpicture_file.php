@@ -1,7 +1,6 @@
 <?php
 use Xmf\Module\Helper;
 
-
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -59,7 +58,7 @@ class TDMPicture_file extends XoopsObject
     public function getFilePath($force = false)
     {
         $moduleDirName = basename(dirname(__DIR__));
-        $moduleHelper = Helper::getHelper($moduleDirName);
+        $moduleHelper  = Helper::getHelper($moduleDirName);
         switch ($this->getVar('file_ext')) {
             case 0:
             default:
@@ -77,15 +76,15 @@ class TDMPicture_file extends XoopsObject
         }
 
         if (!empty($force)) {
-            $image .=  '/'. $force;
-            $thumb .=  '/'.  $force;
+            $image .= '/' . $force;
+            $thumb .= '/' . $force;
         }
 
         return array(
-            'image_url'  => XOOPS_URL .  $image,
-            'image_path' => XOOPS_ROOT_PATH .   $image,
-            'thumb_url'  => XOOPS_URL .   $thumb,
-            'thumb_path' => XOOPS_ROOT_PATH .   $thumb
+            'image_url'  => XOOPS_URL . $image,
+            'image_path' => XOOPS_ROOT_PATH . $image,
+            'thumb_url'  => XOOPS_URL . $thumb,
+            'thumb_path' => XOOPS_ROOT_PATH . $thumb
         );
     }
 
@@ -95,7 +94,7 @@ class TDMPicture_file extends XoopsObject
     public function getFileThumb()
     {
         $moduleDirName = basename(dirname(__DIR__));
-        $moduleHelper = Helper::getHelper($moduleDirName);
+        $moduleHelper  = Helper::getHelper($moduleDirName);
         switch ($this->getVar('file_ext')) {
             case 0:
             default:
@@ -121,11 +120,14 @@ class TDMPicture_file extends XoopsObject
         $url       = TDMPICTURE_URL . '/viewfile.php?st=' . $this->getVar('file_id');
         $form      = new XoopsSimpleForm('', 'form', '', 'post', true);
         $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINK, '', 100, 255, $url));
-        $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFULLSCREEN, '', 100, 255, TDMPICTURE_URL . '/get.php?st=' . $this->getVar('file_id') . '&size=full'));
+        $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFULLSCREEN, '', 100, 255,
+                                            TDMPICTURE_URL . '/get.php?st=' . $this->getVar('file_id') . '&size=full'));
         $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKDHUMB, '', 100, 255, TDMPICTURE_URL . '/get.php?st=' . $this->getVar('file_id')));
         $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFORUM, '', 100, 255, '[url=' . $url . '][img]' . $file_path . '[/img][/url]'));
         $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFORUM1, '', 100, 255, '[url=' . $url . '][img=' . $file_path . '][/url]'));
-        $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKHTML, '', 100, 255, '<a href="' . $url . '" target="_blank"><img src="' . $file_path . '" border="0" alt="' . $this->getVar('file_title') . '"/></a>'));
+        $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKHTML, '', 100, 255,
+                                            '<a href="' . $url . '" target="_blank"><img src="' . $file_path . '" border="0" alt="'
+                                            . $this->getVar('file_title') . '"/></a>'));
 
         return $form;
     }
@@ -138,7 +140,7 @@ class TDMPicture_file extends XoopsObject
     {
         global $xoopsUser, $xoopsDB, $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
-        $moduleHelper = Helper::getHelper($moduleDirName);
+        $moduleHelper  = Helper::getHelper($moduleDirName);
 
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
@@ -187,7 +189,9 @@ class TDMPicture_file extends XoopsObject
 
             $arr    = $catHandler->getall($criteriaUser);
             $mytree = new TDMObjectTree($arr, 'cat_id', 'cat_pid');
-            $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelBox('file_cat', 'cat_title', '-', $this->getVar('file_cat'), '', 0, '', 'tdmpicture_catview')));
+            $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT,
+                                                 $mytree->makeSelBox('file_cat', 'cat_title', '-', $this->getVar('file_cat'), '', 0, '',
+                                                                     'tdmpicture_catview')));
 
             //
 
@@ -251,7 +255,9 @@ class TDMPicture_file extends XoopsObject
             //$form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelBox('file_cat', 'cat_title','-', $this->getVar('cat_pid'), true)), true);
 
             $mytree = new TDMObjectTree($arr, 'cat_id', 'cat_pid');
-            $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelBox('file_cat', 'cat_title', '-', $this->getVar('cat_pid'), '', 0, '', 'tdmpicture_catview')));
+            $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT,
+                                                 $mytree->makeSelBox('file_cat', 'cat_title', '-', $this->getVar('cat_pid'), '', 0, '',
+                                                                     'tdmpicture_catview')));
 
             //
 
@@ -371,10 +377,10 @@ $tdmpicture(document).ready( function() {
 class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null $criteria
-     * @param null $fields
-     * @param bool $asObject
-     * @param bool $id_as_key
+     * @param null       $criteria
+     * @param null|array $fields
+     * @param bool       $asObject
+     * @param bool       $id_as_key
      * @return array
      */
     public function &getGroupby($criteria = null, $fields = null, $asObject = true, $id_as_key = true)
@@ -578,7 +584,7 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
     {
         global $xoopsUser, $xoopsDB, $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
-        $moduleHelper = Helper::getHelper($moduleDirName);
+        $moduleHelper  = Helper::getHelper($moduleDirName);
 
         if (is_numeric($class_photo)) {
             $obj         = $this->get($class_photo);
@@ -613,7 +619,7 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
                 break;
         }
         //  $test1 = $class_photo->fileName;
-        $class_photo->save(TDMPICTURE_THUMB_PATH . '/' .$photo, $moduleHelper->getConfig('tdmpicture_thumb_quality'));
+        $class_photo->save(TDMPICTURE_THUMB_PATH . '/' . $photo, $moduleHelper->getConfig('tdmpicture_thumb_quality'));
 
         //test si reussis
         return true;

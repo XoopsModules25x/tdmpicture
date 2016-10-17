@@ -122,7 +122,8 @@ define('_MD_TDMPICTURE_WEIGHT', 'weight');
 //define("_MD_TDMPICTURE_CD","Number of CDs");
 //define("_MD_TDMPICTURE_INDATE","Release Date");
 //define("_MD_TDMPICTURE_UPLOAD","Upload");
-define('_MD_TDMPICTURE_UPLOAD_DESC', 'Some information may be automatic as the size or the height and width, If you see errors in the information,  you can change all the information simply by editing the file.');
+define('_MD_TDMPICTURE_UPLOAD_DESC',
+       'Some information may be automatic as the size or the height and width, If you see errors in the information,  you can change all the information simply by editing the file.');
 define('_MD_TDMPICTURE_URL', 'URL file');
 //define("_MD_TDMPICTURE_TYPE","Type");
 //define("_MD_TDMPICTURE_SIZE","Size (in byte)");

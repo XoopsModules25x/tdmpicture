@@ -213,7 +213,8 @@ switch ($op) {
 
             //navigation
             if ($numfile > $limit) {
-                $pagenav = new XoopsPageNav($numfile, $moduleHelper->getConfig('tdmpicture_page'), $start, 'start', 'ct=' . $ct . '&tris=' . $tris . '&limit=' . $limit);
+                $pagenav = new XoopsPageNav($numfile, $moduleHelper->getConfig('tdmpicture_page'), $start, 'start',
+                                            'ct=' . $ct . '&tris=' . $tris . '&limit=' . $limit);
                 $xoopsTpl->assign('nav_page', $pagenav->renderNav(2));
             }
         }

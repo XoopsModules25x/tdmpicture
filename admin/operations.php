@@ -162,7 +162,8 @@ $form = new XoopsThemeForm(_AM_FORM_RECORDMAINTENANCE, 'batchupload', 'redothumb
 $form->setExtra("enctype='multipart/form-data'");
 
 $start_text      = new XoopsFormText(_AM_TEXT_RECORDFORSTARTING, 'start', 20, 20, $start);
-$size_text       = new XoopsFormText(_AM_TEXT_NUMBERATATIME . "<br><br><span style='font-weight:normal'>" . _AM_LABEL_DESCNUMBERATATIME . '</span>', 'size', 20, 20, $size);
+$size_text       = new XoopsFormText(_AM_TEXT_NUMBERATATIME . "<br><br><span style='font-weight:normal'>" . _AM_LABEL_DESCNUMBERATATIME . '</span>',
+                                     'size', 20, 20, $size);
 $forceredo_radio = new XoopsFormRadioYN(_AM_RADIO_FORCEREDO, 'forceredo', $forceredo);
 $removerec_radio = new XoopsFormRadioYN(_AM_RADIO_REMOVEREC, 'removerec', $removerec);
 $resize_radio    = new XoopsFormRadioYN(_AM_RADIO_RESIZE . " ({$myalbum_width}x{$myalbum_height})", 'resize', $resize);

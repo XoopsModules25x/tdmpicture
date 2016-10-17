@@ -154,7 +154,7 @@ class CalendarGroupPermForm extends XoopsForm
         }
         $gpermHandler  = xoops_getHandler('groupperm');
         $memberHandler = xoops_getHandler('member');
-        $glist          = $memberHandler->getGroupList();
+        $glist         = $memberHandler->getGroupList();
         foreach (array_keys($glist) as $i) {
             if ($i == XOOPS_GROUP_ANONYMOUS && !$this->_showAnonymous) {
                 continue;
@@ -175,7 +175,8 @@ class CalendarGroupPermForm extends XoopsForm
         if ($this->_permDesc) {
             $ret .= $this->_permDesc . '<br><br>';
         }
-        $ret .= '<form title="' . str_replace('"', '', $this->getTitle()) . '" name="' . $this->getName() . '" id="' . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>'
+        $ret .= '<form title="' . str_replace('"', '', $this->getTitle()) . '" name="' . $this->getName() . '" id="' . $this->getName() . '" action="'
+                . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>'
                 . '<table width="100%" class="outer" cellspacing="1" valign="top">';
         $elements =& $this->getElements();
         $hidden   = '';
@@ -304,7 +305,8 @@ class CalendarGroupFormCheckBox extends XoopsFormElement
         }
         $checkallbtn_id = $ele_name . '[checkallbtn][' . $this->_groupId . ']';
         $option_ids_str = implode(', ', $option_ids);
-        $ret .= _ALL . " <input id=\"" . $checkallbtn_id . "\" type=\"checkbox\" value=\"\" onclick=\"var optionids = new Array(" . $option_ids_str . "); xoopsCheckAllElements(optionids, '" . $checkallbtn_id . "');\" />";
+        $ret .= _ALL . " <input id=\"" . $checkallbtn_id . "\" type=\"checkbox\" value=\"\" onclick=\"var optionids = new Array(" . $option_ids_str
+                . "); xoopsCheckAllElements(optionids, '" . $checkallbtn_id . "');\" />";
         $ret .= '</td></tr></table>';
 
         return $ret;
@@ -322,7 +324,8 @@ class CalendarGroupFormCheckBox extends XoopsFormElement
     public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
     {
         $ele_name = $this->getName();
-        $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" id=\"" . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" onclick=\"";
+        $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" id=\""
+                 . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" onclick=\"";
         // If there are parent elements, add javascript that will
         // make them selecteded when this element is checked to make
         // sure permissions to parent items are added as well.
@@ -342,8 +345,10 @@ class CalendarGroupFormCheckBox extends XoopsFormElement
         if (in_array($option['id'], $this->_value)) {
             $tree .= ' checked';
         }
-        $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . '[itemname][' . $option['id']
-                 . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br>\n";
+        $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . '[parents][' . $option['id'] . "]\" value=\"" . implode(':',
+                                                                                                                                                  $parentIds)
+                 . "\" /><input type=\"hidden\" name=\"" . $ele_name . '[itemname][' . $option['id'] . "]\" value=\""
+                 . htmlspecialchars($option['name']) . "\" /><br>\n";
 
         if ($this->_groupId == XOOPS_GROUP_ANONYMOUS && $option['anonymous']) {
             $tree = '';

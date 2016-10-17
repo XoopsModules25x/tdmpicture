@@ -1,2 +1,4 @@
-ALTER TABLE `tdmpicture_file` ADD `file_ext` int(11) unsigned NOT NULL default '0';
-ALTER TABLE `tdmpicture_cat` modify cat_img VARCHAR(150);
+ALTER TABLE `tdmpicture_file`
+  ADD `file_ext` INT(11) UNSIGNED NOT NULL DEFAULT '0';
+ALTER TABLE `tdmpicture_cat`
+  MODIFY cat_img VARCHAR(150);

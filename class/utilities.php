@@ -37,7 +37,7 @@ use Xmf\Module\Helper;
 //namespace Xoopsmodules/Tdmpicture;
 
 $moduleDirName = basename(dirname(__DIR__));
-$myts = MyTextSanitizer::getInstance();
+$myts          = MyTextSanitizer::getInstance();
 
 /**
  * Class AdslightUtilities
@@ -60,21 +60,23 @@ class TdmPictureUtilities
 
         global $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
-        $helper = Helper::getHelper($moduleDirName);
-        $options = array();
-        $isAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
+        $moduleHelper  = Helper::getHelper($moduleDirName);
+        $options       = array();
+        $isAdmin       = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
 
         if (class_exists('XoopsFormEditor')) {
-            $options['name'] = $name;
-            $options['value'] = $value;
-            $options['rows'] = 20;
-            $options['cols'] = '100%';
-            $options['width'] = $width;
+            $options['name']   = $name;
+            $options['value']  = $value;
+            $options['rows']   = 20;
+            $options['cols']   = '100%';
+            $options['width']  = $width;
             $options['height'] = $height;
             if ($isAdmin) {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $helper->getConfig('adslightAdminUser'), $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new XoopsFormEditor(ucfirst($name), $moduleHelper->getConfig('adslightAdminUser'), $options, $nohtml = false,
+                                                $onfailure = 'textarea');
             } else {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $helper->getConfig('adslightEditorUser'), $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new XoopsFormEditor(ucfirst($name), $moduleHelper->getConfig('adslightEditorUser'), $options, $nohtml = false,
+                                                $onfailure = 'textarea');
             }
         } else {
             $myEditor = new XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');
@@ -198,11 +200,11 @@ class TdmPictureUtilities
     {
         xoops_loadLanguage('admin', $module->dirname());
         //check for minimum XOOPS version
-        $currentVer = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray = explode('.', $currentVer);
+        $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
+        $currArray   = explode('.', $currentVer);
         $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
-        $reqArray = explode('.', $requiredVer);
-        $success = true;
+        $reqArray    = explode('.', $requiredVer);
+        $success     = true;
         foreach ($reqArray as $k => $v) {
             if (isset($currArray[$k])) {
                 if ($currArray[$k] > $v) {
@@ -241,8 +243,8 @@ class TdmPictureUtilities
         xoops_loadLanguage('admin', $module->dirname());
         // check for minimum PHP version
         $success = true;
-        $verNum = phpversion();
-        $reqVer =& $module->getInfo('min_php');
+        $verNum  = phpversion();
+        $reqVer  =& $module->getInfo('min_php');
         if (false !== $reqVer && '' !== $reqVer) {
             if (version_compare($verNum, $reqVer, '<')) {
                 $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_PHP, $reqVer, $verNum));
@@ -336,16 +338,16 @@ class TdmPictureUtilities
     {
         $tmp = array();
         // Search for the "Minimum keyword length"
-        $configHandler = xoops_getHandler('config');
+        $configHandler     = xoops_getHandler('config');
         $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
-        $limit = $xoopsConfigSearch['keyword_min'];
+        $limit             = $xoopsConfigSearch['keyword_min'];
 
-        $myts = MyTextSanitizer::getInstance();
-        $content = str_replace('<br>', ' ', $content);
-        $content = $myts->undoHtmlSpecialChars($content);
-        $content = strip_tags($content);
-        $content = strtolower($content);
-        $search_pattern = array(
+        $myts            = MyTextSanitizer::getInstance();
+        $content         = str_replace('<br>', ' ', $content);
+        $content         = $myts->undoHtmlSpecialChars($content);
+        $content         = strip_tags($content);
+        $content         = strtolower($content);
+        $search_pattern  = array(
             '&nbsp;',
             "\t",
             "\r\n",
@@ -403,9 +405,9 @@ class TdmPictureUtilities
             '',
             ''
         );
-        $content = str_replace($search_pattern, $replace_pattern, $content);
-        $keywords = explode(' ', $content);
-        $keywords = array_unique($keywords);
+        $content         = str_replace($search_pattern, $replace_pattern, $content);
+        $keywords        = explode(' ', $content);
+        $keywords        = array_unique($keywords);
 
         foreach ($keywords as $keyword) {
             if (strlen($keyword) >= $limit && !is_numeric($keyword)) {
@@ -430,7 +432,8 @@ class TdmPictureUtilities
     {
         global $start, $order, $file_cat, $sort, $xoopsModule;
 
-        $select_view = '<form name="form_switch" id="form_switch" action="' . $_SERVER['REQUEST_URI'] . '" method="post"><span style="font-weight: bold;">' . $text . '</span>';
+        $select_view = '<form name="form_switch" id="form_switch" action="' . $_SERVER['REQUEST_URI']
+                       . '" method="post"><span style="font-weight: bold;">' . $text . '</span>';
         //$sorts =  $sort ==  'asc' ? 'desc' : 'asc';
         if ($form_sort == $sort) {
             $sel1 = $order === 'asc' ? 'selasc.png' : 'asc.png';
@@ -439,8 +442,10 @@ class TdmPictureUtilities
             $sel1 = 'asc.png';
             $sel2 = 'desc.png';
         }
-        $select_view .= '  <a href="' . $_SERVER['PHP_SELF'] . '?file_cat=' . $file_cat . '&start=' . $start . '&sort=' . $form_sort . '&order=asc" /><img src="' . TDMPICTURE_IMAGES_URL . '/decos/' . $sel1 . '" title="ASC" alt="ASC"></a>';
-        $select_view .= '<a href="' . $_SERVER['PHP_SELF'] . '?file_cat=' . $file_cat . '&start=' . $start . '&sort=' . $form_sort . '&order=desc" /><img src="' . TDMPICTURE_IMAGES_URL . '/decos/' . $sel2 . '" title="DESC" alt="DESC"></a>';
+        $select_view .= '  <a href="' . $_SERVER['PHP_SELF'] . '?file_cat=' . $file_cat . '&start=' . $start . '&sort=' . $form_sort
+                        . '&order=asc" /><img src="' . TDMPICTURE_IMAGES_URL . '/decos/' . $sel1 . '" title="ASC" alt="ASC"></a>';
+        $select_view .= '<a href="' . $_SERVER['PHP_SELF'] . '?file_cat=' . $file_cat . '&start=' . $start . '&sort=' . $form_sort
+                        . '&order=desc" /><img src="' . TDMPICTURE_IMAGES_URL . '/decos/' . $sel2 . '" title="DESC" alt="DESC"></a>';
         $select_view .= '</form>';
 
         return $select_view;
@@ -496,14 +501,13 @@ class TdmPictureUtilities
     /**
      * xd_getdefaultmatchtypeid
      *
-     * Returns default matchtype id
+     * Returns default matchtype id for related event
      *
      * @package       pronoboulistenaute
      * @author        wild0ne (mailto:wild0ne@partypilger.de)
      * @copyright (c) wild0ne
      * @param $size
      * @return string
-     * @internal      param get $eventid default matchtype for related event
      */
 
     public static function prettySize($size)
@@ -530,7 +534,7 @@ class TdmPictureUtilities
         $moduleDirName = basename(dirname(__DIR__));
         //calcul les albums
         $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-        $criteria = new CriteriaCompo();
+        $criteria    = new CriteriaCompo();
         $criteria->add(new Criteria('file_uid', $uid));
         $numalb = $fileHandler->getCount($criteria);
 
@@ -565,9 +569,9 @@ class TdmPictureUtilities
 
         $form = new XoopsThemeForm('', 'catform', $_SERVER['REQUEST_URI'], 'post', true);
         //$form->setExtra('enctype="multipart/form-data"');
-        $tagchannel_select = new XoopsFormLabel('',
-            $mytree->makeSelBox('cat_pid', 'cat_title', '-', $cat, '-- ' . _MD_TDMPICTURE_CAT, 0, "OnChange='window.document.location=this.options[this.selectedIndex].value;'", 'tdmpicture_catview'),
-            'pid');
+        $tagchannel_select = new XoopsFormLabel('', $mytree->makeSelBox('cat_pid', 'cat_title', '-', $cat, '-- ' . _MD_TDMPICTURE_CAT, 0,
+                                                                        "OnChange='window.document.location=this.options[this.selectedIndex].value;'",
+                                                                        'tdmpicture_catview'), 'pid');
         $form->addElement($tagchannel_select);
 
         //$form->display();
@@ -602,7 +606,14 @@ class TdmPictureUtilities
     public static function selectView($cat, $limit)
     {
         global $start, $tris, $xoopsModule;
-        $option = array('10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '100' => 100);
+        $option      = array(
+            '10'  => 10,
+            '20'  => 20,
+            '30'  => 30,
+            '40'  => 40,
+            '50'  => 50,
+            '100' => 100
+        );
         $select_view = '<select name="limit" onchange="window.document.location=this.options[this.selectedIndex].value;">';
         //trouve le nom de la cat
         foreach (array_keys($option) as $i) {
@@ -621,7 +632,7 @@ class TdmPictureUtilities
      * @param string $before
      * @param string $after
      */
-    public static function print_tab($array, $before = '', $after = '')
+    public static function printTab($array, $before = '', $after = '')
     {
         //Affichage du texte HTML avant le tableau
 
@@ -644,7 +655,7 @@ class TdmPictureUtilities
 
     /**
      * admin menu
-     * @param int $currentoption
+     * @param int    $currentoption
      * @param string $breadcrumb
      */
     public static function adminmenu($currentoption = 0, $breadcrumb = '')
@@ -672,8 +683,10 @@ class TdmPictureUtilities
         global $xoopsModule, $xoopsConfig;
         $myts = MyTextSanitizer::getInstance();
 
-        $tblColors = array();
-        $tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] = $tblColors[7] = $tblColors[8] = '';
+        $tblColors                 = array();
+        $tblColors[0]
+                                   =
+        $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] = $tblColors[7] = $tblColors[8] = '';
         $tblColors[$currentoption] = 'current';
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
             include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php';
@@ -687,20 +700,29 @@ class TdmPictureUtilities
         echo "<td style='font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;'>
     <a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/index.php'>" . $xoopsModule->getVar('dirname') . '</a>
     </td>';
-        echo "<td style='font-size: 10px; text-align: right; color: #2F5376; padding: 0 6px; line-height: 18px;'><b>" . $myts->displayTarea($xoopsModule->name()) . '  </b> ' . $breadcrumb . ' </td>';
+        echo "<td style='font-size: 10px; text-align: right; color: #2F5376; padding: 0 6px; line-height: 18px;'><b>"
+             . $myts->displayTarea($xoopsModule->name()) . '  </b> ' . $breadcrumb . ' </td>';
         echo '</tr></table>';
         echo '</div>';
 
         echo "<div id='buttonbar'>";
         echo '<ul>';
-        echo "<li id='" . $tblColors[0] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/index.php\"><span>" . _MI_TDMSOUND_ADMENUINDEX . '</span></a></li>';
-        echo "<li id='" . $tblColors[1] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/genre.php\"><span>" . _MI_TDMSOUND_ADMENUGENRE . '</span></a></li>';
-        echo "<li id='" . $tblColors[2] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/artiste.php\"><span>" . _MI_TDMSOUND_ADMENUARTISTE . '</span></a></li>';
-        echo "<li id='" . $tblColors[3] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/album.php\"><span>" . _MI_TDMSOUND_ADMENUALBUM . '</span></a></li>';
-        echo "<li id='" . $tblColors[4] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/files.php\"><span>" . _MI_TDMSOUND_ADMENUFILE . '</span></a></li>';
-        echo "<li id='" . $tblColors[5] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/permissions.php\"><span>" . _MI_TDMSOUND_ADMENUPERMISSIONS . '</span></a></li>';
-        echo "<li id='" . $tblColors[6] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/about.php\"><span>" . _MI_TDMSOUND_ADMENUABOUT . '</span></a></li>';
-        echo "<li id='" . $tblColors[7] . "'><a href='../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid') . "'><span>" . _MI_TDMSOUND_ADMENUPREF . '</span></a></li>';
+        echo "<li id='" . $tblColors[0] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/index.php\"><span>"
+             . _MI_TDMSOUND_ADMENUINDEX . '</span></a></li>';
+        echo "<li id='" . $tblColors[1] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/genre.php\"><span>"
+             . _MI_TDMSOUND_ADMENUGENRE . '</span></a></li>';
+        echo "<li id='" . $tblColors[2] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/artiste.php\"><span>"
+             . _MI_TDMSOUND_ADMENUARTISTE . '</span></a></li>';
+        echo "<li id='" . $tblColors[3] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/album.php\"><span>"
+             . _MI_TDMSOUND_ADMENUALBUM . '</span></a></li>';
+        echo "<li id='" . $tblColors[4] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/files.php\"><span>"
+             . _MI_TDMSOUND_ADMENUFILE . '</span></a></li>';
+        echo "<li id='" . $tblColors[5] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname')
+             . "/admin/permissions.php\"><span>" . _MI_TDMSOUND_ADMENUPERMISSIONS . '</span></a></li>';
+        echo "<li id='" . $tblColors[6] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/about.php\"><span>"
+             . _MI_TDMSOUND_ADMENUABOUT . '</span></a></li>';
+        echo "<li id='" . $tblColors[7] . "'><a href='../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid')
+             . "'><span>" . _MI_TDMSOUND_ADMENUPREF . '</span></a></li>';
         echo '</ul></div>&nbsp;';
     }
 }

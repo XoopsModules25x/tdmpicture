@@ -93,7 +93,8 @@ define('_AM_TDMPICTURE_WEIGHT', 'Weight');
 define('_AM_TDMPICTURE_CD', 'Number of CDs');
 define('_AM_TDMPICTURE_INDATE', 'Release Date');
 define('_AM_TDMPICTURE_UPLOAD', 'Upload');
-define('_AM_TDMPICTURE_UPLOAD_DESC', 'Some information may be automatic as the size or the height and width, If you see errors in the information, you can updated it all the information simply by editing the file.');
+define('_AM_TDMPICTURE_UPLOAD_DESC',
+       'Some information may be automatic as the size or the height and width, If you see errors in the information, you can updated it all the information simply by editing the file.');
 
 define('_AM_TDMPICTURE_URL', 'URL file');
 define('_AM_TDMPICTURE_TYPE', 'Type');
@@ -118,7 +119,8 @@ define('_AM_TDMPICTURE_CATERROR', 'Error: You must create a Type');
 define('_AM_TDMPICTURE_ARTERROR', 'Error: You must create an Author');
 //suprime
 define('_AM_TDMPICTURE_FORMSUREDEL', "Are you sure to delete File: <span style='color: Red'>%s </span> </b>");
-define('_AM_TDMPICTURE_FORMSUREDELCAT', "Are you sure to delete Category:  <span style='color: Red'>%s </span> </b>, the children of the category will be deleted but the files will not be erased ");
+define('_AM_TDMPICTURE_FORMSUREDELCAT',
+       "Are you sure to delete Category:  <span style='color: Red'>%s </span> </b>, the children of the category will be deleted but the files will not be erased ");
 //About (about.php)
 define('_AM_ABOUT_RELEASEDATE', 'Release Date');
 define('_AM_ABOUT_AUTHOR', 'Author');

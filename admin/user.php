@@ -51,9 +51,10 @@ $user_waiting = $userHandler->getCount($criteria);
 echo '<div class="CPbigTitle" style="background-image: url(../assets/images/decos/user.png); background-repeat: no-repeat; background-position: left; padding-left: 60px; padding-top:20px; padding-bottom:15px;"><h3><strong>'
      . _AM_TDMPICTURE_MANAGE_user . '</strong></h3>';
 echo '</div><br><div class="head" align="center">';
-echo !isset($_REQUEST['user_display']) || $_REQUEST['user_display'] == 1 ? '<a href="user.php?op=list&user_display=0">' . sprintf(_AM_TDMPICTURE_THEREARE_user_WAITING, $user_waiting) . '</a>' : '<a href="user.php?op=list&user_display=1">'
-                                                                                                                                                                                                  . sprintf(_AM_TDMPICTURE_THEREARE_user, $numuser)
-                                                                                                                                                                                                  . '</a>';
+echo !isset($_REQUEST['user_display']) || $_REQUEST['user_display'] == 1 ? '<a href="user.php?op=list&user_display=0">'
+                                                                           . sprintf(_AM_TDMPICTURE_THEREARE_user_WAITING, $user_waiting)
+                                                                           . '</a>' : '<a href="user.php?op=list&user_display=1">'
+                                                                                      . sprintf(_AM_TDMPICTURE_THEREARE_user, $numuser) . '</a>';
 echo '</div><br>';
 switch ($op) {
 
@@ -72,8 +73,8 @@ switch ($op) {
         //upload
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploaddir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/upload/user/';
-        $mimetype  = explode('|', $helper->getConfig('tdmpicture_mimetype'));
-        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $helper->getConfig('tdmpicture_mimemax'));
+        $mimetype  = explode('|', $moduleHelper->getConfig('tdmpicture_mimetype'));
+        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $moduleHelper->getConfig('tdmpicture_mimemax'));
 
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('picture_');
@@ -97,9 +98,9 @@ switch ($op) {
         if ($userHandler->insert($obj)) {
 
             //permission
-            $perm_id       = isset($_REQUEST['user_id']) ? $_REQUEST['user_id'] : $obj->getVar('user_id');
+            $perm_id      = isset($_REQUEST['user_id']) ? $_REQUEST['user_id'] : $obj->getVar('user_id');
             $gpermHandler = xoops_getHandler('groupperm');
-            $criteria      = new CriteriaCompo();
+            $criteria     = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $perm_id, '='));
             $criteria->add(new Criteria('gperm_modid', $xoopsModule->getVar('mid'), '='));
             $criteria->add(new Criteria('gperm_name', 'tdmpicture_userview', '='));
@@ -151,7 +152,10 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            xoops_confirm(array('ok' => 1, 'user_id' => $_REQUEST['user_id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_TDMPICTURE_FORMSUREDELuser, $obj->getVar('user_title')));
+            xoops_confirm(array('ok'      => 1,
+                                'user_id' => $_REQUEST['user_id'],
+                                'op'      => 'delete'
+                          ), $_SERVER['REQUEST_URI'], sprintf(_AM_TDMPICTURE_FORMSUREDELuser, $obj->getVar('user_title')));
         }
         break;
 
@@ -208,14 +212,17 @@ switch ($op) {
             $mytree              = new TDMObjectTree($assoc_user, 'user_id', 'user_pid');
             $useregory_ArrayTree = $mytree->makeArrayTree('', '<img src="' . TDMPICTURE_IMAGES_URL . '/decos/arrow.gif">');
             foreach (array_keys($useregory_ArrayTree) as $i) {
-                $class      = ($class == 'even') ? 'odd' : 'even';
+                $class      = ($class === 'even') ? 'odd' : 'even';
                 $user_id    = $assoc_user[$i]->getVar('user_id');
                 $user_uid   = XoopsUser::getUnameFromId($assoc_user[$i]->getVar('user_uid'));
                 $user_pid   = $assoc_user[$i]->getVar('user_pid');
                 $user_title = $myts->displayTarea($assoc_user[$i]->getVar('user_title'));
 
-                $display = $assoc_user[$i]->getVar('user_display') == 1 ? "<img src='./../assets/images/on.gif' border='0'>" : "<a href='user.php?op=update&user_id=" . $user_id . "'><img alt='" . _AM_TDMPICTURE_UPDATE . "' title='"
-                                                                                                                               . _AM_TDMPICTURE_UPDATE . "' src='./../assets/images/off.gif' border='0'></a>";
+                $display = $assoc_user[$i]->getVar('user_display')
+                           == 1 ? "<img src='./../assets/images/on.gif' border='0'>" : "<a href='user.php?op=update&user_id=" . $user_id
+                                                                                       . "'><img alt='" . _AM_TDMPICTURE_UPDATE . "' title='"
+                                                                                       . _AM_TDMPICTURE_UPDATE
+                                                                                       . "' src='./../assets/images/off.gif' border='0'></a>";
 
                 //on test l'existance de l'image
                 $imgpath = TDMPICTURE_user_PATH . $assoc_user[$i]->getVar('user_img');
@@ -232,8 +239,10 @@ switch ($op) {
                 echo '<td align="center" width="5%">' . $assoc_user[$i]->getVar('user_weight') . '</td>';
                 echo '<td align="center" width="5%">' . $display . '</td>';
                 echo '<td align="center" width="10%">';
-                echo '<a href="user.php?op=edit&user_id=' . $user_id . '"><img src="./../assets/images/edit_mini.gif" border="0" alt="' . _AM_TDMPICTURE_MODIFY . '" title="' . _AM_TDMPICTURE_MODIFY . '"></a>';
-                echo '<a href="user.php?op=delete&user_id=' . $user_id . '"><img src="./../assets/images/delete_mini.gif" border="0" alt="' . _AM_TDMPICTURE_DELETE . '" title="' . _AM_TDMPICTURE_DELETE . '"></a>';
+                echo '<a href="user.php?op=edit&user_id=' . $user_id . '"><img src="./../assets/images/edit_mini.gif" border="0" alt="'
+                     . _AM_TDMPICTURE_MODIFY . '" title="' . _AM_TDMPICTURE_MODIFY . '"></a>';
+                echo '<a href="user.php?op=delete&user_id=' . $user_id . '"><img src="./../assets/images/delete_mini.gif" border="0" alt="'
+                     . _AM_TDMPICTURE_DELETE . '" title="' . _AM_TDMPICTURE_DELETE . '"></a>';
                 echo '</td>';
                 echo '</tr>';
             }

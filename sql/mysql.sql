@@ -1,62 +1,65 @@
-
 CREATE TABLE `tdmpicture_file` (
-  `file_id` int(11) unsigned NOT NULL auto_increment,
-  `file_cat` int(11) unsigned NOT NULL default '0',
-  `file_file` text,
-  `file_title` varchar(255) NOT NULL default '',
-  `file_text` text,
-  `file_type` varchar(255) default NULL,
-  `file_display` int(1) NOT NULL default '0',
-  `file_hits` int(11) unsigned NOT NULL default '0',
-  `file_dl` int(11) unsigned NOT NULL default '0',
-  `file_votes` int(11) unsigned NOT NULL default '0',
-  `file_counts` int(11) unsigned NOT NULL default '0',
-  `file_indate` int(11) unsigned NOT NULL default '0',
-  `file_uid` int(11) NOT NULL,
-  `file_size` int(11) default NULL,
-  `file_res_x` int(11) NOT NULL,
-  `file_res_y` int(11) NOT NULL,
-  `file_comments` int(11) unsigned NOT NULL default '0', 
-`file_ext` int(11) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`file_id`)
-) ENGINE=MyISAM;
+  `file_id`       INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `file_cat`      INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `file_file`     TEXT,
+  `file_title`    VARCHAR(255)     NOT NULL DEFAULT '',
+  `file_text`     TEXT,
+  `file_type`     VARCHAR(255)              DEFAULT NULL,
+  `file_display`  INT(1)           NOT NULL DEFAULT '0',
+  `file_hits`     INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `file_dl`       INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `file_votes`    INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `file_counts`   INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `file_indate`   INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `file_uid`      INT(11)          NOT NULL,
+  `file_size`     INT(11)                   DEFAULT NULL,
+  `file_res_x`    INT(11)          NOT NULL,
+  `file_res_y`    INT(11)          NOT NULL,
+  `file_comments` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `file_ext`      INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`file_id`)
+)
+  ENGINE = MyISAM;
 
 CREATE TABLE `tdmpicture_cat` (
-  `cat_id` int(11) unsigned NOT NULL auto_increment,
-  `cat_pid` int(11) unsigned NOT NULL default '0',
-  `cat_title` varchar(50) NOT NULL default '',
-  `cat_date` int(11) NOT NULL default '0',
-  `cat_text` text,
-  `cat_img` varchar(100) default NULL,
-  `cat_weight` int(11) unsigned NOT NULL default '0',
-  `cat_display` int(1) NOT NULL default '0',
-  `cat_uid` int(11) unsigned NOT NULL default '0',
-  `cat_index` int(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY  (`cat_id`)
-) ENGINE=MyISAM;
+  `cat_id`      INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cat_pid`     INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `cat_title`   VARCHAR(50)      NOT NULL DEFAULT '',
+  `cat_date`    INT(11)          NOT NULL DEFAULT '0',
+  `cat_text`    TEXT,
+  `cat_img`     VARCHAR(100)              DEFAULT NULL,
+  `cat_weight`  INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `cat_display` INT(1)           NOT NULL DEFAULT '0',
+  `cat_uid`     INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `cat_index`   INT(1) UNSIGNED  NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cat_id`)
+)
+  ENGINE = MyISAM;
 
 CREATE TABLE `tdmpicture_pl` (
-  `pl_id` mediumint(8) unsigned NOT NULL auto_increment,
-  `pl_uid` int(10) unsigned NOT NULL default '0',
-  `pl_file` int(10) unsigned NOT NULL default '0',
-  `pl_album` int(10) unsigned NOT NULL default '0',
-  `pl_artiste` int(10) unsigned NOT NULL default '0',
-  `pl_genre` int(10) unsigned NOT NULL default '0',
-  `pl_num` int(10) unsigned NOT NULL default '0',
-  `pl_title` varchar(255) NOT NULL default '',
-  `pl_display` int(1) NOT NULL default '0',
-  `pl_hits` int(10) unsigned NOT NULL default '0',
-  `pl_votes` int(10) unsigned NOT NULL default '0',
-  `pl_counts` int(10) unsigned NOT NULL default '0',
-  `pl_indate` int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`pl_id`)
-) ENGINE=MyISAM;
+  `pl_id`      MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pl_uid`     INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_file`    INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_album`   INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_artiste` INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_genre`   INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_num`     INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_title`   VARCHAR(255)          NOT NULL DEFAULT '',
+  `pl_display` INT(1)                NOT NULL DEFAULT '0',
+  `pl_hits`    INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_votes`   INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_counts`  INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  `pl_indate`  INT(10) UNSIGNED      NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pl_id`)
+)
+  ENGINE = MyISAM;
 
 CREATE TABLE `tdmpicture_vote` (
-  `vote_id` int(8) unsigned NOT NULL auto_increment,
-  `vote_file` int(10) unsigned NOT NULL default '0',
-  `vote_album` int(10) unsigned NOT NULL default '0',
-  `vote_artiste` int(10) unsigned NOT NULL default '0',
-  `vote_ip` varchar(20) default NULL,
-  PRIMARY KEY  (`vote_id`)
-) ENGINE=MyISAM;
+  `vote_id`      INT(8) UNSIGNED  NOT NULL AUTO_INCREMENT,
+  `vote_file`    INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `vote_album`   INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `vote_artiste` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `vote_ip`      VARCHAR(20)               DEFAULT NULL,
+  PRIMARY KEY (`vote_id`)
+)
+  ENGINE = MyISAM;

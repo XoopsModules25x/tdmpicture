@@ -13,47 +13,43 @@
  * @copyright    XOOPS Project http://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
- * @since
  * @author       XOOPS Development Team
  */
 
-require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-require_once __DIR__ . '/common.php';
+//require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+//require_once __DIR__ . '/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-
-$modir = strtoupper($moduleDirName);
+$upperDirName  = strtoupper($moduleDirName);
 /*
-if (!defined($modir . '_DIRNAME')) {
-    define($modir . '_DIRNAME', $moduleDirName);
-    define($modir . '_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($modir . '_DIRNAME'));
-    define($modir . '_URL', XOOPS_URL . '/modules/' . constant($modir . '_DIRNAME'));
-    define($modir . '_ADMIN', constant($modir . '_URL') . '/admin/index.php');
-    define($modir . '_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($modir . '_DIRNAME'));
-    define($modir . '_AUTHOR_LOGOIMG', constant($modir . '_URL') . '/assets/images/logoModule.png');
+if (!defined($upperDirName . '_DIRNAME')) {
+    define($upperDirName . '_DIRNAME', $moduleDirName);
+    define($upperDirName . '_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($upperDirName . '_DIRNAME'));
+    define($upperDirName . '_URL', XOOPS_URL . '/modules/' . constant($upperDirName . '_DIRNAME'));
+    define($upperDirName . '_ADMIN', constant($upperDirName . '_URL') . '/admin/index.php');
+    define($upperDirName . '_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($upperDirName . '_DIRNAME'));
+    define($upperDirName . '_AUTHOR_LOGOIMG', constant($upperDirName . '_URL') . '/assets/images/logoModule.png');
 }
+*/
 
 // Define here the place where main upload path
+//$img_dir = $moduleHelper->getConfig('uploaddir');
 
-//$img_dir = $helper->getConfig('uploaddir');
-
-define($modir . '_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . constant($modir . '_DIRNAME')); // WITHOUT Trailing slash
+//define($upperDirName . '_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . $moduleDirName); // WITHOUT Trailing slash
 //define("ADSLIGHT_UPLOAD_PATH", $img_dir); // WITHOUT Trailing slash
-define($modir . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . constant($modir . '_DIRNAME')); // WITHOUT Trailing slash
-*/
+define($upperDirName . '_UPLOAD_PATH_CONFIG', XOOPS_UPLOAD_PATH . '/' . $moduleDirName); // WITHOUT Trailing slash
+
 //Configurator
 return array(
     'name'          => 'Module Configurator',
     'uploadFolders' => array(
-        constant($modir . '_UPLOAD_PATH'),
-        constant($modir . '_UPLOAD_PATH') . '/photo',
-        constant($modir . '_UPLOAD_PATH') . '/thumb',
-        constant($modir . '_UPLOAD_PATH') . '/cat',
+        constant($upperDirName . '_UPLOAD_PATH_CONFIG'),
+        constant($upperDirName . '_UPLOAD_PATH_CONFIG') . '/thumb',
+        constant($upperDirName . '_UPLOAD_PATH_CONFIG') . '/cat',
     ),
     'copyFiles'     => array(
-        constant($modir . '_UPLOAD_PATH') . '/photo',
-        constant($modir . '_UPLOAD_PATH') . '/thumb',
-        constant($modir . '_UPLOAD_PATH') . '/cat',
+        constant($upperDirName . '_UPLOAD_PATH_CONFIG') . '/thumb',
+        constant($upperDirName . '_UPLOAD_PATH_CONFIG') . '/cat',
     ),
 
     'templateFolders' => array(
@@ -75,5 +71,14 @@ return array(
 );
 
 // module information
-$modCopyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
-                     <img src='" . constant($modir . '_AUTHOR_LOGOIMG') . "' alt='XOOPS Project' /></a>";
+$modCopyright
+    = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
+                     <img src='" . constant($upperDirName . '_AUTHOR_LOGOIMG') . "' alt='XOOPS Project' /></a>";
+
+//
+//xoops_loadLanguage('common', $moduleDirName);
+//
+//xoops_load('constants', $moduleDirName);
+//xoops_load('utilities', $moduleDirName);
+//xoops_load('XoopsRequest');
+//xoops_load('XoopsFilterInput');

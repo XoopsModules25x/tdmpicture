@@ -56,7 +56,7 @@ function FieldExists($fieldname, $table)
 function xoops_module_pre_update_tdmpicture(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $className = ucfirst($moduleDirName) . 'Utilities';
+    $className     = ucfirst($moduleDirName) . 'Utilities';
     if (!class_exists($className)) {
         xoops_load('utilities', $moduleDirName);
     }
@@ -74,8 +74,8 @@ function xoops_module_pre_update_tdmpicture(XoopsModule $module)
 }
 
 /**
- * @param XoopsObject $xoopsModule
- * @param null|int $previousVersion
+ * @param XoopsModule|XoopsObject $xoopsModule
+ * @param null|int                $previousVersion
  * @return bool
  */
 function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersion = null)
@@ -84,11 +84,11 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
     $moduleDirName = basename(dirname(__DIR__));
 
     if ($previousVersion < 106) {
-        $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/'. $moduleDirName . '/sql/mysql1.06.sql');
+        $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/sql/mysql1.06.sql');
     }
 
     if ($previousVersion < 108) {
-        $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/'. $moduleDirName . '/sql/mysql1.07.sql');
+        $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/sql/mysql1.07.sql');
     }
     if ($previousVersion < 109) {
 
@@ -98,13 +98,15 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
             xoops_load('utilities', $moduleDirName);
         }
 
-
         //delete old HTML templates
         if (count($configurator['templateFolders']) > 0) {
             foreach ($configurator['templateFolders'] as $folder) {
                 $templateFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $folder);
                 if (is_dir($templateFolder)) {
-                    $templateList = array_diff(scandir($templateFolder), array('..', '.'));
+                    $templateList = array_diff(scandir($templateFolder), array(
+                        '..',
+                        '.'
+                    ));
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
                         if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
@@ -116,7 +118,6 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
                 }
             }
         }
-
 
         //  ---  DELETE OLD FILES ---------------
         if (count($configurator['oldFiles']) > 0) {
@@ -136,7 +137,7 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
             foreach (array_keys($configurator['oldFolders']) as $i) {
                 $tempFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator['oldFolders'][$i]);
                 /** @var XoopsObjectHandler $folderHandler */
-                $folderHandler   = XoopsFile::getHandler('folder', $tempFolder);
+                $folderHandler = XoopsFile::getHandler('folder', $tempFolder);
                 $folderHandler->delete($tempFolder);
             }
         }
@@ -159,7 +160,8 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
         }
 
         //delete .html entries from the tpl table
-        $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+        $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n')
+               . "' AND `tpl_file` LIKE '%.html%'";
         $xoopsDB->queryF($sql);
 
     }

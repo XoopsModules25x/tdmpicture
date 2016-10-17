@@ -39,7 +39,7 @@ $xoopsTpl->assign('perm_cat', $perm_cat);
 
 //variable post
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
-//$limit = !empty($_REQUEST['limit']) ? $_REQUEST['limit'] : $helper->getConfig('tdmpicture_page');
+//$limit = !empty($_REQUEST['limit']) ? $_REQUEST['limit'] : $moduleHelper->getConfig('tdmpicture_page');
 $ct    = isset($_REQUEST['ct']) ? $_REQUEST['ct'] : false;
 $start = isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
 $tris  = isset($_REQUEST['tris']) ? $_REQUEST['tris'] : 'file_indate';
@@ -50,13 +50,13 @@ $order = isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
 //$xoopsTpl->assign('view_mode', $view_mode = isset($_REQUEST['view_mode']) ? $_REQUEST['view_mode'] : 'block' );
 $xoopsTpl->assign('tris', $tris);
 $xoopsTpl->assign('order', $order);
-$xoopsTpl->assign('limit', $helper->getConfig('tdmpicture_page'));
-$xoopsTpl->assign('slide_width', $helper->getConfig('tdmpicture_slide_width'));
-$xoopsTpl->assign('slide_height', $helper->getConfig('tdmpicture_slide_height'));
+$xoopsTpl->assign('limit', $moduleHelper->getConfig('tdmpicture_page'));
+$xoopsTpl->assign('slide_width', $moduleHelper->getConfig('tdmpicture_slide_width'));
+$xoopsTpl->assign('slide_height', $moduleHelper->getConfig('tdmpicture_slide_height'));
 $xoopsTpl->assign('baseurl', $_SERVER['PHP_SELF']);
-$xoopsTpl->assign('display', $helper->getConfig('tdmpicture_display'));
-$xoopsTpl->assign('thumb_width', $helper->getConfig('tdmpicture_thumb_width') . 'px');
-$xoopsTpl->assign('thumb_heigth', $helper->getConfig('tdmpicture_thumb_heigth') . 'px');
+$xoopsTpl->assign('display', $moduleHelper->getConfig('tdmpicture_display'));
+$xoopsTpl->assign('thumb_width', $moduleHelper->getConfig('tdmpicture_thumb_width') . 'px');
+$xoopsTpl->assign('thumb_heigth', $moduleHelper->getConfig('tdmpicture_thumb_heigth') . 'px');
 
 switch ($op) {
 
@@ -91,8 +91,8 @@ switch ($op) {
         //asigne les URL
         //define("TDM_CAT_URL", TDMPICTURE_CAT_URL);
         //define("TDM_CAT_PATH", TDMPICTURE_CAT_PATH);
-        //$cat_display = $helper->getConfig('tdmpicture_cat_display');
-        //$cat_cel = $helper->getConfig('tdmpicture_cat_cel');
+        //$cat_display = $moduleHelper->getConfig('tdmpicture_cat_display');
+        //$cat_cel = $moduleHelper->getConfig('tdmpicture_cat_cel');
         $display_cat = $mytree->makeCatBox($fileHandler, 'cat_title', '-', $ct);
         //$xoopsTpl->assign('display_cat', $display_cat);
         $xoopsTpl->assign('tree_display', $display_cat);
@@ -113,7 +113,7 @@ switch ($op) {
         $criteria3->add(new Criteria('file_display', 1));
         $criteria3->add(new Criteria('file_cat', $ct));
         $criteria3->setStart($start);
-        $criteria3->setLimit($helper->getConfig('tdmpicture_page'));
+        $criteria3->setLimit($moduleHelper->getConfig('tdmpicture_page'));
         $criteria3->setSort($tris);
 
         $criteria3->setOrder($order);
@@ -181,7 +181,7 @@ switch ($op) {
                     //}
 
                     //favorie
-                    if ($file['counts'] >= $helper->getConfig('tdmpicture_favourite')) {
+                    if ($file['counts'] >= $moduleHelper->getConfig('tdmpicture_favourite')) {
                         $file['favourite'] = "<img src='" . TDMPICTURE_IMAGES_URL . "/flag.png'/>";
                     } else {
                         $file['favourite'] = '';
@@ -213,7 +213,8 @@ switch ($op) {
 
             //navigation
             if ($numfile > $limit) {
-                $pagenav = new XoopsPageNav($numfile, $helper->getConfig('tdmpicture_page'), $start, 'start', 'ct=' . $ct . '&tris=' . $tris . '&limit=' . $limit);
+                $pagenav = new XoopsPageNav($numfile, $moduleHelper->getConfig('tdmpicture_page'), $start, 'start',
+                                            'ct=' . $ct . '&tris=' . $tris . '&limit=' . $limit);
                 $xoopsTpl->assign('nav_page', $pagenav->renderNav(2));
             }
         }
@@ -228,8 +229,8 @@ if (isset($xoTheme) && is_object($xoTheme)) {
     $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($meta_description));
     $xoTheme->addMeta('meta', 'description', $meta_description);
 } else {    // Compatibility for old Xoops versions
-    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($helper->getConfig('tdmpicture_keywords')));
-    $xoopsTpl->assign('xoops_meta_description', $helper->getConfig('tdmpicture_description'));
+    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($moduleHelper->getConfig('tdmpicture_keywords')));
+    $xoopsTpl->assign('xoops_meta_description', $moduleHelper->getConfig('tdmpicture_description'));
 }
 
 include_once XOOPS_ROOT_PATH . '/footer.php';

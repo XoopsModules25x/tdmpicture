@@ -24,7 +24,7 @@ include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $moduleDirName = basename(dirname(__DIR__));
-$helper = Helper::getHelper($moduleDirName);
+$moduleHelper  = Helper::getHelper($moduleDirName);
 
 TdmPictureUtilities::adminheader();
 $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
@@ -85,8 +85,8 @@ switch ($op) {
         $path = $obj->getFilePath();
 
         @chmod($path['image_path'], 0755);
-        $mimetype = explode('|', $helper->getConfig('tdmpicture_mimetype'));
-        $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $helper->getConfig('tdmpicture_mimemax'), null, null);
+        $mimetype = explode('|', $moduleHelper->getConfig('tdmpicture_mimetype'));
+        $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $moduleHelper->getConfig('tdmpicture_mimemax'), null, null);
 
         //variable commune
         $obj->setVar('file_cat', $_REQUEST['file_cat']);
@@ -123,7 +123,7 @@ switch ($op) {
                     if (!empty($_REQUEST['resize'])) {
                         $size = explode('x', $_REQUEST['resize']);
                         $photo->adaptiveResize($size[0], $size[1]);
-                        $photo->save($file_path['image_path'], $helper->getConfig('tdmpicture_thumb_quality'));
+                        $photo->save($file_path['image_path'], $moduleHelper->getConfig('tdmpicture_thumb_quality'));
                     }
 
                     $obj->setVar('file_res_x', $photo->getCurrentWidth());
@@ -210,7 +210,10 @@ switch ($op) {
             $category_admin = new ModuleAdmin();
             echo $category_admin->addNavigation(basename(__FILE__));
 
-            xoops_confirm(array('ok' => 1, 'file_id' => $_REQUEST['file_id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_TDMPICTURE_FORMSUREDEL, $obj->getVar('file_title')));
+            xoops_confirm(array('ok'      => 1,
+                                'file_id' => $_REQUEST['file_id'],
+                                'op'      => 'delete'
+                          ), $_SERVER['REQUEST_URI'], sprintf(_AM_TDMPICTURE_FORMSUREDEL, $obj->getVar('file_title')));
         }
         break;
 
@@ -378,7 +381,9 @@ switch ($op) {
 
         //nav
         if ($numrows > 10) {
-            $pagenav = new XoopsPageNav($numrows, 10, $start, 'start', 'op=list&file_display=' . $file_display . '&file_cat=' . $file_cat . '&sort=' . $sort . '&order=' . $order . '');
+            $pagenav = new XoopsPageNav($numrows, 10, $start, 'start',
+                                        'op=list&file_display=' . $file_display . '&file_cat=' . $file_cat . '&sort=' . $sort . '&order=' . $order
+                                        . '');
             $pagenav = $pagenav->renderNav(2);
         } else {
             $pagenav = '';
@@ -414,9 +419,11 @@ switch ($op) {
                 $file_size  = $arr[$i]->getVar('file_size');
                 $file_hits  = $arr[$i]->getVar('file_hits');
 
-                $display = $arr[$i]->getVar('file_display') == 1 ? "<a href='files.php?op=display&file_id=" . $file_id . "'><img src='" . $pathIcon16 . "/1.png' border='0'></a>" : "<a href='files.php?op=display&file_id=" . $file_id . "'><img alt='"
-                                                                                                                                                                                    . _AM_TDMPICTURE_DISPLAY . "' title='" . _AM_TDMPICTURE_DISPLAY
-                                                                                                                                                                                    . "' src='" . $pathIcon16 . "/0.png' border='0'></a>";
+                $display = $arr[$i]->getVar('file_display') == 1 ? "<a href='files.php?op=display&file_id=" . $file_id . "'><img src='" . $pathIcon16
+                                                                   . "/1.png' border='0'></a>" : "<a href='files.php?op=display&file_id=" . $file_id
+                                                                                                 . "'><img alt='" . _AM_TDMPICTURE_DISPLAY
+                                                                                                 . "' title='" . _AM_TDMPICTURE_DISPLAY . "' src='"
+                                                                                                 . $pathIcon16 . "/0.png' border='0'></a>";
 
                 //apelle lien image
                 $file_path = $arr[$i]->getFilePath($arr[$i]->getVar('file_file'));
@@ -430,14 +437,17 @@ switch ($op) {
                 //on test l'existance du thumb
                 $thumb_img = "<a href='files.php?op=thumb&file_id=" . $file_id . "'>";
                 if (file_exists($file_path['thumb_path'])) {
-                    $thumb_img .= "<img alt='" . _AM_TDMPICTURE_ADDTHUMB . "' title='" . _AM_TDMPICTURE_ADDTHUMB . "' src='" . $pathIcon16 . "/1.png' border='0'>";
+                    $thumb_img .= "<img alt='" . _AM_TDMPICTURE_ADDTHUMB . "' title='" . _AM_TDMPICTURE_ADDTHUMB . "' src='" . $pathIcon16
+                                  . "/1.png' border='0'>";
                 } else {
-                    $thumb_img .= "<img alt='" . _AM_TDMPICTURE_ADDTHUMB . "' title='" . _AM_TDMPICTURE_ADDTHUMB . "' src='" . $pathIcon16 . "/0.png' border='0'>";
+                    $thumb_img .= "<img alt='" . _AM_TDMPICTURE_ADDTHUMB . "' title='" . _AM_TDMPICTURE_ADDTHUMB . "' src='" . $pathIcon16
+                                  . "/0.png' border='0'>";
                 }
                 $thumb_img .= '</a>';
 
                 echo '<tr class="' . $class . '">';
-                echo '<td align="center" style="vertical-align:middle;"><input type="checkbox" name="id[]" id="id[]" value="' . $arr[$i]->getVar('file_id') . '" /></td>';
+                echo '<td align="center" style="vertical-align:middle;"><input type="checkbox" name="id[]" id="id[]" value="'
+                     . $arr[$i]->getVar('file_id') . '" /></td>';
                 echo '<td align="center" style="vertical-align:middle;"><img src="' . $file_img . '" alt="" title="" height="60"></td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $file_cattitle . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $file_title . '</td>';
@@ -449,9 +459,12 @@ switch ($op) {
                 echo '<td align="center" style="vertical-align:middle;">' . $thumb_img . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $display . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">';
-                echo '<a href="files.php?op=update&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/up.png border="0" alt="' . _AM_TDMPICTURE_UPDATE . '" title="' . _AM_TDMPICTURE_UPDATE . '"></a>';
-                echo '<a href="files.php?op=edit&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/edit.png border="0" alt="' . _AM_TDMPICTURE_MODIFY . '" title="' . _AM_TDMPICTURE_MODIFY . '"></a>';
-                echo '<a href="files.php?op=delete&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/delete.png border="0" alt="' . _AM_TDMPICTURE_DELETE . '" title="' . _AM_TDMPICTURE_DELETE . '"></a>';
+                echo '<a href="files.php?op=update&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/up.png border="0" alt="'
+                     . _AM_TDMPICTURE_UPDATE . '" title="' . _AM_TDMPICTURE_UPDATE . '"></a>';
+                echo '<a href="files.php?op=edit&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/edit.png border="0" alt="'
+                     . _AM_TDMPICTURE_MODIFY . '" title="' . _AM_TDMPICTURE_MODIFY . '"></a>';
+                echo '<a href="files.php?op=delete&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/delete.png border="0" alt="'
+                     . _AM_TDMPICTURE_DELETE . '" title="' . _AM_TDMPICTURE_DELETE . '"></a>';
                 //echo '<a href="files.php?op=edit_img&file_id='.$file_id.'"><img src="./../assets/images/picture_edit.png" border="0" alt="'._AM_TDMPICTURE_EDITIMG.'" title="'._AM_TDMPICTURE_EDITIMG.'"></a>';
                 echo '</td>';
                 echo '</tr>';

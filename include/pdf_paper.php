@@ -36,14 +36,15 @@ error_reporting(0);
 
 include_once __DIR__ . '/../../../mainfile.php';
 include_once __DIR__ . '/../../../include/cp_header.php';
-require __DIR__ . '/../fpdf/fpdf.php';
+//require __DIR__ . '/../fpdf/fpdf.php';
+require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
 //include_once XOOPS_ROOT_PATH.'/modules/tdmpicture/class/tdmassoc_pdf_table.php';
 include_once XOOPS_ROOT_PATH . '/modules/tdmpicture/class/utilities.php';
 
 global $xoopsDB, $xoopsConfig;
 
 $moduleDirName = basename(dirname(__DIR__));
-$helper = Helper::getHelper($moduleDirName);
+$moduleHelper  = Helper::getHelper($moduleDirName);
 
 if (file_exists(XOOPS_ROOT_PATH . '/modules/tdmpicture/language/' . $xoopsConfig['language'] . '/admin.php')) {
     include_once XOOPS_ROOT_PATH . '/modules/tdmpicture/language/' . $xoopsConfig['language'] . '/admin.php';
@@ -55,23 +56,23 @@ $myts = MyTextSanitizer:: getInstance(); // MyTextSanitizer object
 $option = !empty($_REQUEST['option']) ? $_REQUEST['option'] : 'default';
 
 //Text generale
-$pdf_data['member_name']               = Chars(_AM_TDMASSOC_MEMBER_FORM_NAME);
-$pdf_data['member_firstname']          = Chars(_AM_TDMASSOC_MEMBER_FORM_FISRTNAME);
-$pdf_data['member_adress']             = Chars(_AM_TDMASSOC_MEMBER_FORM_ADRESS);
-$pdf_data['member_zipcode']            = Chars(_AM_TDMASSOC_MEMBER_PDF_ZIPCODE);
-$pdf_data['member_town']               = Chars(_AM_TDMASSOC_MEMBER_FORM_TOWN);
-$pdf_data['member_phone']              = Chars(_AM_TDMASSOC_MEMBER_FORM_PHONE);
-$pdf_data['member_registration_start'] = Chars(_AM_TDMASSOC_MEMBER_FORM_REGISTRATION_START);
-$pdf_data['member_registration_end']   = Chars(_AM_TDMASSOC_MEMBER_FORM_REGISTRATION_END);
-$pdf_data['status_name']               = Chars(_AM_TDMASSOC_MEMBER_FORM_STATUS);
+$pdf_data['member_name']               = Chars(_AM_TDMPICTURE_MEMBER_FORM_NAME);
+$pdf_data['member_firstname']          = Chars(_AM_TDMPICTURE_MEMBER_FORM_FISRTNAME);
+$pdf_data['member_adress']             = Chars(_AM_TDMPICTURE_MEMBER_FORM_ADRESS);
+$pdf_data['member_zipcode']            = Chars(_AM_TDMPICTURE_MEMBER_PDF_ZIPCODE);
+$pdf_data['member_town']               = Chars(_AM_TDMPICTURE_MEMBER_FORM_TOWN);
+$pdf_data['member_phone']              = Chars(_AM_TDMPICTURE_MEMBER_FORM_PHONE);
+$pdf_data['member_registration_start'] = Chars(_AM_TDMPICTURE_MEMBER_FORM_REGISTRATION_START);
+$pdf_data['member_registration_end']   = Chars(_AM_TDMPICTURE_MEMBER_FORM_REGISTRATION_END);
+$pdf_data['status_name']               = Chars(_AM_TDMPICTURE_MEMBER_FORM_STATUS);
 
 //Composition de l'association
-$pdf_data['composition_title']       = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_TITLE);
-$pdf_data['composition_list_admin']  = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_LIST_ADMIN_TITLE);
-$pdf_data['composition_list_office'] = Chars(_AM_TDMASSOC_MEMBER_PDF_COMPOSITION_LIST_OFFICE_TITLE);
+$pdf_data['composition_title']       = Chars(_AM_TDMPICTURE_MEMBER_PDF_COMPOSITION_TITLE);
+$pdf_data['composition_list_admin']  = Chars(_AM_TDMPICTURE_MEMBER_PDF_COMPOSITION_LIST_ADMIN_TITLE);
+$pdf_data['composition_list_office'] = Chars(_AM_TDMPICTURE_MEMBER_PDF_COMPOSITION_LIST_OFFICE_TITLE);
 
 //Liste d'administrateurs
-$pdf_data['list_admin_title'] = Chars(_AM_TDMASSOC_MEMBER_PDF_LISTADMIN_TITLE);
+$pdf_data['list_admin_title'] = Chars(_AM_TDMPICTURE_MEMBER_PDF_LISTADMIN_TITLE);
 
 switch ($option) {
     default:
@@ -98,13 +99,26 @@ switch ($option) {
         $pdf->AddCol('member_phone', 24, $pdf_data['member_phone'], 'L');
         $pdf->AddCol('status_name', 32, $pdf_data['status_name'], 'L');
         $prop = array(
-            'HeaderColor' => array(255, 150, 100),
-            'color1'      => array(210, 245, 255),
-            'color2'      => array(255, 255, 210),
+            'HeaderColor' => array(
+                255,
+                150,
+                100
+            ),
+            'color1'      => array(
+                210,
+                245,
+                255
+            ),
+            'color2'      => array(
+                255,
+                255,
+                210
+            ),
             'padding'     => 2
         );
 
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
+                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
                     . ' S WHERE S.status_id=M.member_status AND M.member_office = "1" ORDER BY S.status_order limit 0,10', $prop);
 
         $pdf->TitreChapitre($myts->displayTarea($pdf_data['composition_list_admin']));
@@ -117,9 +131,21 @@ switch ($option) {
         $pdf->AddCol('member_phone', 24, $pdf_data['member_phone'], 'L');
         $pdf->AddCol('status_name', 32, $pdf_data['status_name'], 'L');
         $prop = array(
-            'HeaderColor' => array(255, 150, 100),
-            'color1'      => array(210, 245, 255),
-            'color2'      => array(255, 255, 210),
+            'HeaderColor' => array(
+                255,
+                150,
+                100
+            ),
+            'color1'      => array(
+                210,
+                245,
+                255
+            ),
+            'color2'      => array(
+                255,
+                255,
+                210
+            ),
             'padding'     => 2
         );
 
@@ -127,7 +153,8 @@ switch ($option) {
         $criteria->add(new Criteria('member_waiting', 1,'='));
         $criteria->setOrder('ASC');
         $assoc_arr = $memberHandler->getObjects($criteria);*/
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
+                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
                     . ' S WHERE S.status_id=M.member_status AND M.member_office = "0" ORDER BY S.status_order limit 0,10', $prop);
         $pdf->Output();
 
@@ -151,13 +178,26 @@ switch ($option) {
         $pdf->AddCol('member_phone', 24, $pdf_data['member_phone'], 'L');
         $pdf->AddCol('status_name', 32, $pdf_data['status_name'], 'L');
         $prop = array(
-            'HeaderColor' => array(255, 150, 100),
-            'color1'      => array(210, 245, 255),
-            'color2'      => array(255, 255, 210),
+            'HeaderColor' => array(
+                255,
+                150,
+                100
+            ),
+            'color1'      => array(
+                210,
+                245,
+                255
+            ),
+            'color2'      => array(
+                255,
+                255,
+                210
+            ),
             'padding'     => 1
         );
 
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
+                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
                     . ' S WHERE S.status_id=M.member_status ORDER BY S.status_order limit 0,10', $prop);
         $pdf->Output();
 
@@ -204,7 +244,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 210; ++$j) {
                                 if ((210 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
+                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -242,7 +283,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 297; ++$j) {
                                 if ((297 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
+                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -283,7 +325,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 297; ++$j) {
                                 if ((297 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
+                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -322,7 +365,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 420; ++$j) {
                                 if ((420 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/'.$moduleDirName.'/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
+                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -360,14 +404,14 @@ switch ($option) {
     //pdf pour les newsletter
     case 'list_newsletter':
         $newsletterHandler = xoops_getModuleHandler('tdmassoc_newsletter', 'tdmpicture');
-        $newsletter         = $newsletterHandler->get($_REQUEST['newsletter_id']);
+        $newsletter        = $newsletterHandler->get($_REQUEST['newsletter_id']);
 
         $newsletter_head   = utf8_decode(Chars($newsletter->getVar('newsletter_head')));
         $newsletter_text   = utf8_decode(Chars($newsletter->getVar('newsletter_text')));
         $newsletter_foot   = utf8_decode(Chars($newsletter->getVar('newsletter_foot')));
         $newsletter_indate = formatTimestamp($newsletter->getVar('newsletter_indate'), 'm');
         $color             = TDMPicture_color($newsletter->getVar('newsletter_color'));
-        $pdf               = new FPDF();
+        $pdf               = new TCPDF();
         $pdf->AddPage();
         //titre
         $pdf->SetFont('Arial', 'B', 15);
@@ -385,7 +429,7 @@ switch ($option) {
         $pdf->SetFont('Arial', '', 8);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFillColor(255, 255, 255);
-        $pdf->MultiCell(50, 8, Chars(_AM_TDMASSOC_FORMINDATE) . ': ' . $newsletter_indate, 1, 1, 'L', true);
+        $pdf->MultiCell(50, 8, Chars(_AM_TDMPICTURE_FORMINDATE) . ': ' . $newsletter_indate, 1, 1, 'L', true);
         $pdf->Ln(6);
 
         //content
@@ -404,16 +448,29 @@ switch ($option) {
         $titre = $newsletter->getVar('newsletter_title');
         $pdf->AddPage();
         $prop = array(
-            'HeaderColor' => array(255, 150, 100),
-            'color1'      => array(210, 245, 255),
-            'color2'      => array(255, 255, 210),
+            'HeaderColor' => array(
+                255,
+                150,
+                100
+            ),
+            'color1'      => array(
+                210,
+                245,
+                255
+            ),
+            'color2'      => array(
+                255,
+                255,
+                210
+            ),
             'padding'     => 2
         );
         /*$criteria = new CriteriaCompo();
         $criteria->add(new Criteria('member_waiting', 1,'='));
         $criteria->setOrder('ASC');
         $assoc_arr = $memberHandler->getObjects($criteria);*/
-        $pdf->Table('SELECT newsletter_head FROM ' . $xoopsDB->prefix('tdmassoc_newsletter') . ' WHERE newsletter_id = ' . $_REQUEST['newsletter_id'] . ' limit 0,10', $prop);
+        $pdf->Table('SELECT newsletter_head FROM ' . $xoopsDB->prefix('tdmassoc_newsletter') . ' WHERE newsletter_id = ' . $_REQUEST['newsletter_id']
+                    . ' limit 0,10', $prop);
         $pdf->Output();
 
         break;
@@ -423,19 +480,19 @@ switch ($option) {
 
         $productHandler = xoops_getModuleHandler('tdmassoc_product', 'tdmpicture');
         $stockHandler   = xoops_getModuleHandler('tdmassoc_stock', 'tdmpicture');
-        $product         = $productHandler->get($_REQUEST['product_id']);
-        $product_ref     = utf8_decode(Chars($product->getVar('product_ref')));
-        $product_tva     = $product->getVar('product_tva');
-        $product_text    = utf8_decode(Chars($product->getVar('product_text')));
-        $product_indate  = formatTimestamp($product->getVar('product_indate'), 'm');
-        $num             = $product->getVar('product_cid');
-        $cat             = array(
-            '1' => _AM_TDMASSOC_PRODUCTCAT_ACHAT,
-            '2' => _AM_TDMASSOC_PRODUCTCAT_VENTE,
-            '3' => _AM_TDMASSOC_PRODUCTCAT_LOCATION,
-            '4' => _AM_TDMASSOC_PRODUCTCAT_PRETS,
-            '5' => _AM_TDMASSOC_PRODUCTCAT_CADEAUX,
-            '6' => _AM_TDMASSOC_PRODUCTCAT_DIVERS
+        $product        = $productHandler->get($_REQUEST['product_id']);
+        $product_ref    = utf8_decode(Chars($product->getVar('product_ref')));
+        $product_tva    = $product->getVar('product_tva');
+        $product_text   = utf8_decode(Chars($product->getVar('product_text')));
+        $product_indate = formatTimestamp($product->getVar('product_indate'), 'm');
+        $num            = $product->getVar('product_cid');
+        $cat            = array(
+            '1' => _AM_TDMPICTURE_PRODUCTCAT_ACHAT,
+            '2' => _AM_TDMPICTURE_PRODUCTCAT_VENTE,
+            '3' => _AM_TDMPICTURE_PRODUCTCAT_LOCATION,
+            '4' => _AM_TDMPICTURE_PRODUCTCAT_PRETS,
+            '5' => _AM_TDMPICTURE_PRODUCTCAT_CADEAUX,
+            '6' => _AM_TDMPICTURE_PRODUCTCAT_DIVERS
         );
 
         //calcul les stocks
@@ -453,7 +510,7 @@ switch ($option) {
         //
 
         $product_ht = $product->getVar('product_inht');
-        $title_ht   = _AM_TDMASSOC_FORMINHT;
+        $title_ht   = _AM_TDMPICTURE_FORMINHT;
 
         $product_fullht  = $product_ht * $product_qte;
         $str             = str_replace(',', '.', $product_tva);
@@ -461,7 +518,7 @@ switch ($option) {
         $product_fulltva = $str / 100 * $product_fullht;
         $product_ttc     = $product_fullht * (1 + $mintva);
 
-        $pdf = new FPDF();
+        $pdf = new TCPDF();
         $pdf->AddPage();
 
         //titre
@@ -473,31 +530,38 @@ switch ($option) {
         //mini ref
         $pdf->SetFont('Arial', '', 8);
         $pdf->Cell(130);
-        $pdf->Cell(30, 10, Chars(_AM_TDMASSOC_FORMREF) . ' : ' . $product_ref, 0, 0, 'L');
+        $pdf->Cell(30, 10, Chars(_AM_TDMPICTURE_FORMREF) . ' : ' . $product_ref, 0, 0, 'L');
         $pdf->Ln(5);
         //mini date entrer
         $pdf->Cell(130);
-        $pdf->Cell(30, 10, Chars(_AM_TDMASSOC_FORMDATE) . ' : ' . $product_indate, 0, 0, 'L');
+        $pdf->Cell(30, 10, Chars(_AM_TDMPICTURE_FORMDATE) . ' : ' . $product_indate, 0, 0, 'L');
         $pdf->Ln(5);
         //mini date sortis
         //if ($num == 3 || $num == 4 || $num == 6) {
         //$product_outregdate = formatTimeStamp($product->getVar("product_outregdate"),"m");
         //$pdf->Cell(130);
-        //$pdf->Cell(30,10, Chars(_AM_TDMASSOC_FORMOUTREGDATE). " : ".$product_outregdate,0,0,'L');
+        //$pdf->Cell(30,10, Chars(_AM_TDMPICTURE_FORMOUTREGDATE). " : ".$product_outregdate,0,0,'L');
         //}
 
         $pdf->Ln(20);
         //Tableau Largeurs des colonnes
-        $w = array(40, 50, 30, 25, 25, 20);
+        $w = array(
+            40,
+            50,
+            30,
+            25,
+            25,
+            20
+        );
 
         //En-tête
         $pdf->SetFont('Arial', '', 8);
-        $pdf->Cell($w[0], 7, Chars(_AM_TDMASSOC_FORMREF), 1, 0, 'L', 0);
-        $pdf->Cell($w[1], 7, Chars(_AM_TDMASSOC_FORMTEXT), 1, 0, 'L', 0);
-        $pdf->Cell($w[2], 7, Chars(_AM_TDMASSOC_FORMQTE), 1, 0, 'C', 0);
+        $pdf->Cell($w[0], 7, Chars(_AM_TDMPICTURE_FORMREF), 1, 0, 'L', 0);
+        $pdf->Cell($w[1], 7, Chars(_AM_TDMPICTURE_FORMTEXT), 1, 0, 'L', 0);
+        $pdf->Cell($w[2], 7, Chars(_AM_TDMPICTURE_FORMQTE), 1, 0, 'C', 0);
         $pdf->Cell($w[3], 7, Chars($title_ht), 1, 0, 'C', 0);
-        $pdf->Cell($w[4], 7, Chars(_AM_TDMASSOC_FORMCOUNTHT), 1, 0, 'C', 0);
-        $pdf->Cell($w[5], 7, Chars(_AM_TDMASSOC_FORMTVA), 1, 0, 'C', 0);
+        $pdf->Cell($w[4], 7, Chars(_AM_TDMPICTURE_FORMCOUNTHT), 1, 0, 'C', 0);
+        $pdf->Cell($w[5], 7, Chars(_AM_TDMPICTURE_FORMTVA), 1, 0, 'C', 0);
 
         $pdf->Ln();
         //Données
@@ -531,16 +595,16 @@ switch ($option) {
         //En-tête
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(90);
-        $pdf->Cell(80, 10, Chars(_AM_TDMASSOC_PRODUCT_RECA), 1, 0, 'C', 0);
-        $pdf->Cell(20, 10, Chars($helper->getConfig('assoc_type_money')), 1, 0, 'C', 0);
+        $pdf->Cell(80, 10, Chars(_AM_TDMPICTURE_PRODUCT_RECA), 1, 0, 'C', 0);
+        $pdf->Cell(20, 10, Chars($moduleHelper->getConfig('assoc_type_money')), 1, 0, 'C', 0);
         $pdf->Ln(10);
         //Données
         $pdf->Cell(90);
-        $pdf->Cell(80, 7, Chars(_AM_TDMASSOC_FORMCOUNTHT) . ' : ', 'L', 0, 'L');
+        $pdf->Cell(80, 7, Chars(_AM_TDMPICTURE_FORMCOUNTHT) . ' : ', 'L', 0, 'L');
         $pdf->Cell(20, 7, $product_fullht, 'R', 0, 'C');
         $pdf->Ln();
         $pdf->Cell(90);
-        $pdf->Cell(80, 7, Chars(_AM_TDMASSOC_FORMTVA) . ' : ', 'L', 0, 'L');
+        $pdf->Cell(80, 7, Chars(_AM_TDMPICTURE_FORMTVA) . ' : ', 'L', 0, 'L');
         $pdf->Cell(20, 7, $product_fulltva, 'R', 0, 'C');
         $pdf->Ln();
         $pdf->Cell(90);
@@ -549,7 +613,7 @@ switch ($option) {
         $pdf->Ln();
         $pdf->SetFont('Arial', '', 14);
         $pdf->Cell(90);
-        $pdf->Cell(80, 10, Chars(_AM_TDMASSOC_FORMTTC) . ' : ', 'L', 0, 'L');
+        $pdf->Cell(80, 10, Chars(_AM_TDMPICTURE_FORMTTC) . ' : ', 'L', 0, 'L');
         $pdf->Cell(20, 10, $product_ttc, 'R', 0, 'C');
         $pdf->Ln();
         $pdf->Cell(90);
@@ -565,8 +629,8 @@ switch ($option) {
     case 'list_stock':
         $stockHandler   = xoops_getModuleHandler('tdmassoc_stock', 'tdmpicture');
         $productHandler = xoops_getModuleHandler('tdmassoc_product', 'tdmpicture');
-        $stock           = $stockHandler->get($_REQUEST['stock_id']);
-        $product         = $productHandler->get($stock->getVar('stock_product'));
+        $stock          = $stockHandler->get($_REQUEST['stock_id']);
+        $product        = $productHandler->get($stock->getVar('stock_product'));
 
         //travail les reponse
         $stock_title  = utf8_decode(Chars($stock->getVar('stock_title')));
@@ -576,16 +640,16 @@ switch ($option) {
         $stock_indate = formatTimestamp($stock->getVar('stock_indate'), 'm');
         $num          = $product->getVar('product_cid');
         $cat          = array(
-            '1' => _AM_TDMASSOC_PRODUCTCAT_ACHAT,
-            '2' => _AM_TDMASSOC_PRODUCTCAT_VENTE,
-            '3' => _AM_TDMASSOC_PRODUCTCAT_LOCATION,
-            '4' => _AM_TDMASSOC_PRODUCTCAT_PRETS,
-            '5' => _AM_TDMASSOC_PRODUCTCAT_CADEAUX,
-            '6' => _AM_TDMASSOC_PRODUCTCAT_DIVERS
+            '1' => _AM_TDMPICTURE_PRODUCTCAT_ACHAT,
+            '2' => _AM_TDMPICTURE_PRODUCTCAT_VENTE,
+            '3' => _AM_TDMPICTURE_PRODUCTCAT_LOCATION,
+            '4' => _AM_TDMPICTURE_PRODUCTCAT_PRETS,
+            '5' => _AM_TDMPICTURE_PRODUCTCAT_CADEAUX,
+            '6' => _AM_TDMPICTURE_PRODUCTCAT_DIVERS
         );
 
         $product_ht = $product->getVar('product_inht');
-        $title_ht   = _AM_TDMASSOC_FORMINHT;
+        $title_ht   = _AM_TDMPICTURE_FORMINHT;
 
         $product_fullht  = $product_ht * $stock_qte;
         $str             = str_replace(',', '.', $product_tva);
@@ -593,7 +657,7 @@ switch ($option) {
         $product_fulltva = $str / 100 * $product_fullht;
         $product_ttc     = $product_fullht * (1 + $mintva);
 
-        $pdf = new FPDF();
+        $pdf = new TCPDF();
         $pdf->AddPage();
 
         //titre
@@ -605,31 +669,38 @@ switch ($option) {
         //mini ref
         $pdf->SetFont('Arial', '', 8);
         $pdf->Cell(130);
-        $pdf->Cell(30, 10, Chars(_AM_TDMASSOC_FORMREF) . ' : ' . $stock_title, 0, 0, 'L');
+        $pdf->Cell(30, 10, Chars(_AM_TDMPICTURE_FORMREF) . ' : ' . $stock_title, 0, 0, 'L');
         $pdf->Ln(5);
         //mini date entrer
         $pdf->Cell(130);
-        $pdf->Cell(30, 10, Chars(_AM_TDMASSOC_FORMDATE) . ' : ' . $stock_indate, 0, 0, 'L');
+        $pdf->Cell(30, 10, Chars(_AM_TDMPICTURE_FORMDATE) . ' : ' . $stock_indate, 0, 0, 'L');
         $pdf->Ln(5);
         //mini date sortis
         if ($num == 3 || $num == 4 || $num == 6) {
             $stock_outregdate = formatTimestamp($stock->getVar('stock_outregdate'), 'm');
             $pdf->Cell(130);
-            $pdf->Cell(30, 10, Chars(_AM_TDMASSOC_FORMOUTREGDATE) . ' : ' . $stock_outregdate, 0, 0, 'L');
+            $pdf->Cell(30, 10, Chars(_AM_TDMPICTURE_FORMOUTREGDATE) . ' : ' . $stock_outregdate, 0, 0, 'L');
         }
 
         $pdf->Ln(20);
         //Tableau Largeurs des colonnes
-        $w = array(40, 50, 30, 25, 25, 20);
+        $w = array(
+            40,
+            50,
+            30,
+            25,
+            25,
+            20
+        );
 
         //En-tête
         $pdf->SetFont('Arial', '', 8);
-        $pdf->Cell($w[0], 7, Chars(_AM_TDMASSOC_FORMREF), 1, 0, 'L', 0);
-        $pdf->Cell($w[1], 7, Chars(_AM_TDMASSOC_FORMTEXT), 1, 0, 'L', 0);
-        $pdf->Cell($w[2], 7, Chars(_AM_TDMASSOC_FORMQTE), 1, 0, 'C', 0);
+        $pdf->Cell($w[0], 7, Chars(_AM_TDMPICTURE_FORMREF), 1, 0, 'L', 0);
+        $pdf->Cell($w[1], 7, Chars(_AM_TDMPICTURE_FORMTEXT), 1, 0, 'L', 0);
+        $pdf->Cell($w[2], 7, Chars(_AM_TDMPICTURE_FORMQTE), 1, 0, 'C', 0);
         $pdf->Cell($w[3], 7, Chars($title_ht), 1, 0, 'C', 0);
-        $pdf->Cell($w[4], 7, Chars(_AM_TDMASSOC_FORMCOUNTHT), 1, 0, 'C', 0);
-        $pdf->Cell($w[5], 7, Chars(_AM_TDMASSOC_FORMTVA), 1, 0, 'C', 0);
+        $pdf->Cell($w[4], 7, Chars(_AM_TDMPICTURE_FORMCOUNTHT), 1, 0, 'C', 0);
+        $pdf->Cell($w[5], 7, Chars(_AM_TDMPICTURE_FORMTVA), 1, 0, 'C', 0);
 
         $pdf->Ln();
         //Données
@@ -662,16 +733,16 @@ switch ($option) {
         //En-tête
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(90);
-        $pdf->Cell(80, 10, Chars(_AM_TDMASSOC_PRODUCT_RECA), 1, 0, 'C', 0);
-        $pdf->Cell(20, 10, Chars($helper->getConfig('assoc_type_money')), 1, 0, 'C', 0);
+        $pdf->Cell(80, 10, Chars(_AM_TDMPICTURE_PRODUCT_RECA), 1, 0, 'C', 0);
+        $pdf->Cell(20, 10, Chars($moduleHelper->getConfig('assoc_type_money')), 1, 0, 'C', 0);
         $pdf->Ln(10);
         //Données
         $pdf->Cell(90);
-        $pdf->Cell(80, 7, Chars(_AM_TDMASSOC_FORMCOUNTHT) . ' : ', 'L', 0, 'L');
+        $pdf->Cell(80, 7, Chars(_AM_TDMPICTURE_FORMCOUNTHT) . ' : ', 'L', 0, 'L');
         $pdf->Cell(20, 7, $product_fullht, 'R', 0, 'C');
         $pdf->Ln();
         $pdf->Cell(90);
-        $pdf->Cell(80, 7, Chars(_AM_TDMASSOC_FORMTVA) . ' : ', 'L', 0, 'L');
+        $pdf->Cell(80, 7, Chars(_AM_TDMPICTURE_FORMTVA) . ' : ', 'L', 0, 'L');
         $pdf->Cell(20, 7, $product_fulltva, 'R', 0, 'C');
         $pdf->Ln();
         $pdf->Cell(90);
@@ -680,7 +751,7 @@ switch ($option) {
         $pdf->Ln();
         $pdf->SetFont('Arial', '', 14);
         $pdf->Cell(90);
-        $pdf->Cell(80, 10, Chars(_AM_TDMASSOC_FORMTTC) . ' : ', 'L', 0, 'L');
+        $pdf->Cell(80, 10, Chars(_AM_TDMPICTURE_FORMTTC) . ' : ', 'L', 0, 'L');
         $pdf->Cell(20, 10, $product_ttc, 'R', 0, 'C');
         $pdf->Ln();
         $pdf->Cell(90);
@@ -695,29 +766,29 @@ switch ($option) {
     //pour le RIB
     case 'list_rib':
 
-        $secu_id = urldecode(hash('ripemd128', $helper->getConfig('assoc_label')));
+        $secu_id = urldecode(hash('ripemd128', $moduleHelper->getConfig('assoc_label')));
 
         if ($_REQUEST['secu_id'] != $secu_id) {
-            redirect_header('account.php', 3, _AM_TDMASSOC_FORMNONE);
+            redirect_header('account.php', 3, _AM_TDMPICTURE_FORMNONE);
         } else {
-            $pdf = new FPDF();
+            $pdf = new TCPDF();
             $pdf->AddPage();
 
             //titre
             $pdf->SetFont('Arial', 'B', 25);
             $pdf->Cell(40);
-            $pdf->Cell(30, 10, Chars(_AM_TDMASSOC_ACCOUNT_RIBDESC), 0, 0, 'L');
+            $pdf->Cell(30, 10, Chars(_AM_TDMPICTURE_ACCOUNT_RIBDESC), 0, 0, 'L');
             $pdf->Ln(20);
             //mini nom
             $pdf->SetFont('Arial', '', 9);
-            $pdf->Cell(30, 10, Chars($helper->getConfig('assoc_name')), 0, 0, 'L');
+            $pdf->Cell(30, 10, Chars($moduleHelper->getConfig('assoc_name')), 0, 0, 'L');
             $pdf->Ln(10);
             //mini adresse
             $pdf->SetFont('Arial', '', 8);
-            $pdf->Cell(30, 10, Chars($helper->getConfig('assoc_adress')), 0, 0, 'L');
+            $pdf->Cell(30, 10, Chars($moduleHelper->getConfig('assoc_adress')), 0, 0, 'L');
             $pdf->Ln(5);
             //mini tel
-            $pdf->Cell(30, 10, $helper->getConfig('assoc_tel'), 0, 0, 'L');
+            $pdf->Cell(30, 10, $moduleHelper->getConfig('assoc_tel'), 0, 0, 'L');
             $pdf->Ln(20);
             //Tableau Largeurs des colonnes
             //En-tête
@@ -726,19 +797,19 @@ switch ($option) {
             $pdf->Ln();
             //
             $pdf->SetFont('Arial', '', 9);
-            $pdf->Cell(90, 7, Chars($helper->getConfig('assoc_label')), 'LR', 0, 'L', 0);
-            $pdf->Cell(90, 7, Chars(_MI_TDMASSOC_ACCOUNT_COBANQ . ' : ' . $helper->getConfig('assoc_banque')), 'LR', 0, 'L', 0);
+            $pdf->Cell(90, 7, Chars($moduleHelper->getConfig('assoc_label')), 'LR', 0, 'L', 0);
+            $pdf->Cell(90, 7, Chars(_MI_TDMPICTURE_ACCOUNT_COBANQ . ' : ' . $moduleHelper->getConfig('assoc_banque')), 'LR', 0, 'L', 0);
 
             $pdf->Ln();
             //Données
-            $pdf->Cell(90, 6, Chars($helper->getConfig('assoc_domiciliation')), 'LR', 0, 'L');
-            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_COGUI . ' : ' . $helper->getConfig('assoc_guichet')), 'LR', 0, 'L');
+            $pdf->Cell(90, 6, Chars($moduleHelper->getConfig('assoc_domiciliation')), 'LR', 0, 'L');
+            $pdf->Cell(90, 6, Chars(_MI_TDMPICTURE_ACCOUNT_COGUI . ' : ' . $moduleHelper->getConfig('assoc_guichet')), 'LR', 0, 'L');
             $pdf->Ln();
             $pdf->Cell(90, 6, '', 'LR', 0, 'L');
-            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_COMPTE . ' : ' . $helper->getConfig('assoc_compte')), 'LR', 0, 'L');
+            $pdf->Cell(90, 6, Chars(_MI_TDMPICTURE_ACCOUNT_COMPTE . ' : ' . $moduleHelper->getConfig('assoc_compte')), 'LR', 0, 'L');
             $pdf->Ln();
             $pdf->Cell(90, 6, '', 'LR', 0, 'L');
-            $pdf->Cell(90, 6, Chars(_MI_TDMASSOC_ACCOUNT_CLEFRIB . ' : ' . $helper->getConfig('assoc_rib')), 'LR', 0, 'L');
+            $pdf->Cell(90, 6, Chars(_MI_TDMPICTURE_ACCOUNT_CLEFRIB . ' : ' . $moduleHelper->getConfig('assoc_rib')), 'LR', 0, 'L');
             $pdf->Ln();
             $pdf->Cell(90, 10, '', 'LR', 0, 'L');
             $pdf->Cell(90, 10, '', 'LR', 0, 'L');
@@ -749,9 +820,9 @@ switch ($option) {
             //tableau recapitulatif
             //Tableau Largeurs des colonnes
             //Données
-            $pdf->Cell(180, 7, Chars(_MI_TDMASSOC_ACCOUNT_IBAN . ' : ' . $helper->getConfig('assoc_iban')), 'LR', 0, 'L');
+            $pdf->Cell(180, 7, Chars(_MI_TDMPICTURE_ACCOUNT_IBAN . ' : ' . $moduleHelper->getConfig('assoc_iban')), 'LR', 0, 'L');
             $pdf->Ln();
-            $pdf->Cell(180, 7, Chars(_MI_TDMASSOC_ACCOUNT_BIC . ' : ' . $helper->getConfig('assoc_bic')), 'LR', 0, 'L');
+            $pdf->Cell(180, 7, Chars(_MI_TDMPICTURE_ACCOUNT_BIC . ' : ' . $moduleHelper->getConfig('assoc_bic')), 'LR', 0, 'L');
             $pdf->Ln();
             $pdf->Cell(180, 0, '', 1, 0, 'L');
             $pdf->Ln();
@@ -779,5 +850,14 @@ function Chars($text)
                             '/<br \/>/i',
                             '/&agrave;/i',
                             '/&#8364;/i'
-                        ), array("'", 'é', 'è', 'à', '"', "\n", 'à', '€'), $text);
+                        ), array(
+                            "'",
+                            'é',
+                            'è',
+                            'à',
+                            '"',
+                            "\n",
+                            'à',
+                            '€'
+                        ), $text);
 }

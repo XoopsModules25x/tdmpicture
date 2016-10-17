@@ -55,7 +55,8 @@ define('_MI_TDMPICTURE_THUMB_HEIGTH', 'Thumbnail: Maximum height of image');
 define('_MI_TDMPICTURE_THUMB_QUALITY', 'Thumbnail: Image quality');
 define('_MI_TDMPICTURE_PAGE', 'Maximum number of files per page?');
 define('_MI_TDMPICTURE_DESCRIPTION', 'META: Description pages without information for the rest of the pages it will be automatic');
-define('_MI_TDMPICTURE_KEYWORDS', 'META: Keywords pages without information, separate words with a space for the rest of the pages it will be automatic');
+define('_MI_TDMPICTURE_KEYWORDS',
+       'META: Keywords pages without information, separate words with a space for the rest of the pages it will be automatic');
 define('_MI_TDMPICTURE_SLIDE_WIDTH', 'Slideshow Thumbnail: Image width');
 define('_MI_TDMPICTURE_SLIDE_HEIGTH', 'Slideshow Thumbnail: Image height');
 define('_MI_TDMPICTURE_CAT_WIDTH', 'Category: Image Width');
@@ -123,6 +124,6 @@ define('_AM_TDMPICTURE_ALL', 'All Pictures');
 
 //Help
 define('_MI_TDMPICTURE_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TDMPICTURE_HELP_HEADER', __DIR__.'/help/helpheader.html');
+define('_MI_TDMPICTURE_HELP_HEADER', __DIR__ . '/help/helpheader.html');
 define('_MI_TDMPICTURE_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_TDMPICTURE_HELP_OVERVIEW', 'Overview');

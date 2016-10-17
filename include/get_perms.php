@@ -33,8 +33,8 @@ if (is_object($xoopsDB)) {
         }
         $whr_groupid = substr($whr_groupid, 0, -1) . ')';
     }
-    $sq2 = 'SELECT gperm_itemid FROM ' . $xoopsDB->prefix('group_permission') . ' LEFT JOIN ' . $xoopsDB->prefix('modules') . " m ON gperm_modid=m.mid WHERE m.dirname='" . $xoopsModule->getVar('dirname')
-           . "' AND (gperm_name='sound_view') AND ($whr_groupid)";
+    $sq2 = 'SELECT gperm_itemid FROM ' . $xoopsDB->prefix('group_permission') . ' LEFT JOIN ' . $xoopsDB->prefix('modules')
+           . " m ON gperm_modid=m.mid WHERE m.dirname='" . $xoopsModule->getVar('dirname') . "' AND (gperm_name='sound_view') AND ($whr_groupid)";
     $rs  = $xoopsDB->query($sq2);
     while (list($itemid) = $xoopsDB->fetchRow($rs)) {
         $global_perms |= $itemid;

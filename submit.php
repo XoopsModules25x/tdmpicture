@@ -77,8 +77,8 @@ switch ($op) {
         //upload
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploaddir = TDMPICTURE_CAT_PATH;
-        $mimetype  = explode('|', $helper->getConfig('tdmpicture_mimetype'));
-        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $helper->getConfig('tdmpicture_mimemax'));
+        $mimetype  = explode('|', $moduleHelper->getConfig('tdmpicture_mimetype'));
+        $uploader  = new XoopsMediaUploader($uploaddir, $mimetype, $moduleHelper->getConfig('tdmpicture_mimemax'));
 
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('picture_');
@@ -141,11 +141,12 @@ switch ($op) {
         //include
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         include_once TDMPICTURE_ROOT_PATH . '/class/thumbnail.inc.php';
+        $erreur = false;
         //prepare l'upload
         $path = $obj->getFilePath();
         @chmod($path['image_path'], 0755);
-        $mimetype = explode('|', $helper->getConfig('tdmpicture_mimetype'));
-        $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $helper->getConfig('tdmpicture_mimemax'), null, null);
+        $mimetype = explode('|', $moduleHelper->getConfig('tdmpicture_mimetype'));
+        $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $moduleHelper->getConfig('tdmpicture_mimemax'), null, null);
 
         $obj = $fileHandler->create();
         //variable commune
@@ -181,7 +182,7 @@ switch ($op) {
                     if (!empty($_REQUEST['resize'])) {
                         $size = explode('x', $_REQUEST['resize']);
                         $photo->adaptiveResize($size[0], $size[1]);
-                        $photo->save($file_path['image_path'], $helper->getConfig('tdmpicture_thumb_quality'));
+                        $photo->save($file_path['image_path'], $moduleHelper->getConfig('tdmpicture_thumb_quality'));
                     }
 
                     $obj->setVar('file_res_x', $photo->getCurrentWidth());
@@ -199,7 +200,7 @@ switch ($op) {
             //        redirect_header('submit.php', 2, _MD_TDMPICTURE_BASE);
             redirect_header('index.php', 2, _MD_TDMPICTURE_BASE);
         } else {
-            $uploader->getErrors();
+            $errors = $uploader->getErrors();
         }
         //include_once(__DIR__ . '/../include/forms.php');
         echo $obj->getHtmlErrors() . $errors;

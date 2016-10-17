@@ -23,13 +23,13 @@ use Xmf\Module\Helper;
 include __DIR__ . '/../../mainfile.php';
 
 $moduleDirName = basename(__DIR__);
-$helper = Helper::getHelper($moduleDirName);
+$moduleHelper        = Helper::getHelper($moduleDirName);
 
 /* Use XOOPS_ROOT_PATH for all include file */
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 include_once XOOPS_ROOT_PATH . '/class/tree.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/common.php';
+include_once __DIR__ . '/include/common.php';
 //include_once XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->getVar("dirname").'/include/get_perms.php';
 $gpermHandler = xoops_getHandler('groupperm');
 //permission
@@ -47,13 +47,9 @@ if (!$gpermHandler->checkRight('tdmpicture_view', 2, $groups, $xoopsModule->getV
 }
 
 $perm_playlist = $gpermHandler->checkRight('tdmpicture_view', 4, $groups, $xoopsModule->getVar('mid')) ? true : false;
-
-$perm_vote = $gpermHandler->checkRight('tdmpicture_view', 64, $groups, $xoopsModule->getVar('mid')) ? true : false;
-
-$perm_submit = $gpermHandler->checkRight('tdmpicture_view', 8, $groups, $xoopsModule->getVar('mid')) ? true : false;
-
-$perm_cat = $gpermHandler->checkRight('tdmpicture_view', 1024, $groups, $xoopsModule->getVar('mid')) ? true : false;
-
-$perm_dl = $gpermHandler->checkRight('tdmpicture_view', 32, $groups, $xoopsModule->getVar('mid')) ? true : false;
+$perm_vote     = $gpermHandler->checkRight('tdmpicture_view', 64, $groups, $xoopsModule->getVar('mid')) ? true : false;
+$perm_submit   = $gpermHandler->checkRight('tdmpicture_view', 8, $groups, $xoopsModule->getVar('mid')) ? true : false;
+$perm_cat      = $gpermHandler->checkRight('tdmpicture_view', 1024, $groups, $xoopsModule->getVar('mid')) ? true : false;
+$perm_dl       = $gpermHandler->checkRight('tdmpicture_view', 32, $groups, $xoopsModule->getVar('mid')) ? true : false;
 
 $moduleDirName = basename(__DIR__);

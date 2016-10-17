@@ -24,10 +24,10 @@ include_once $path . '/mainfile.php';
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 
-$dirname         = basename(dirname(__DIR__));
+$moduleDirName = basename(dirname(__DIR__));
 /** @var XoopsModuleHandler $moduleHandler */
 //$moduleHandler = xoops_getHandler('module');
-//$module          = $moduleHandler->getByDirname($dirname);
+//$module          = $moduleHandler->getByDirname($moduleDirName);
 //$pathModuleAdmin =& $module->getInfo('dirmoduleadmin');
 //$pathLanguage    = $path . $pathModuleAdmin;
 
@@ -39,10 +39,10 @@ $dirname         = basename(dirname(__DIR__));
 
 $adminmenu = array();
 
-$i                      = 1;
+$i = 1;
 $adminmenu[$i]['title'] = _AM_MODULEADMIN_HOME;
-$adminmenu[$i]['link']  = 'admin/index.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
+$adminmenu[$i]['link'] = 'admin/index.php';
+$adminmenu[$i]['icon'] = $pathIcon32 . '/home.png';
 
 //++$i;
 //$adminmenu[$i]["title"] =  _MI_ISTATS_INDEX;
@@ -51,34 +51,34 @@ $adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
 
 ++$i;
 $adminmenu[$i]['title'] = _MI_TDMPICTURE_ADMENUCAT;
-$adminmenu[$i]['link']  = 'admin/cat.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/category.png';
+$adminmenu[$i]['link'] = 'admin/cat.php';
+$adminmenu[$i]['icon'] = $pathIcon32 . '/category.png';
 
 ++$i;
 $adminmenu[$i]['title'] = _MI_TDMPICTURE_ADMENUFILE;
-$adminmenu[$i]['link']  = 'admin/files.php';
-$adminmenu[$i]['icon']  = 'assets/images/decos/min_file.png';
+$adminmenu[$i]['link'] = 'admin/files.php';
+$adminmenu[$i]['icon'] = 'assets/images/decos/min_file.png';
 
 ++$i;
 $adminmenu[$i]['title'] = _MI_TDMPICTURE_ADMENUPERMISSIONS;
-$adminmenu[$i]['link']  = 'admin/permissions.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/permissions.png';
+$adminmenu[$i]['link'] = 'admin/permissions.php';
+$adminmenu[$i]['icon'] = $pathIcon32 . '/permissions.png';
 
 //1.07
 ++$i;
 $adminmenu[$i]['title'] = _MI_TDMPICTURE_ADMENUIMPORT;
-$adminmenu[$i]['link']  = 'admin/import.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/compfile.png';
+$adminmenu[$i]['link'] = 'admin/import.php';
+$adminmenu[$i]['icon'] = $pathIcon32 . '/compfile.png';
 
 ++$i;
 $adminmenu[$i]['title'] = _MI_TDMPICTURE_ADMENUBATCH;
-$adminmenu[$i]['link']  = 'admin/batch.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/exec.png';
+$adminmenu[$i]['link'] = 'admin/batch.php';
+$adminmenu[$i]['icon'] = $pathIcon32 . '/exec.png';
 
 ++$i;
 $adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
-$adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
+$adminmenu[$i]['link'] = 'admin/about.php';
+$adminmenu[$i]['icon'] = $pathIcon32 . '/about.png';
 
 //$adminmenu[0]['title'] = _MI_TDMPICTURE_ADMENUINDEX;
 //$adminmenu[0]['link'] = "admin/index.php";

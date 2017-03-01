@@ -34,8 +34,16 @@ use Xmf\Module\Helper;
 
 //namespace Xoopsmodules/Tdmpicture;
 
-$moduleDirName = basename(dirname(__DIR__));
+if (!isset($moduleDirName)) {
+    $moduleDirName = basename(dirname(__DIR__));
+}
+
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
 $myts          = MyTextSanitizer::getInstance();
+
 
 /**
  * Class TdmpictureUtility
@@ -45,9 +53,9 @@ class TdmpictureUtility
     /**
      * Check Xoops Version against a provided version
      *
-     * @param int $x
-     * @param int $y
-     * @param int $z
+     * @param int    $x
+     * @param int    $y
+     * @param int    $z
      * @param string $signal
      * @return bool
      */
@@ -56,8 +64,8 @@ class TdmpictureUtility
         $xv = explode('-', str_replace('XOOPS ', '', XOOPS_VERSION));
 
         list($a, $b, $c) = explode('.', $xv[0]);
-        $xv = $a*10000 + $b*100 + $c;
-        $mv = $x*10000 + $y*100 + $z;
+        $xv = $a * 10000 + $b * 100 + $c;
+        $mv = $x * 10000 + $y * 100 + $z;
         if ($signal === '>') {
             return $xv > $mv;
         }
@@ -169,13 +177,12 @@ class TdmpictureUtility
         try {
             if (!file_exists($folder)) {
                 if (!mkdir($folder) && !is_dir($folder)) {
-                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-            } else {
-                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
+                    throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
+                } else {
+                    file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
+                }
             }
-            }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
         }
     }
@@ -476,8 +483,10 @@ class TdmpictureUtility
             $sel1 = 'asc.png';
             $sel2 = 'desc.png';
         }
-        $select_view .= '  <a href="' . $_SERVER['PHP_SELF'] . '?file_cat=' . $file_cat . '&start=' . $start . '&sort=' . $form_sort . '&order=asc" /><img src="' . TDMPICTURE_IMAGES_URL . '/decos/' . $sel1 . '" title="ASC" alt="ASC"></a>';
-        $select_view .= '<a href="' . $_SERVER['PHP_SELF'] . '?file_cat=' . $file_cat . '&start=' . $start . '&sort=' . $form_sort . '&order=desc" /><img src="' . TDMPICTURE_IMAGES_URL . '/decos/' . $sel2 . '" title="DESC" alt="DESC"></a>';
+        $select_view .= '  <a href="' . $_SERVER['PHP_SELF'] . '?file_cat=' . $file_cat . '&start=' . $start . '&sort=' . $form_sort . '&order=asc" /><img src="' . TDMPICTURE_IMAGES_URL . '/decos/'
+                        . $sel1 . '" title="ASC" alt="ASC"></a>';
+        $select_view .= '<a href="' . $_SERVER['PHP_SELF'] . '?file_cat=' . $file_cat . '&start=' . $start . '&sort=' . $form_sort . '&order=desc" /><img src="' . TDMPICTURE_IMAGES_URL . '/decos/'
+                        . $sel2 . '" title="DESC" alt="DESC"></a>';
         $select_view .= '</form>';
 
         return $select_view;
@@ -602,7 +611,8 @@ class TdmpictureUtility
 
         $form = new XoopsThemeForm('', 'catform', $_SERVER['REQUEST_URI'], 'post', true);
         //$form->setExtra('enctype="multipart/form-data"');
-        $tagchannel_select = new XoopsFormLabel('', $mytree->makeSelBox('cat_pid', 'cat_title', '-', $cat, '-- ' . _MD_TDMPICTURE_CAT, 0, "OnChange='window.document.location=this.options[this.selectedIndex].value;'", 'tdmpicture_catview'), 'pid');
+        $tagchannel_select = new XoopsFormLabel('', $mytree->makeSelBox('cat_pid', 'cat_title', '-', $cat, '-- ' . _MD_TDMPICTURE_CAT, 0,
+                                                                        "OnChange='window.document.location=this.options[this.selectedIndex].value;'", 'tdmpicture_catview'), 'pid');
         $form->addElement($tagchannel_select);
 
         //$form->display();
@@ -740,9 +750,253 @@ class TdmpictureUtility
         echo "<li id='" . $tblColors[2] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/artiste.php"><span>' . _MI_TDMPICTURE_ADMENUARTISTE . '</span></a></li>';
         echo "<li id='" . $tblColors[3] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/album.php"><span>' . _MI_TDMPICTURE_ADMENUALBUM . '</span></a></li>';
         echo "<li id='" . $tblColors[4] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/files.php"><span>' . _MI_TDMPICTURE_ADMENUFILE . '</span></a></li>';
-        echo "<li id='" . $tblColors[5] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/permissions.php"><span>' . _MI_TDMPICTURE_ADMENUPERMISSIONS . '</span></a></li>';
+        echo "<li id='" . $tblColors[5] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/permissions.php"><span>' . _MI_TDMPICTURE_ADMENUPERMISSIONS
+             . '</span></a></li>';
         echo "<li id='" . $tblColors[6] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/about.php"><span>' . _MI_TDMPICTURE_ADMENUABOUT . '</span></a></li>';
-        echo "<li id='" . $tblColors[7] . "'><a href='../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid') . "'><span>" . _MI_TDMPICTURE_ADMENUPREF . '</span></a></li>';
+        echo "<li id='" . $tblColors[7] . "'><a href='../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid') . "'><span>" . _MI_TDMPICTURE_ADMENUPREF
+             . '</span></a></li>';
         echo '</ul></div>&nbsp;';
+    }
+
+
+
+    /**
+     * Do some basic file checks and stuff.
+     */
+    public static function getServerInfo()
+    {
+        $moduleDirName = basename(dirname(__DIR__));
+        //        xoops_loadLanguage('admin', $moduleDirName);
+
+        //??????
+
+        // includes
+        //include_once('header.php');
+
+        //        $helper = Xoopsmodules\amreviews\Helper::getInstance();
+        if (!isset($moduleDirName)) {
+            $moduleDirName = basename(dirname(__DIR__));
+        }
+
+        if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+        } else {
+            $moduleHelper = Xmf\Module\Helper::getHelper('system');
+        }
+
+        echo '<fieldset>';
+        echo '<legend style=\'color: #990000; font-weight: bold;\'>' . _AM_TDMPICTURE_SERVERSTATS . '</legend>';
+        /*
+            $photodir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/photos';
+            $photothumbdir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/photos/thumbs';
+            $photohighdir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/photos/highlight';
+            $cachedir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/cache';
+            $tmpdir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/cache/tmp';
+
+            if (file_exists($photodir)) {
+                if (!is_writable($photodir)) {
+                    echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> I am unable to write to: ' . $photodir . '<br>';
+                } else {
+                    echo '<span style=\' color: green; font-weight: bold;\'>OK:</span> ' . $photodir . '<br>';
+                }
+            } else {
+                echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> ' . $photodir . ' does NOT exist!<br>';
+            }
+            // photothumbdir
+            if (file_exists($photothumbdir)) {
+                if (!is_writable($photothumbdir)) {
+                    echo "<span style=\" color: red; font-weight: bold;\">Warning:</span> I am unable to write to: " . $photothumbdir . '<br>';
+                } else {
+                    echo '<span style=\' color: green; font-weight: bold;\'>OK:</span> ' . $photothumbdir . '<br>';
+                }
+            } else {
+                echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> ' . $photothumbdir . ' does NOT exist!<br>';
+            }
+            // photohighdir
+            if (file_exists($photohighdir)) {
+                if (!is_writable($photohighdir)) {
+                    echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> I am unable to write to: ' . $photohighdir . '<br>';
+                } else {
+                    echo '<span style=\' color: green; font-weight: bold;\'>OK:</span> ' . $photohighdir . '<br>';
+                }
+            } else {
+                echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> ' . $photohighdir . ' does NOT exist!<br>';
+            }
+            // cachedir
+            if (file_exists($cachedir)) {
+                if (!is_writable($cachedir)) {
+                    echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> I am unable to write to: ' . $cachedir . '<br>';
+                } else {
+                    echo '<span style=\' color: green; font-weight: bold;\'>OK:</span> ' . $cachedir . '<br>';
+                }
+            } else {
+                echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> ' . $cachedir . ' does NOT exist!<br>';
+            }
+            // tmpdir
+            if (file_exists($tmpdir)) {
+                if (!is_writable($tmpdir)) {
+                    echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> I am unable to write to: ' . $tmpdir . '<br>';
+                } else {
+                    echo '<span style=\' color: green; font-weight: bold;\'>OK:</span> ' . $tmpdir . '<br>';
+                }
+            } else {
+                echo '<span style=\' color: red; font-weight: bold;\'>Warning:</span> ' . $tmpdir . ' does NOT exist!<br>';
+            }
+        */
+
+        /**
+         * Some Upload info
+         */
+        $uploads = ini_get('file_uploads') ? _AM_TDMPICTURE_UPLOAD_ON : _AM_TDMPICTURE_UPLOAD_OFF;
+        //    echo '<br>';
+        echo '<ul>';
+        echo '<li>' . _AM_TDMPICTURE_UPLOADMAX . '<b>' . ini_get('upload_max_filesize') . '</b></li>';
+        echo '<li>' . _AM_TDMPICTURE_POSTMAX . '<b>' . ini_get('post_max_size') . '</b></li>';
+        echo '<li>' . _AM_TDMPICTURE_UPLOADS . '<b>' . $uploads . '</b></li>';
+
+        $gdinfo = gd_info();
+        if (function_exists('gd_info')) {
+            echo '<li>' . _AM_TDMPICTURE_GDIMGSPPRT . '<b>' . _AM_TDMPICTURE_GDIMGON . '</b></li>';
+            echo '<li>' . _AM_TDMPICTURE_GDIMGVRSN . '<b>' . $gdinfo['GD Version'] . '</b></li>';
+        } else {
+            echo '<li>' . _AM_TDMPICTURE_GDIMGSPPRT . '<b>' . _AM_TDMPICTURE_GDIMGOFF . '</b></li>';
+        }
+        echo '</ul>';
+
+        //$inithingy = ini_get_all();
+        //print_r($inithingy);
+
+        echo '</fieldset>';
+    } // end function
+
+
+
+    /**
+     * serverStats()
+     *
+     * @return string
+     */
+    public static function getServerStatus()
+    {
+        // mb    $TDMPICTURE = TDMPICTURETDMPICTURE::getInstance();
+
+        $moduleDirName = basename(dirname(__DIR__));
+        //        xoops_loadLanguage('admin', $moduleDirName);
+
+        //??????
+
+        // includes
+        //include_once('header.php');
+
+        //        $helper = Xoopsmodules\amreviews\Helper::getInstance();
+        if (!isset($moduleDirName)) {
+            $moduleDirName = basename(dirname(__DIR__));
+        }
+
+        if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+        } else {
+            $moduleHelper = Xmf\Module\Helper::getHelper('system');
+        }
+        //        $adminLang = '_AM_' . strtoupper($moduleDirName);
+
+        // Load language files
+        $html  = '';
+        $sql   = 'SELECT metavalue';
+        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('TDMPICTURE_meta');
+        $sql   .= " WHERE metakey='version' LIMIT 1";
+        $query = $GLOBALS['xoopsDB']->query($sql);
+        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
+        $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_TDMPICTURE_DOWN_IMAGEINFO . "</legend>\n";
+        $html .= "<div style='padding: 8px;'>\n";
+        $html .= '<div>' . _AM_TDMPICTURE_DOWN_METAVERSION . $meta . "</div>\n";
+        $html .= "<br>\n";
+        $html .= "<br>\n";
+        $html .= '<div>' . _AM_TDMPICTURE_DOWN_SPHPINI . "</div>\n";
+        $html .= "<ul>\n";
+        //
+        $gdlib = function_exists('gd_info') ? '<span style="color: green;">' . _AM_TDMPICTURE_DOWN_GDON . '</span>' : '<span style="color: red;">' . _AM_TDMPICTURE_DOWN_GDOFF . '</span>';
+        $html  .= '<li>' . _AM_TDMPICTURE_DOWN_GDLIBSTATUS . $gdlib;
+        if (function_exists('gd_info')) {
+            if (true === $gdlib = gd_info()) {
+                $html .= '<li>' . _AM_TDMPICTURE_DOWN_GDLIBVERSION . '<b>' . $gdlib['GD Version'] . '</b>';
+            }
+        }
+        //
+        //    $safemode = ini_get('safe_mode') ? _AM_TDMPICTURE_DOWN_ON') . _AM_TDMPICTURE_DOWN_SAFEMODEPROBLEMS') : _AM_TDMPICTURE_DOWN_OFF;
+        //    $html .= '<li>' . _AM_TDMPICTURE_DOWN_SAFEMODESTATUS') . $safemode;
+        //
+        //    $registerglobals = (!ini_get('register_globals')) ? "<span style=\"color: green;\">" . _AM_TDMPICTURE_DOWN_OFF') . '</span>' : "<span style=\"color: red;\">" . _AM_TDMPICTURE_DOWN_ON') . '</span>';
+        //    $html .= '<li>' . _AM_TDMPICTURE_DOWN_REGISTERGLOBALS') . $registerglobals;
+        //
+        $downloads = ini_get('file_uploads') ? '<span style="color: green;">' . _AM_TDMPICTURE_DOWN_ON . '</span>' : '<span style="color: red;">' . _AM_TDMPICTURE_DOWN_OFF . '</span>';
+        $html      .= '<li>' . _AM_TDMPICTURE_DOWN_SERVERUPLOADSTATUS . $downloads;
+        //
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MAXUPLOADSIZE . ' <b><span style="color: blue;">' . ini_get('upload_max_filesize') . "</span></b>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MAXPOSTSIZE . ' <b><span style="color: blue;">' . ini_get('post_max_size') . "</span></b>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MEMORYLIMIT . ' <b><span style="color: blue;">' . ini_get('memory_limit') . "</span></b>\n";
+        $html .= "</ul>\n";
+        $html .= "<ul>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_SERVERPATH . ' <b>' . XOOPS_ROOT_PATH . "</b>\n";
+        $html .= "</ul>\n";
+        $html .= "<br>\n";
+        $html .= _AM_TDMPICTURE_DOWN_UPLOADPATHDSC . "\n";
+        $html .= '</div>';
+        $html .= '</fieldset><br>';
+        echo $html;
+        //        return $html;
+    }
+
+
+    /**
+     * serverStats()
+     *
+     * @return string
+     */
+    public static function serverStats()
+    {
+        //mb    $TDMPICTURE = TDMPICTURETDMPICTURE::getInstance();
+        $html  = '';
+        $sql   = 'SELECT metavalue';
+        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('TDMPICTURE_meta');
+        $sql   .= " WHERE metakey='version' LIMIT 1";
+        $query = $GLOBALS['xoopsDB']->query($sql);
+        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
+        $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_TDMPICTURE_DOWN_IMAGEINFO . "</legend>\n";
+        $html .= "<div style='padding: 8px;'>\n";
+        $html .= '<div>' . _AM_TDMPICTURE_DOWN_METAVERSION . $meta . "</div>\n";
+        $html .= "<br>\n";
+        $html .= "<br>\n";
+        $html .= '<div>' . _AM_TDMPICTURE_DOWN_SPHPINI . "</div>\n";
+        $html .= "<ul>\n";
+        //
+        $gdlib = function_exists('gd_info') ? "<span style=\"color: green;\">" . _AM_TDMPICTURE_DOWN_GDON . '</span>' : "<span style=\"color: red;\">" . _AM_TDMPICTURE_DOWN_GDOFF . '</span>';
+        $html  .= '<li>' . _AM_TDMPICTURE_DOWN_GDLIBSTATUS . $gdlib;
+        if (function_exists('gd_info')) {
+            if (true === $gdlib = gd_info()) {
+                $html .= '<li>' . _AM_TDMPICTURE_DOWN_GDLIBVERSION . '<b>' . $gdlib['GD Version'] . '</b>';
+            }
+        }
+        //
+        //    $safemode = ini_get('safe_mode') ? _AM_TDMPICTURE_DOWN_ON . _AM_TDMPICTURE_DOWN_SAFEMODEPROBLEMS : _AM_TDMPICTURE_DOWN_OFF;
+        //    $html .= '<li>' . _AM_TDMPICTURE_DOWN_SAFEMODESTATUS . $safemode;
+        //
+        //    $registerglobals = (!ini_get('register_globals')) ? "<span style=\"color: green;\">" . _AM_TDMPICTURE_DOWN_OFF . '</span>' : "<span style=\"color: red;\">" . _AM_TDMPICTURE_DOWN_ON . '</span>';
+        //    $html .= '<li>' . _AM_TDMPICTURE_DOWN_REGISTERGLOBALS . $registerglobals;
+        //
+        $downloads = ini_get('file_uploads') ? "<span style=\"color: green;\">" . _AM_TDMPICTURE_DOWN_ON . '</span>' : "<span style=\"color: red;\">" . _AM_TDMPICTURE_DOWN_OFF . '</span>';
+        $html      .= '<li>' . _AM_TDMPICTURE_DOWN_SERVERUPLOADSTATUS . $downloads;
+        //
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MAXUPLOADSIZE . " <b><span style=\"color: blue;\">" . ini_get('upload_max_filesize') . "</span></b>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MAXPOSTSIZE . " <b><span style=\"color: blue;\">" . ini_get('post_max_size') . "</span></b>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MEMORYLIMIT . " <b><span style=\"color: blue;\">" . ini_get('memory_limit') . "</span></b>\n";
+        $html .= "</ul>\n";
+        $html .= "<ul>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_SERVERPATH . ' <b>' . XOOPS_ROOT_PATH . "</b>\n";
+        $html .= "</ul>\n";
+        $html .= "<br>\n";
+        $html .= _AM_TDMPICTURE_DOWN_UPLOADPATHDSC . "\n";
+        $html .= '</div>';
+        $html .= '</fieldset><br>';
+
+        return $html;
     }
 }

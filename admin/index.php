@@ -48,13 +48,13 @@ $folder = array(
     TDMPICTURE_CAT_PATH
 );
 //test GD
-if (!extension_loaded('gd')) {
-    if (!dl('gd.so')) {
-        $veriffile = '<span style="color: red;"><img src="' . $pathIcon16 . '0.png"> ' . _AM_TDMPICTURE_MANAGE_GDERROR . '</a>';
-    }
-} else {
-    $veriffile = '<span style="color: green;"><img src="' . $pathIcon16 . '1.png" >' . _AM_TDMPICTURE_MANAGE_GDOK . '</span>';
-}
+//if (!extension_loaded('gd')) {
+//    if (!dl('gd.so')) {
+//        $veriffile = '<span style="color: red;"><img src="' . $pathIcon16 . '0.png"> ' . _AM_TDMPICTURE_MANAGE_GDERROR . '</a>';
+//    }
+//} else {
+//    $veriffile = '<span style="color: green;"><img src="' . $pathIcon16 . '1.png" >' . _AM_TDMPICTURE_MANAGE_GDOK . '</span>';
+//}
 
 //$adminObject = \Xmf\Module\Admin::getInstance();
 $adminObject->addInfoBox(_AM_TDMPICTURE_MANAGE_CAT);
@@ -77,7 +77,7 @@ if ($file_waiting == 0) {
 //    $adminObject->addConfigBoxLine($folder[$i], 'folder');
 //    $adminObject->addConfigBoxLine(array($folder[$i], '777'), 'chmod');
 //}
-$adminObject->addConfigBoxLine($veriffile);
+//$adminObject->addConfigBoxLine($veriffile);
 
 $configurator = include __DIR__ . '/../include/config.php';
 $classUtility = ucfirst($moduleDirName) . 'Utility';
@@ -94,6 +94,9 @@ if (count($configurator['uploadFolders']) > 0) {
 
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
+
+TdmpictureUtility::getServerInfo();
+TdmpictureUtility::getServerStatus();
 
 //if ( !is_readable(XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php")) {
 //TdmpictureUtility::getAdminMenu(0, _AM_TDMPICTURE_INDEXDESC);

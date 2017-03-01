@@ -5,6 +5,7 @@ Dev: Xoops 2.5.9, PHP 7.1.2
 - updated file headers for consistency (mamba)
 - renamed several $indexAdmin with $adminObject for consistency (mamba)
 - moved functions to Utility class (mamba)
+- added ServerInfo and Server Stats (mamba)
 - conversion to XMF (mamba)
     - updated addInfoBoxLine entries (mamba)
     - displayNavigation(basename(__FILE__))  (mamba)

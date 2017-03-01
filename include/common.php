@@ -1,7 +1,5 @@
 <?php
 
-use Xmf\Module\Helper;
-
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -22,11 +20,13 @@ use Xmf\Module\Helper;
  * @author          trabis <lusopoemas@gmail.com>
  */
 
+use Xmf\Module\Helper;
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 $moduleDirName = basename(dirname(__DIR__));
-$upperDirName = strtoupper($moduleDirName);
-$moduleHelper = Helper::getHelper($moduleDirName);
+$upperDirName  = strtoupper($moduleDirName);
+$moduleHelper  = Helper::getHelper($moduleDirName);
 
 define('TDMPICTURE_DIRNAME', basename(dirname(__DIR__)));
 define('TDMPICTURE_URL', XOOPS_URL . '/modules/' . TDMPICTURE_DIRNAME);
@@ -54,7 +54,7 @@ define('TDMPICTURE_HEIGHT', $moduleHelper->getConfig('tdmpicture_heigth'));
 define('TDMPICTURE_THUMB_WIDTH', $moduleHelper->getConfig('tdmpicture_thumb_width'));
 define('TDMPICTURE_THUMB_HEIGTH', $moduleHelper->getConfig('tdmpicture_thumb_heigth'));
 
-include_once TDMPICTURE_ROOT_PATH . '/class/utilities.php';
+include_once TDMPICTURE_ROOT_PATH . '/class/utility.php';
 include_once TDMPICTURE_ROOT_PATH . '/class/thumbnail.inc.php';
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 include_once XOOPS_ROOT_PATH . '/class/tree.php';

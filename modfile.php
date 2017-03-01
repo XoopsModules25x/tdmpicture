@@ -17,6 +17,8 @@
  * ****************************************************************************
  */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();
 
@@ -25,11 +27,11 @@ include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '
 
 $xoopsTpl->assign('dirname', $moduleDirName);
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
+$op   = Request::getVar('op', 'list'); //isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 
 //load class
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
 switch ($op) {
 
@@ -108,9 +110,10 @@ switch ($op) {
                 }
             }
         } else {
-            xoops_confirm(array('ok'      => 1,
-                                'file_id' => $_REQUEST['file_id'],
-                                'op'      => 'delete'
+            xoops_confirm(array(
+                              'ok'      => 1,
+                              'file_id' => $_REQUEST['file_id'],
+                              'op'      => 'delete'
                           ), $_SERVER['REQUEST_URI'], _MD_TDMPICTURE_FORMSUREDEL);
         }
         break;
@@ -123,5 +126,5 @@ switch ($op) {
         break;
 
 }
-TdmPictureUtilities::header();
+TdmpictureUtility::getHeader();
 include_once XOOPS_ROOT_PATH . '/footer.php';

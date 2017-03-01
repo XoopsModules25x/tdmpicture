@@ -1,7 +1,5 @@
 <?php
 
-use Xmf\Module\Helper;
-
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -19,13 +17,19 @@ use Xmf\Module\Helper;
  *
  * ****************************************************************************
  */
+
+use Xmf\Module\Helper;
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class TDMPicture_cat extends XoopsObject
+/**
+ * Class TdmPictureCategory
+ */
+class TdmPictureCategory extends XoopsObject
 {
     // constructor
     /**
-     * TDMPicture_cat constructor.
+     * TdmPictureCategory constructor.
      */
     public function __construct()
     {
@@ -79,7 +83,7 @@ class TDMPicture_cat extends XoopsObject
         }
 
         //categorie
-        $catHandler = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+        $catHandler = xoops_getModuleHandler('category', $moduleDirName);
 
         $criteriaDisplay = new CriteriaCompo();
         $criteriaDisplay->add(new Criteria('cat_display', 1));
@@ -92,8 +96,12 @@ class TDMPicture_cat extends XoopsObject
 
         $arr    = $catHandler->getall($criteriaUser);
         $mytree = new XoopsObjectTree($arr, 'cat_id', 'cat_pid');
-        $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_PARENT,
-                                             $mytree->makeSelBox('cat_pid', 'cat_title', '-', $this->getVar('cat_pid'), true)));
+        if (TdmpictureUtility::checkXoopsVersion('2', '5', '9', '>=')) {
+            $catSelect = new XoopsFormLabel(_MD_TDMPICTURE_PARENT, $mytree->makeSelectElement('cat_pid', 'cat_title', '-', $this->getVar('cat_pid'), true, 0, '', ''));
+            $form->addElement($catSelect);
+        } else {
+            $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_PARENT, $mytree->makeSelBox('cat_pid', 'cat_title', '-', $this->getVar('cat_pid'), true)));
+        }
 
         //editor
         $editor_configs           = array();
@@ -116,10 +124,9 @@ class TDMPicture_cat extends XoopsObject
         foreach ($topics_array as $image) {
             $imageselect->addOption("$image", $image);
         }
-        $imageselect->setExtra("onchange='showImgSelected(\"image3\", \"img\", \"" . $uploadirectory . "\", \"\", \"" . XOOPS_URL . "\")'");
+        $imageselect->setExtra("onchange='showImgSelected(\"image3\", \"img\", \"" . $uploadirectory . '", "", "' . XOOPS_URL . "\")'");
         $imgtray->addElement($imageselect, false);
-        $imgtray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_URL . '/' . $uploadirectory . '/' . $img
-                                                    . "' name='image3' id='image3' alt='' />"));
+        $imgtray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_URL . '/' . $uploadirectory . '/' . $img . "' name='image3' id='image3' alt='' />"));
 
         $fileseltray = new XoopsFormElementTray('', '<br>');
         $fileseltray->addElement(new XoopsFormFile(_MD_TDMPICTURE_UPLOAD, 'attachedfile', $moduleHelper->getConfig('tdmpicture_mimemax')), false);
@@ -145,8 +152,7 @@ class TDMPicture_cat extends XoopsObject
 
         if ($gpermHandler->checkRight('tdmpicture_view', 1048, $groups, $xoopsModule->getVar('mid'))) {
             if (!$this->isNew()) { // Edit mode
-                $groups_ids                    = $gpermHandler->getGroupIds('tdmpicture_catview', $this->getVar('cat_id'),
-                                                                            $xoopsModule->getVar('mid'));
+                $groups_ids                    = $gpermHandler->getGroupIds('tdmpicture_catview', $this->getVar('cat_id'), $xoopsModule->getVar('mid'));
                 $groups_ids                    = array_values($groups_ids);
                 $groups_news_can_view_checkbox = new XoopsFormCheckBox(_MD_TDMPICTURE_PERM_2, 'groups_view[]', $groups_ids);
             } else { // Creation mode
@@ -182,16 +188,16 @@ class TDMPicture_cat extends XoopsObject
 }
 
 /**
- * Class TDMPicturetdmpicture_catHandler
+ * Class TdmPictureCategoryHandler
  */
-class TDMPicturetdmpicture_catHandler extends XoopsPersistableObjectHandler
+class TdmPictureCategoryHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * TDMPicturetdmpicture_catHandler constructor.
+     * TdmPictureCategoryHandler constructor.
      * @param XoopsDatabase $db
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'tdmpicture_cat', 'TDMPicture_cat', 'cat_id', 'cat_title');
+        parent::__construct($db, 'tdmpicture_cat', 'TdmPictureCategory', 'cat_id', 'cat_title');
     }
 }

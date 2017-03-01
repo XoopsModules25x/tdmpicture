@@ -1,7 +1,5 @@
 <?php
 
-use Xmf\Module\Helper;
-
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -19,13 +17,19 @@ use Xmf\Module\Helper;
  *
  * ****************************************************************************
  */
+
+use Xmf\Module\Helper;
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class TDMPicture_pl extends XoopsObject
+/**
+ * Class TdmPicturePlaylist
+ */
+class TdmPicturePlaylist extends XoopsObject
 {
     // constructor
     /**
-     * TDMPicture_pl constructor.
+     * TdmPicturePlaylist constructor.
      */
     public function __construct()
     {
@@ -53,26 +57,26 @@ class TDMPicture_pl extends XoopsObject
     {
         global $xoopsDB, $xoopsModule;
         $moduleDirName = basename(dirname(__DIR__));
-        $moduleHelper = Helper::getHelper($moduleDirName);
+        $moduleHelper  = Helper::getHelper($moduleDirName);
 
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $title = $this->isNew() ? sprintf(_AM_TDMSOUND_ADD) : sprintf(_AM_TDMSOUND_EDIT);
+        $title = $this->isNew() ? sprintf(_AM_TDMPICTURE_ADD) : sprintf(_AM_TDMPICTURE_EDIT);
 
         include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
         $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
-        //  $form->addElement(new XoopsFormText(_AM_TDMSOUND_TITLE, 'filecat_title', 100, 255, $this->getVar('filecat_title')), true);
+        //  $form->addElement(new XoopsFormText(_AM_TDMPICTURE_TITLE, 'filecat_title', 100, 255, $this->getVar('filecat_title')), true);
         if (!$this->isNew()) {
             //Load groups
             $form->addElement(new XoopsFormHidden('id', $this->getVar('pl_id')));
         }
 
         //load album
-        $albHandler = xoops_getModuleHandler('tdmsound_alb', $moduleDirName);
-        $cat_select  = new XoopsFormSelect(_AM_TDMSOUND_ALBUM, 'pl_pid', $this->getVar('pl_pid'));
+        $albHandler = xoops_getModuleHandler('TDMPICTURE_alb', $moduleDirName);
+        $cat_select = new XoopsFormSelect(_AM_TDMPICTURE_ALBUM, 'pl_pid', $this->getVar('pl_pid'));
         $cat_select->addOptionArray($albHandler->getList());
         $form->addElement($cat_select, true);
         //
@@ -81,11 +85,11 @@ class TDMPicture_pl extends XoopsObject
 
         for ($i = 1; $i < 5; ++$i) {
             $form->insertBreak('<div align="center"></div>', 'odd');
-            $form->addElement(new XoopsFormText(_AM_TDMSOUND_TITLE, 'file_title[]', 100, 255, $this->getVar('filecat_title')));
-            $form->addElement(new XoopsFormFile(_AM_TDMSOUND_UPLOAD, 'attachedfile' . $i, $moduleHelper->getConfig('mimemax')));
+            $form->addElement(new XoopsFormText(_AM_TDMPICTURE_TITLE, 'file_title[]', 100, 255, $this->getVar('filecat_title')));
+            $form->addElement(new XoopsFormFile(_AM_TDMPICTURE_UPLOAD, 'attachedfile' . $i, $moduleHelper->getConfig('mimemax')));
         }
 
-        $form->addElement(new XoopsFormRadioYN(_AM_TDMSOUND_DISPLAYUSER, 'pl_display', $this->getVar('plcat_display'), _YES, _NO));
+        $form->addElement(new XoopsFormRadioYN(_AM_TDMPICTURE_DISPLAYUSER, 'pl_display', $this->getVar('plcat_display'), _YES, _NO));
         $form->addElement(new XoopsFormHidden('op', 'save'));
         $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 
@@ -94,16 +98,16 @@ class TDMPicture_pl extends XoopsObject
 }
 
 /**
- * Class TDMPicturetdmpicture_plHandler
+ * Class TdmPicturePlaylistHandler
  */
-class TDMPicturetdmpicture_plHandler extends XoopsPersistableObjectHandler
+class TdmPicturePlaylistHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * TDMPicturetdmpicture_plHandler constructor.
+     * TdmPicturePlaylistHandler constructor.
      * @param XoopsDatabase $db
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'tdmsound_pl', 'TDMPicture_pl', 'pl_id', 'pl_title');
+        parent::__construct($db, 'TDMPICTURE_pl', 'TdmPicturePlaylist', 'pl_id', 'pl_title');
     }
 }

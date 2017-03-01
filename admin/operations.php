@@ -17,29 +17,29 @@
  * ****************************************************************************
  */
 
-include_once __DIR__ . '/admin_header.php';
+use Xmf\Request;
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-TdmPictureUtilities::adminheader();
+TdmpictureUtility::getAdminHeader();
 
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
 $myts  = MyTextSanitizer::getInstance();
-$op    = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
-$start = isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
-$size  = isset($_REQUEST['size']) ? $_REQUEST['size'] : 0;
+$op    = Request::getVar('op', 'list'); //isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
+$start = Request::getInt('start', 0); //isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
+$size  = Request::getInt('size', 0); //isset($_REQUEST['size']) ? $_REQUEST['size'] : 0;
 if ($size <= 0 || $size > 10000) {
     $size = 10;
 }
 
 //$forceredo = isset( $_POST['forceredo'] ) ? (int)( $_POST['forceredo'] ) : false ;
-$forcethumb = isset($_POST['forcethumb']) ? (int)$_POST['forcethumb'] : false;
-
+$forcethumb = Request::getInt('forcethumb', false, 'POST'); //isset($_POST['forcethumb']) ? (int)$_POST['forcethumb'] : false;
 //$removerec = isset( $_POST['removerec'] ) ? (int)( $_POST['removerec'] ) : false ;
-$removerec = isset($_REQUEST['removerec']) ? (int)$_REQUEST['removerec'] : false;
-
-$resize = isset($_REQUEST['resize']) ? (int)$_REQUEST['resize'] : false;
+$removerec = Request::getInt('removerec', false); //isset($_REQUEST['removerec']) ? (int)$_REQUEST['removerec'] : false;
+$resize    = Request::getInt('resize', false); //isset($_REQUEST['resize']) ? (int)$_REQUEST['resize'] : false;
 
 // get flag of safe_mode
 //$safe_mode_flag = ini_get('safe_mode');
@@ -137,16 +137,16 @@ if (!empty($_POST['submit'])) {
         }
 
         switch ($retcode) {
-            case 0 :
+            case 0:
                 echo _AM_MB_FAILEDREADING . "<br>\n";
                 break;
-            case 1 :
+            case 1:
                 echo _AM_MB_CREATEDTHUMBS . "<br>\n";
                 break;
-            case 2 :
+            case 2:
                 echo _AM_MB_BIGTHUMBS . "<br>\n";
                 break;
-            case 3 :
+            case 3:
                 echo _AM_MB_SKIPPED . "<br>\n";
                 break;
         }
@@ -162,8 +162,7 @@ $form = new XoopsThemeForm(_AM_FORM_RECORDMAINTENANCE, 'batchupload', 'redothumb
 $form->setExtra("enctype='multipart/form-data'");
 
 $start_text      = new XoopsFormText(_AM_TEXT_RECORDFORSTARTING, 'start', 20, 20, $start);
-$size_text       = new XoopsFormText(_AM_TEXT_NUMBERATATIME . "<br><br><span style='font-weight:normal'>" . _AM_LABEL_DESCNUMBERATATIME . '</span>',
-                                     'size', 20, 20, $size);
+$size_text       = new XoopsFormText(_AM_TEXT_NUMBERATATIME . "<br><br><span style='font-weight:normal'>" . _AM_LABEL_DESCNUMBERATATIME . '</span>', 'size', 20, 20, $size);
 $forceredo_radio = new XoopsFormRadioYN(_AM_RADIO_FORCEREDO, 'forceredo', $forceredo);
 $removerec_radio = new XoopsFormRadioYN(_AM_RADIO_REMOVEREC, 'removerec', $removerec);
 $resize_radio    = new XoopsFormRadioYN(_AM_RADIO_RESIZE . " ({$myalbum_width}x{$myalbum_height})", 'resize', $resize);

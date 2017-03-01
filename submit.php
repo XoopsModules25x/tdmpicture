@@ -1,5 +1,7 @@
 <?php
 
+use Xmf\Request;
+
 //include
 include_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();
@@ -24,10 +26,10 @@ if (!$gpermHandler->checkRight('tdmpicture_view', 8, $groups, $xoopsModule->getV
     redirect_header(XOOPS_URL, 2, _MD_TDMPICTURE_NOPERM);
 }
 //load class
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'upload';
+$op   = Request::getVar('op', 'upload'); //isset($_REQUEST['op']) ? $_REQUEST['op'] : 'upload';
 
 global $xoopsUser, $xoopsModule;
 
@@ -104,9 +106,9 @@ switch ($op) {
         if ($catHandler->insert($obj)) {
 
             //permission
-            $perm_id       = isset($_REQUEST['cat_id']) ? $_REQUEST['cat_id'] : $obj->getVar('cat_id');
+            $perm_id      = isset($_REQUEST['cat_id']) ? $_REQUEST['cat_id'] : $obj->getVar('cat_id');
             $gpermHandler = xoops_getHandler('groupperm');
-            $criteria      = new CriteriaCompo();
+            $criteria     = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $perm_id, '='));
             $criteria->add(new Criteria('gperm_modid', $xoopsModule->getVar('mid'), '='));
             $criteria->add(new Criteria('gperm_name', 'tdmpicture_catview', '='));
@@ -122,7 +124,7 @@ switch ($op) {
         }
         //include_once(__DIR__ . '/../include/forms.php');
         echo $obj->getHtmlErrors() . $errors;
-        $form =& $obj->getForm();
+        $form = $obj->getForm();
         $form->display();
         break;
 
@@ -213,5 +215,5 @@ switch ($op) {
         redirect_header('index.php', 2, _MD_TDMPICTURE_NOPERM);
 
 }
-TdmPictureUtilities::header();
+TdmpictureUtility::getHeader();
 include_once __DIR__ . '/../../footer.php';

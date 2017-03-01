@@ -18,6 +18,8 @@
  * ****************************************************************************
  */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'tdmpicture_viewfile.tpl';
 require XOOPS_ROOT_PATH . '/header.php';
@@ -27,18 +29,18 @@ $xoopsTpl->assign('dirname', $moduleDirName);
 // get User ID
 //is_object($xoopsUser) ? $xd_uid = $xoopsUser->getVar('uid') : $xd_uid = -1;
 
-$op      = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
-$tris    = isset($_REQUEST['tris']) ? $_REQUEST['tris'] : 'file_indate';
-$order   = isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
-$post_ct = isset($_REQUEST['ct']) ? $_REQUEST['ct'] : false;
-$post_ut = isset($_REQUEST['ut']) ? $_REQUEST['ut'] : false;
-$st      = isset($_REQUEST['st']) ? $_REQUEST['st'] : false;
+$op      = Request::getVar('op', 'list'); //isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
+$tris    = Request::getString('tris', 'file_indate'); //iisset($_REQUEST['tris']) ? $_REQUEST['tris'] : 'file_indate';
+$order   = Request::getString('order', 'desc'); //iisset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
+$post_ct = Request::getString('ct', false); //iisset($_REQUEST['ct']) ? $_REQUEST['ct'] : false;
+$post_ut = Request::getString('ut', false); //iisset($_REQUEST['ut']) ? $_REQUEST['ut'] : false;
+$st      = Request::getString('st', false); //iisset($_REQUEST['st']) ? $_REQUEST['st'] : false;
 
 isset($_REQUEST['com_mode']) ? $op = 'detail' : '';
 
 //load class
-$fileHandler  = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler   = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler  = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler   = xoops_getModuleHandler('category', $moduleDirName);
 $gpermHandler = xoops_getHandler('groupperm');
 
 $myts = MyTextSanitizer::getInstance();
@@ -116,9 +118,9 @@ switch ($op) {
         //navigation
         $navigation = '';
         $xoopsTpl->assign('cat_view', true);
-        //$xoopsTpl->assign('selectcat', TdmPictureUtilities::catselect($mytree, (int)($ct)));
+        //$xoopsTpl->assign('selectcat', TdmpictureUtility::selectCat($mytree, (int)($ct)));
         //$xoopsTpl->assign('selecttris', tdmpicture_trisselect((int)($ct), $tris));
-        //$xoopsTpl->assign('selectview', TdmPictureUtilities::selectView((int)($ct), $limit));
+        //$xoopsTpl->assign('selectview', TdmpictureUtility::selectView((int)($ct), $limit));
         $meta_title = $meta_keywords = $meta_description = $GLOBALS['cat_title'];
 
         //$xoopsTpl->assign('nav_bar', $GLOBALS['navbar']);
@@ -169,12 +171,9 @@ switch ($op) {
             if (file_exists($array_thumbs_path[$pos - 1])) {
                 $previmg = '<img src=' . $array_thumbs[$pos - 1] . " class='detail_img'>";
                 if (!empty($post_ut)) {
-                    $prev_page = "<a title='" . $array_titles[$pos - 1] . "' href='viewfile.php?st=" . $array_ids[$pos - 1] . '&ut=' . $array_uts[$pos
-                                                                                                                                                  - 1]
-                                 . '&tris=' . $tris . '&order=' . $order . "'>" . $previmg . '</a>';
+                    $prev_page = "<a title='" . $array_titles[$pos - 1] . "' href='viewfile.php?st=" . $array_ids[$pos - 1] . '&ut=' . $array_uts[$pos - 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $previmg . '</a>';
                 } else {
-                    $prev_page = "<a title='" . $array_titles[$pos - 1] . "' href='viewfile.php?st=" . $array_ids[$pos - 1] . '&ct='
-                                 . $array_cats[$pos - 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $previmg . '</a>';
+                    $prev_page = "<a title='" . $array_titles[$pos - 1] . "' href='viewfile.php?st=" . $array_ids[$pos - 1] . '&ct=' . $array_cats[$pos - 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $previmg . '</a>';
                 }
                 $xoopsTpl->assign('prev_page', $prev_page);
             }
@@ -184,12 +183,9 @@ switch ($op) {
             if (file_exists($array_thumbs_path[$pos + 1])) {
                 $nextimg = '<img src=' . $array_thumbs[$pos + 1] . " class='detail_img'>";
                 if (!empty($post_ut)) {
-                    $next_page = "<a title='" . $array_titles[$pos + 1] . "' href='viewfile.php?st=" . $array_ids[$pos + 1] . '&ut=' . $array_uts[$pos
-                                                                                                                                                  + 1]
-                                 . '&tris=' . $tris . '&order=' . $order . "'>" . $nextimg . '</a>';
+                    $next_page = "<a title='" . $array_titles[$pos + 1] . "' href='viewfile.php?st=" . $array_ids[$pos + 1] . '&ut=' . $array_uts[$pos + 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $nextimg . '</a>';
                 } else {
-                    $next_page = "<a title='" . $array_titles[$pos + 1] . "' href='viewfile.php?st=" . $array_ids[$pos + 1] . '&ct='
-                                 . $array_cats[$pos + 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $nextimg . '</a>';
+                    $next_page = "<a title='" . $array_titles[$pos + 1] . "' href='viewfile.php?st=" . $array_ids[$pos + 1] . '&ct=' . $array_cats[$pos + 1] . '&tris=' . $tris . '&order=' . $order . "'>" . $nextimg . '</a>';
                 }
                 $xoopsTpl->assign('next_page', $next_page);
             }
@@ -243,14 +239,14 @@ switch ($op) {
 
             //
 
-            $file['id'] = $file_arr[$f]->getVar('file_id');
-            $meta_title .= ' : ' . $file_arr[$f]->getVar('file_title');
+            $file['id']    = $file_arr[$f]->getVar('file_id');
+            $meta_title    .= ' : ' . $file_arr[$f]->getVar('file_title');
             $file['title'] = $myts->displayTarea($file_arr[$f]->getVar('file_title'));
             $xoopsTpl->assign('tree_title', $file['title']);
             $file['type']   = $file_arr[$f]->getVar('file_type');
             $file['hits']   = $file_arr[$f]->getVar('file_hits');
             $file['dl']     = $file_arr[$f]->getVar('file_dl');
-            $file['size']   = TdmPictureUtilities::prettySize($file_arr[$f]->getVar('file_size'));
+            $file['size']   = TdmpictureUtility::getPrettySize($file_arr[$f]->getVar('file_size'));
             $file['with']   = $file_arr[$f]->getVar('file_res_x');
             $file['height'] = $file_arr[$f]->getVar('file_res_y');
 
@@ -260,17 +256,15 @@ switch ($op) {
             if (file_exists($poster_image) && $poster->getVar('user_avatar') != ''
                 && $poster->getVar('user_avatar') !== 'blank.png'
             ) {
-                $file['userimg'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $poster->getVar('user_avatar') . "' height='60px' title="
-                                   . $poster->getVar('uname') . " style='border: 1px solid #CCC;' alt=" . $poster->getVar('uname') . '>';
+                $file['userimg'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $poster->getVar('user_avatar') . "' height='60px' title=" . $poster->getVar('uname'). " style='border: 1px solid #CCC;' alt=" . $poster->getVar('uname') . '>';
             } else {
-                $file['userimg'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL
-                                   . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
+                $file['userimg'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
             }
             //
             $file['postername'] = XoopsUser::getUnameFromId($file_arr[$f]->getVar('file_uid'));
             $file['uid']        = $file_arr[$f]->getVar('file_uid');
             //test si l'user a un album
-            $file['useralb'] = TdmPictureUtilities::useralb($file_arr[$f]->getVar('file_uid'));
+            $file['useralb'] = TdmpictureUtility::getUserAlbum($file_arr[$f]->getVar('file_uid'));
             //
             if ($xd_uid == $file_arr[$f]->getVar('file_uid')) {
                 $xoopsTpl->assign('file_edit', true);
@@ -322,14 +316,14 @@ switch ($op) {
         break;
 
 }
-TdmPictureUtilities::header();
+TdmpictureUtility::getHeader();
 $xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($xoopsModule->name() . ' : ' . $meta_title));
 
 if (isset($xoTheme) && is_object($xoTheme)) {
-    $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($meta_desc));
+    $xoTheme->addMeta('meta', 'keywords', TdmpictureUtility::getKeywords($meta_desc));
     $xoTheme->addMeta('meta', 'description', $meta_desc);
 } else {    // Compatibility for old Xoops versions
-    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($moduleHelper->getConfig('tdmpicture_keywords')));
+    $xoopsTpl->assign('xoops_meta_keywords', TdmpictureUtility::getKeywords($moduleHelper->getConfig('tdmpicture_keywords')));
     $xoopsTpl->assign('xoops_meta_description', $moduleHelper->getConfig('tdmpicture_description'));
 }
 //fonction commentaire

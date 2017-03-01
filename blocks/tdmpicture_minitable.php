@@ -85,8 +85,8 @@ function b_tdmpicture($options)
     $style_block          = $options[6];
 
     $myts        = MyTextSanitizer::getInstance();
-    $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-    $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+    $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+    $catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
     if (!isset($GLOBALS['xoopsModuleConfig'])) {
         /** @var XoopsModuleHandler $moduleHandler */
@@ -154,9 +154,7 @@ function b_tdmpicture($options)
 
         $blocks[$i]['i']     = $e;
         $blocks[$i]['id']    = $file_arr[$i]->getVar('file_id');
-        $title               = $myts->displayTarea((strlen($file_arr[$i]->getVar('file_title'))
-                                                    > $lenght_title ? substr($file_arr[$i]->getVar('file_title'), 0, $lenght_title)
-                                                                      . '...' : $file_arr[$i]->getVar('file_title')));
+        $title               = $myts->displayTarea((strlen($file_arr[$i]->getVar('file_title')) > $lenght_title ? substr($file_arr[$i]->getVar('file_title'), 0, $lenght_title) . '...' : $file_arr[$i]->getVar('file_title')));
         $blocks[$i]['title'] = $title;
         //$blocks[$i]['cat'] =  $file_arr[$i]->getVar('file_cat');
         $blocks[$i]['tris']       = $type_block;
@@ -192,13 +190,13 @@ function b_tdmpicture($options)
 function b_tdmpicture_edit($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $catHandler    = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+    $catHandler    = xoops_getModuleHandler('category', $moduleDirName);
     $criteria      = new CriteriaCompo();
     $criteria->add(new Criteria('cat_display', 1));
     $criteria->setSort('cat_title');
     $criteria->setOrder('ASC');
     $assoc_arr = $catHandler->getall($criteria);
-    $form      = "<input type=\"hidden\" name=\"options[0]\" value=\"" . $options[0] . "\" />";
+    $form      = '<input type="hidden" name="options[0]" value="' . $options[0] . '" />';
 
     $array = array(
         _AM_TDMPICTURE_SELECT_TEXT,
@@ -218,12 +216,10 @@ function b_tdmpicture_edit($options)
 
     print_r($options);
     $selectedid = explode(',', $options[7]);
-    $form .= _MB_TDMPICTURE_CATTODISPLAY . "<br><select name=\"options[7][]\" multiple=\"multiple\" size=\"5\">";
-    $form .= "<option value=\"0\" " . (array_search(0, $selectedid) === false ? '' : 'selected') . '>' . _MB_TDMPICTURE_ALLCAT . '</option>';
+    $form       .= _MB_TDMPICTURE_CATTODISPLAY . '<br><select name="options[7][]" multiple="multiple" size="5">';
+    $form       .= '<option value="0" ' . (array_search(0, $selectedid) === false ? '' : 'selected') . '>' . _MB_TDMPICTURE_ALLCAT . '</option>';
     foreach (array_keys($assoc_arr) as $i) {
-        $form .= "<option value=\"" . $assoc_arr[$i]->getVar('cat_id') . "\" " . (array_search($assoc_arr[$i]->getVar('cat_id'), $selectedid)
-                                                                                  === false ? '' : 'selected') . '>'
-                 . $assoc_arr[$i]->getVar('cat_title') . '</option>';
+        $form .= '<option value="' . $assoc_arr[$i]->getVar('cat_id') . '" ' . (array_search($assoc_arr[$i]->getVar('cat_id'), $selectedid) === false ? '' : 'selected') . '>' . $assoc_arr[$i]->getVar('cat_title') . '</option>';
     }
     $form .= '</select><br>';
 
@@ -259,7 +255,7 @@ function tdmpicture_blockselect($options, $number, $lang, $array)
     $select = $lang . ': ';
     $select .= "<select name='options[{$number}]'>";
     foreach ($array as $key => $value) {
-        $select .= "<option value=\"" . $key . "\" " . (($key == $options[$number]) === false ? '' : 'selected') . '>' . $value . '</option>';
+        $select .= '<option value="' . $key . '" ' . (($key == $options[$number]) === false ? '' : 'selected') . '>' . $value . '</option>';
     }
 
     $select .= '</select><br>';
@@ -276,8 +272,7 @@ function tdmpicture_blockselect($options, $number, $lang, $array)
  */
 function tdmpicture_blocktext($options, $number, $lang, $size)
 {
-    $text = $lang . ": <input name='options[{$number}]' size='" . $size . "' maxlength=\"255\" value='" . $options[$number]
-            . "' type=\"text\" /><br>";
+    $text = $lang . ": <input name='options[{$number}]' size='" . $size . "' maxlength=\"255\" value='" . $options[$number] . "' type=\"text\" /><br>";
 
     return $text;
 }

@@ -17,7 +17,9 @@
  * ****************************************************************************
  */
 
-include_once __DIR__ . '/admin_header.php';
+use Xmf\Request;
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
@@ -25,12 +27,12 @@ include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 include_once __DIR__ . '/../class/calendargrouppermform.php';
 //include_once XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->dirname().'/class/mygrouppermform.php';
 
-if (!empty($_POST['submit'])) {
+if (Request::hasVar('submit', 'POST')) { //!empty($_POST['submit'])) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/admin/permissions.php', 1, _AM_XD_GPERMUPDATED);
 }
 
-$category_admin = new ModuleAdmin();
-echo $category_admin->addNavigation(basename(__FILE__));
+$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject->displayNavigation(basename(__FILE__));
 
 $module_id = $xoopsModule->getVar('mid');
 
@@ -78,4 +80,4 @@ echo '<style type="text/css">
 echo '<div class="tips">' . _AM_TDMPICTURE_MANAGE_PERM . '</div><br>';
 echo $permform->render();
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

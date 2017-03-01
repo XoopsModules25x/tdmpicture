@@ -1,37 +1,37 @@
 <?php
-
-use Xmf\Module\Helper;
-
 /**
  * ****************************************************************************
- *  - TDMSpot By TDM   - TEAM DEV MODULE FOR XOOPS
- *  - Licence PRO Copyright (c)  (http://www.)
+ *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
+ *  - Licence GPL Copyright (c)  (http://xoops.org)
  *
- * Cette licence, contient des limitations
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * 1. Vous devez poss�der une permission d'ex�cuter le logiciel, pour n'importe quel usage.
- * 2. Vous ne devez pas l' �tudier ni l'adapter � vos besoins,
- * 3. Vous ne devez le redistribuer ni en faire des copies,
- * 4. Vous n'avez pas la libert� de l'am�liorer ni de rendre publiques les modifications
- *
- * @license     TDMFR GNU public license
- * @author      TDMFR ; TEAM DEV MODULE
+ * @license     TDM GPL license
+ * @author      TDM TEAM DEV MODULE
  *
  * ****************************************************************************
  */
 
-include_once __DIR__ . '/admin_header.php';
+use Xmf\Module\Helper;
+use Xmf\Request;
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $moduleDirName = basename(dirname(__DIR__));
 $moduleHelper  = Helper::getHelper($moduleDirName);
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
-$op           = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
-$batch_folder = isset($_REQUEST['batch_folder']) ? $_REQUEST['batch_folder'] : '' . XOOPS_ROOT_PATH . "/uploads/$moduleDirName/photo/";
-$nbPhotos     = isset($_POST['nbPhotos']) ? $_POST['nbPhotos'] : 0;
+$op           = Request::getVar('op', 'list'); //
+$batch_folder = Request::getString('batch_folder', '' . XOOPS_ROOT_PATH . "/uploads/$moduleDirName/photo/");
+$nbPhotos     = Request::getInt('nbPhotos', 0, 'POST');
 
 switch ($op) {
 
@@ -107,10 +107,10 @@ switch ($op) {
         }
 
         if ($maxTimeReached) {
-            $aboutAdmin = new ModuleAdmin();
+            $adminObject = \Xmf\Module\Admin::getInstance();
             //$aboutAdmin->addInfoBox(_AM_TDMPICTURE_NOTE);
             //$aboutAdmin->addInfoBoxLine(_AM_TDMPICTURE_NOTE, _AM_TDMPICTURE_BATCHDESC, '', '', 'information');
-            echo $aboutAdmin->addNavigation(basename(__FILE__));
+            $adminObject->displayNavigation(basename(__FILE__));
             echo $aboutAdmin->renderInfoBox();
 
             echo '<div class="confirmMsg">';
@@ -149,10 +149,10 @@ switch ($op) {
             $uid    = 0;
         }
 
-        $aboutAdmin = new ModuleAdmin();
+        $aboutAdmin = \Xmf\Module\Admin::getInstance();
         //$aboutAdmin->addInfoBox(_AM_TDMPICTURE_NOTE);
         //$aboutAdmin->addInfoBoxLine(_AM_TDMPICTURE_NOTE, _AM_TDMPICTURE_BATCHDESC, '', '', 'information');
-        echo $aboutAdmin->addNavigation(basename(__FILE__));
+        $adminObject->displayNavigation(basename(__FILE__));
         echo $aboutAdmin->renderInfoBox();
 
         //compte les fichiers dans le dossier
@@ -177,7 +177,7 @@ switch ($op) {
         $form = new XoopsThemeForm(_AM_TDMPICTURE_ADD, 'batch_photo', 'batch.php', '', true);
 
         //categorie
-        $catHandler = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+        $catHandler = xoops_getModuleHandler('category', $moduleDirName);
 
         $cat_select = new XoopsFormSelect(_AM_TDMPICTURE_CAT, 'file_cat');
         //$cat_select->addOption(0, _ALL);
@@ -244,8 +244,7 @@ function import_liste($liste)
     `file_title`, `file_text`, `file_type`, `file_display`, `file_hits`, `file_dl`, `file_votes`,
     `file_counts`, `file_indate`, `file_uid`, `file_size`, `file_res_x`, `file_res_y`, `file_comments`, `file_ext`)
     SELECT  `photo_id`, `cat_id` , `photo_name`, `photo_desc`, `photo_title`,   NULL, `photo_approved`, `photo_hits`, NULL,
-    `photo_nbrating`, `photo_rating`, `photo_date`, `uid`,  `photo_size`, `photo_res_x` ,   `photo_res_y`, `photo_comment`, 2   FROM '
-                                     . $xoopsDB->prefix('extgallery_publicphoto') . '';
+    `photo_nbrating`, `photo_rating`, `photo_date`, `uid`,  `photo_size`, `photo_res_x` ,   `photo_res_y`, `photo_comment`, 2   FROM ' . $xoopsDB->prefix('extgallery_publicphoto') . '';
             $import['conf_path']   = 'tdm_extgallery_path';
             $import['conf_thumbs'] = 'tdm_extgallery_thumb';
             break;
@@ -259,4 +258,4 @@ function import_liste($liste)
     return $import;
 }
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

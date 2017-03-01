@@ -19,8 +19,8 @@
 include __DIR__ . '/../../mainfile.php';
 include_once $GLOBALS['xoops']->path('class/template.php');
 
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
 error_reporting(0);
 $GLOBALS['xoopsLogger']->activated = false;
@@ -81,10 +81,8 @@ if (!$tpl->is_cached('db:tdmpicture_rss.tpl')) {
         $tpitem['text'] = $item_arr[$i]->getVar('file_text');
 
         $tpitem['indate'] = formatTimestamp($item_arr[$i]->getVar('file_indate'), 'm');
-        $tpitem['link']   = XOOPS_URL . '/modules/TDMPicture/viewfile.php?st=' . $item_arr[$i]->getVar('file_id') . '&amp;ct='
-                            . $item_arr[$i]->getVar('file_cat');
-        $tpitem['guid']   = XOOPS_URL . '/modules/TDMPicture/viewfile.php?st=' . $item_arr[$i]->getVar('file_id') . '&amp;ct='
-                            . $item_arr[$i]->getVar('file_cat');
+        $tpitem['link']   = XOOPS_URL . '/modules/TDMPicture/viewfile.php?st=' . $item_arr[$i]->getVar('file_id') . '&amp;ct=' . $item_arr[$i]->getVar('file_cat');
+        $tpitem['guid']   = XOOPS_URL . '/modules/TDMPicture/viewfile.php?st=' . $item_arr[$i]->getVar('file_id') . '&amp;ct=' . $item_arr[$i]->getVar('file_cat');
 
         $tpl->append('tpitem', $tpitem);
     }

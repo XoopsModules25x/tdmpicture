@@ -1,7 +1,5 @@
 <?php
 
-use Xmf\Module\Helper;
-
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -32,6 +30,8 @@ use Xmf\Module\Helper;
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
+use Xmf\Module\Helper;
+
 error_reporting(0);
 
 include_once __DIR__ . '/../../../mainfile.php';
@@ -39,7 +39,7 @@ include_once __DIR__ . '/../../../include/cp_header.php';
 //require __DIR__ . '/../fpdf/fpdf.php';
 require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
 //include_once XOOPS_ROOT_PATH.'/modules/tdmpicture/class/tdmassoc_pdf_table.php';
-include_once XOOPS_ROOT_PATH . '/modules/tdmpicture/class/utilities.php';
+include_once XOOPS_ROOT_PATH . '/modules/tdmpicture/class/utility.php';
 
 global $xoopsDB, $xoopsConfig;
 
@@ -117,9 +117,8 @@ switch ($option) {
             'padding'     => 2
         );
 
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
-                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
-                    . ' S WHERE S.status_id=M.member_status AND M.member_office = "1" ORDER BY S.status_order limit 0,10', $prop);
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, '
+                    . $xoopsDB->prefix('tdmassoc_status') . ' S WHERE S.status_id=M.member_status AND M.member_office = "1" ORDER BY S.status_order limit 0,10', $prop);
 
         $pdf->TitreChapitre($myts->displayTarea($pdf_data['composition_list_admin']));
 
@@ -153,9 +152,8 @@ switch ($option) {
         $criteria->add(new Criteria('member_waiting', 1,'='));
         $criteria->setOrder('ASC');
         $assoc_arr = $memberHandler->getObjects($criteria);*/
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
-                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
-                    . ' S WHERE S.status_id=M.member_status AND M.member_office = "0" ORDER BY S.status_order limit 0,10', $prop);
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, '
+                    . $xoopsDB->prefix('tdmassoc_status') . ' S WHERE S.status_id=M.member_status AND M.member_office = "0" ORDER BY S.status_order limit 0,10', $prop);
         $pdf->Output();
 
         break;
@@ -196,9 +194,8 @@ switch ($option) {
             'padding'     => 1
         );
 
-        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM '
-                    . $xoopsDB->prefix('tdmassoc_member') . ' M, ' . $xoopsDB->prefix('tdmassoc_status')
-                    . ' S WHERE S.status_id=M.member_status ORDER BY S.status_order limit 0,10', $prop);
+        $pdf->Table('SELECT M.member_name, M.member_firstname, M.member_adress, M.member_zipcode, M.member_town, M.member_phone, S.status_name FROM ' . $xoopsDB->prefix('tdmassoc_member') . ' M, '
+                    . $xoopsDB->prefix('tdmassoc_status') . ' S WHERE S.status_id=M.member_status ORDER BY S.status_order limit 0,10', $prop);
         $pdf->Output();
 
         break;
@@ -213,7 +210,7 @@ switch ($option) {
         $method2         = !empty($_REQUEST['method2']) ? $_REQUEST['method2'] : '1';
 
         $text_size               = $ticket->getVar('ticket_text_size');
-        $text_color              = TDMPicture_color($ticket->getVar('ticket_text_color'));
+        $text_color              = TdmPicture_color($ticket->getVar('ticket_text_color'));
         $ticket_picture          = $ticket->getVar('ticket_picture');
         $ticket_width_fixe       = $ticket->getVar('ticket_width');
         $ticket_height_fixe      = $ticket->getVar('ticket_height');
@@ -244,8 +241,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 210; ++$j) {
                                 if ((210 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
-                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe,
+                                                $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -253,14 +250,14 @@ switch ($option) {
                                     $pdf->Rotate(0);
                                     $pdf->NumText($ticket_num2_width, $ticket_num2_height, $num_ticket);
                                 }
-                                $ticket_width += $ticket_width_fixe;
+                                $ticket_width      += $ticket_width_fixe;
                                 $ticket_num1_width += $ticket_width_fixe;
                                 $ticket_num2_width += $ticket_width_fixe;
                             }
                             $ticket_num1_width = $ticket_num1_width_fixe;
                             $ticket_num2_width = $ticket_num2_width_fixe;
                         }
-                        $ticket_height += $ticket_height_fixe;
+                        $ticket_height      += $ticket_height_fixe;
                         $ticket_num1_height += $ticket_height_fixe;
                         $ticket_num2_height += $ticket_height_fixe;
                     }
@@ -283,8 +280,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 297; ++$j) {
                                 if ((297 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
-                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe,
+                                                $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -292,14 +289,14 @@ switch ($option) {
                                     $pdf->Rotate(0);
                                     $pdf->NumText($ticket_num2_width, $ticket_num2_height, $num_ticket);
                                 }
-                                $ticket_width += $ticket_width_fixe;
+                                $ticket_width      += $ticket_width_fixe;
                                 $ticket_num1_width += $ticket_width_fixe;
                                 $ticket_num2_width += $ticket_width_fixe;
                             }
                             $ticket_num1_width = $ticket_num1_width_fixe;
                             $ticket_num2_width = $ticket_num2_width_fixe;
                         }
-                        $ticket_height += $ticket_height_fixe;
+                        $ticket_height      += $ticket_height_fixe;
                         $ticket_num1_height += $ticket_height_fixe;
                         $ticket_num2_height += $ticket_height_fixe;
                     }
@@ -325,8 +322,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 297; ++$j) {
                                 if ((297 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
-                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe,
+                                                $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -334,14 +331,14 @@ switch ($option) {
                                     $pdf->Rotate(0);
                                     $pdf->NumText($ticket_num2_width, $ticket_num2_height, $num_ticket);
                                 }
-                                $ticket_width += $ticket_width_fixe;
+                                $ticket_width      += $ticket_width_fixe;
                                 $ticket_num1_width += $ticket_width_fixe;
                                 $ticket_num2_width += $ticket_width_fixe;
                             }
                             $ticket_num1_width = $ticket_num1_width_fixe;
                             $ticket_num2_width = $ticket_num2_width_fixe;
                         }
-                        $ticket_height += $ticket_height_fixe;
+                        $ticket_height      += $ticket_height_fixe;
                         $ticket_num1_height += $ticket_height_fixe;
                         $ticket_num2_height += $ticket_height_fixe;
                     }
@@ -365,8 +362,8 @@ switch ($option) {
                             for ($j = 0; $ticket_width <= 420; ++$j) {
                                 if ((420 - $ticket_width) > $ticket_width_fixe) {
                                     ++$num_ticket;
-                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '',
-                                                $ticket_width, $ticket_height, $ticket_width_fixe, $ticket_height_fixe);
+                                    $pdf->Image('' . XOOPS_ROOT_PATH . '/uploads/' . $moduleDirName . '/images/ticket/' . $ticket_picture . '', $ticket_width, $ticket_height, $ticket_width_fixe,
+                                                $ticket_height_fixe);
                                     $pdf->SetFont('Arial', 'B', $text_size);
                                     $pdf->SetTextColor($text_color['r'], $text_color['v'], $text_color['b']);
                                     $pdf->Rotate(90, $ticket_num1_width, $ticket_num1_height);
@@ -374,14 +371,14 @@ switch ($option) {
                                     $pdf->Rotate(0);
                                     $pdf->NumText($ticket_num2_width, $ticket_num2_height, $num_ticket);
                                 }
-                                $ticket_width += $ticket_width_fixe;
+                                $ticket_width      += $ticket_width_fixe;
                                 $ticket_num1_width += $ticket_width_fixe;
                                 $ticket_num2_width += $ticket_width_fixe;
                             }
                             $ticket_num1_width = $ticket_num1_width_fixe;
                             $ticket_num2_width = $ticket_num2_width_fixe;
                         }
-                        $ticket_height += $ticket_height_fixe;
+                        $ticket_height      += $ticket_height_fixe;
                         $ticket_num1_height += $ticket_height_fixe;
                         $ticket_num2_height += $ticket_height_fixe;
                     }
@@ -410,7 +407,7 @@ switch ($option) {
         $newsletter_text   = utf8_decode(Chars($newsletter->getVar('newsletter_text')));
         $newsletter_foot   = utf8_decode(Chars($newsletter->getVar('newsletter_foot')));
         $newsletter_indate = formatTimestamp($newsletter->getVar('newsletter_indate'), 'm');
-        $color             = TDMPicture_color($newsletter->getVar('newsletter_color'));
+        $color             = TdmPicture_color($newsletter->getVar('newsletter_color'));
         $pdf               = new TCPDF();
         $pdf->AddPage();
         //titre
@@ -469,8 +466,7 @@ switch ($option) {
         $criteria->add(new Criteria('member_waiting', 1,'='));
         $criteria->setOrder('ASC');
         $assoc_arr = $memberHandler->getObjects($criteria);*/
-        $pdf->Table('SELECT newsletter_head FROM ' . $xoopsDB->prefix('tdmassoc_newsletter') . ' WHERE newsletter_id = ' . $_REQUEST['newsletter_id']
-                    . ' limit 0,10', $prop);
+        $pdf->Table('SELECT newsletter_head FROM ' . $xoopsDB->prefix('tdmassoc_newsletter') . ' WHERE newsletter_id = ' . $_REQUEST['newsletter_id'] . ' limit 0,10', $prop);
         $pdf->Output();
 
         break;
@@ -501,8 +497,8 @@ switch ($option) {
         $stock_arr =& $stockHandler->getall($criteria);
         $stock_qte = 0;
         foreach (array_keys($stock_arr) as $s) {
-            $math = $stock_arr[$s]->getVar('stock_math');
-            $qte  = (int)$stock_arr[$s]->getVar('stock_qte');
+            $math      = $stock_arr[$s]->getVar('stock_math');
+            $qte       = (int)$stock_arr[$s]->getVar('stock_qte');
             $stock_qte += number_format($math . $qte, 2);
         }
         //adition stock et depart

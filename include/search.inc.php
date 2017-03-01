@@ -32,7 +32,7 @@ function tdmpicture_search($queryarray, $andor, $limit, $offset, $userid)
     global $xoopsDB;
 
     //load class
-    $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
+    $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
 
     $ret = array();
     //cherche le fichier

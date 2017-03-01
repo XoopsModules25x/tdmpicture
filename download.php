@@ -19,8 +19,8 @@
 
 include_once __DIR__ . '/header.php';
 include_once XOOPS_ROOT_PATH . '/header.php';
-$myts         = MyTextSanitizer::getInstance();
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
+$myts        = MyTextSanitizer::getInstance();
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
 
 if (empty($_REQUEST['st'])) {
     redirect_header('index.php', 2, _AM_TDMPICTURE_BASEERROR);

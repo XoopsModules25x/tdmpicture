@@ -23,9 +23,9 @@ require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 //load class
-/** @var TdmPictureFileHandler $fileHandler */
+/** @var TdmpictureFileHandler $fileHandler */
 $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
-/** @var TdmPictureCategoryHandler $catHandler */
+/** @var TdmpictureCategoryHandler $catHandler */
 $catHandler = xoops_getModuleHandler('category', $moduleDirName);
 
 $myts = MyTextSanitizer::getInstance();

@@ -95,8 +95,8 @@ if (count($configurator['uploadFolders']) > 0) {
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
 
-TdmpictureUtility::getServerInfo();
-TdmpictureUtility::getServerStatus();
+//TdmpictureUtility::getServerInfo();
+//TdmpictureUtility::getServerStatus();
 
 //if ( !is_readable(XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php")) {
 //TdmpictureUtility::getAdminMenu(0, _AM_TDMPICTURE_INDEXDESC);

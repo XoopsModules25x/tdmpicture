@@ -900,18 +900,18 @@ class TdmpictureUtility
 
         // Load language files
         $html  = '';
-        $sql   = 'SELECT metavalue';
-        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('TDMPICTURE_meta');
-        $sql   .= " WHERE metakey='version' LIMIT 1";
-        $query = $GLOBALS['xoopsDB']->query($sql);
-        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
-        $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_TDMPICTURE_DOWN_IMAGEINFO . "</legend>\n";
-        $html .= "<div style='padding: 8px;'>\n";
-        $html .= '<div>' . _AM_TDMPICTURE_DOWN_METAVERSION . $meta . "</div>\n";
-        $html .= "<br>\n";
-        $html .= "<br>\n";
-        $html .= '<div>' . _AM_TDMPICTURE_DOWN_SPHPINI . "</div>\n";
-        $html .= "<ul>\n";
+//        $sql   = 'SELECT metavalue';
+//        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('TDMPICTURE_META');
+//        $sql   .= " WHERE metakey='version' LIMIT 1";
+//        $query = $GLOBALS['xoopsDB']->query($sql);
+//        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
+//        $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_TDMPICTURE_DOWN_IMAGEINFO . "</legend>\n";
+//        $html .= "<div style='padding: 8px;'>\n";
+//        $html .= '<div>' . _AM_TDMPICTURE_DOWN_METAVERSION . $meta . "</div>\n";
+//        $html .= "<br>\n";
+//        $html .= "<br>\n";
+//        $html .= '<div>' . _AM_TDMPICTURE_DOWN_SPHPINI . "</div>\n";
+//        $html .= "<ul>\n";
         //
         $gdlib = function_exists('gd_info') ? '<span style="color: green;">' . _AM_TDMPICTURE_DOWN_GDON . '</span>' : '<span style="color: red;">' . _AM_TDMPICTURE_DOWN_GDOFF . '</span>';
         $html  .= '<li>' . _AM_TDMPICTURE_DOWN_GDLIBSTATUS . $gdlib;
@@ -955,20 +955,20 @@ class TdmpictureUtility
     {
         //mb    $TDMPICTURE = TDMPICTURETDMPICTURE::getInstance();
         $html  = '';
-        $sql   = 'SELECT metavalue';
-        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('TDMPICTURE_meta');
-        $sql   .= " WHERE metakey='version' LIMIT 1";
-        $query = $GLOBALS['xoopsDB']->query($sql);
-        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
-        $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_TDMPICTURE_DOWN_IMAGEINFO . "</legend>\n";
-        $html .= "<div style='padding: 8px;'>\n";
-        $html .= '<div>' . _AM_TDMPICTURE_DOWN_METAVERSION . $meta . "</div>\n";
-        $html .= "<br>\n";
-        $html .= "<br>\n";
-        $html .= '<div>' . _AM_TDMPICTURE_DOWN_SPHPINI . "</div>\n";
-        $html .= "<ul>\n";
+//        $sql   = 'SELECT metavalue';
+//        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('TDMPICTURE_META');
+//        $sql   .= " WHERE metakey='version' LIMIT 1";
+//        $query = $GLOBALS['xoopsDB']->query($sql);
+//        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
+//        $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_TDMPICTURE_DOWN_IMAGEINFO . "</legend>\n";
+//        $html .= "<div style='padding: 8px;'>\n";
+//        $html .= '<div>' . _AM_TDMPICTURE_DOWN_METAVERSION . $meta . "</div>\n";
+//        $html .= "<br>\n";
+//        $html .= "<br>\n";
+//        $html .= '<div>' . _AM_TDMPICTURE_DOWN_SPHPINI . "</div>\n";
+//        $html .= "<ul>\n";
         //
-        $gdlib = function_exists('gd_info') ? "<span style=\"color: green;\">" . _AM_TDMPICTURE_DOWN_GDON . '</span>' : "<span style=\"color: red;\">" . _AM_TDMPICTURE_DOWN_GDOFF . '</span>';
+        $gdlib = function_exists('gd_info') ? '<span style="color: green;">' . _AM_TDMPICTURE_DOWN_GDON . '</span>' : '<span style="color: red;">' . _AM_TDMPICTURE_DOWN_GDOFF . '</span>';
         $html  .= '<li>' . _AM_TDMPICTURE_DOWN_GDLIBSTATUS . $gdlib;
         if (function_exists('gd_info')) {
             if (true === $gdlib = gd_info()) {
@@ -982,12 +982,12 @@ class TdmpictureUtility
         //    $registerglobals = (!ini_get('register_globals')) ? "<span style=\"color: green;\">" . _AM_TDMPICTURE_DOWN_OFF . '</span>' : "<span style=\"color: red;\">" . _AM_TDMPICTURE_DOWN_ON . '</span>';
         //    $html .= '<li>' . _AM_TDMPICTURE_DOWN_REGISTERGLOBALS . $registerglobals;
         //
-        $downloads = ini_get('file_uploads') ? "<span style=\"color: green;\">" . _AM_TDMPICTURE_DOWN_ON . '</span>' : "<span style=\"color: red;\">" . _AM_TDMPICTURE_DOWN_OFF . '</span>';
+        $downloads = ini_get('file_uploads') ? '<span style="color: green;">' . _AM_TDMPICTURE_DOWN_ON . '</span>' : '<span style="color: red;">' . _AM_TDMPICTURE_DOWN_OFF . '</span>';
         $html      .= '<li>' . _AM_TDMPICTURE_DOWN_SERVERUPLOADSTATUS . $downloads;
         //
-        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MAXUPLOADSIZE . " <b><span style=\"color: blue;\">" . ini_get('upload_max_filesize') . "</span></b>\n";
-        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MAXPOSTSIZE . " <b><span style=\"color: blue;\">" . ini_get('post_max_size') . "</span></b>\n";
-        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MEMORYLIMIT . " <b><span style=\"color: blue;\">" . ini_get('memory_limit') . "</span></b>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MAXUPLOADSIZE . ' <b><span style="color: blue;">' . ini_get('upload_max_filesize') . "</span></b>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MAXPOSTSIZE . ' <b><span style="color: blue;">' . ini_get('post_max_size') . "</span></b>\n";
+        $html .= '<li>' . _AM_TDMPICTURE_DOWN_MEMORYLIMIT . ' <b><span style="color: blue;">' . ini_get('memory_limit') . "</span></b>\n";
         $html .= "</ul>\n";
         $html .= "<ul>\n";
         $html .= '<li>' . _AM_TDMPICTURE_DOWN_SERVERPATH . ' <b>' . XOOPS_ROOT_PATH . "</b>\n";

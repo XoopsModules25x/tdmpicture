@@ -30,11 +30,11 @@ $xoopsTpl->assign('dirname', $moduleDirName);
 //is_object($xoopsUser) ? $xd_uid = $xoopsUser->getVar('uid') : $xd_uid = -1;
 
 $op      = Request::getVar('op', 'list'); //isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
-$tris    = Request::getString('tris', 'file_indate'); //iisset($_REQUEST['tris']) ? $_REQUEST['tris'] : 'file_indate';
-$order   = Request::getString('order', 'desc'); //iisset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
-$post_ct = Request::getString('ct', false); //iisset($_REQUEST['ct']) ? $_REQUEST['ct'] : false;
-$post_ut = Request::getString('ut', false); //iisset($_REQUEST['ut']) ? $_REQUEST['ut'] : false;
-$st      = Request::getString('st', false); //iisset($_REQUEST['st']) ? $_REQUEST['st'] : false;
+$tris    = Request::getString('tris', 'file_indate'); //isset($_REQUEST['tris']) ? $_REQUEST['tris'] : 'file_indate';
+$order   = Request::getString('order', 'desc'); //isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
+$post_ct = Request::getString('ct', false); //isset($_REQUEST['ct']) ? $_REQUEST['ct'] : false;
+$post_ut = Request::getString('ut', false); //isset($_REQUEST['ut']) ? $_REQUEST['ut'] : false;
+$st      = Request::getString('st', false); //isset($_REQUEST['st']) ? $_REQUEST['st'] : false;
 
 isset($_REQUEST['com_mode']) ? $op = 'detail' : '';
 
@@ -89,21 +89,27 @@ switch ($op) {
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('cat_display', 1));
-        //$cat_arr = $catHandler->getall($criteria);
-        //$mytree = new TDMObjectTree($cat_arr, 'cat_id', 'cat_pid');
-        //asigne les URL
-        //define("TDM_CAT_URL", TDMPICTURE_CAT_URL);
-        //define("TDM_CAT_PATH", TDMPICTURE_CAT_PATH);
-        //$GLOBALS['scat_display'] = false;
-        //$cat_display = $moduleHelper->getConfig('tdmpicture_cat_display');
-        //$cat_cel = $moduleHelper->getConfig('tdmpicture_cat_cel');
-        //$display_cat = $mytree->makeCatBox($fileHandler, 'cat_title','-', $ct);
-        //$xoopsTpl->assign('display_cat', $display_cat);
 
-        //news categorie
-        //$criteria = new CriteriaCompo();
-        //$criteria->add(new Criteria('cat_display', 1));
-        //$criteria->add(new Criteria('cat_index', 1));
+
+
+        $cat_arr = $catHandler->getall($criteria);
+        $mytree = new TDMObjectTree($cat_arr, 'cat_id', 'cat_pid');
+//        asigne les URL
+        define('TDM_CAT_URL', TDMPICTURE_CAT_URL);
+        define('TDM_CAT_PATH', TDMPICTURE_CAT_PATH);
+        $GLOBALS['scat_display'] = false;
+        $cat_display = $moduleHelper->getConfig('tdmpicture_cat_display');
+        $cat_cel = $moduleHelper->getConfig('tdmpicture_cat_cel');
+        $display_cat = $mytree->makeCatBox($fileHandler, 'cat_title','-', $ct);
+        $xoopsTpl->assign('display_cat', $display_cat);
+
+//        news categorie
+        $criteria = new CriteriaCompo();
+        $criteria->add(new Criteria('cat_display', 1));
+        $criteria->add(new Criteria('cat_index', 1));
+
+
+
         $criteria->setSort('cat_weight');
         $criteria->setOrder('DESC');
         //$criteria->add(new Criteria('cat_display', 1));

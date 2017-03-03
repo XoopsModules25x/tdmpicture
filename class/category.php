@@ -23,13 +23,13 @@ use Xmf\Module\Helper;
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
- * Class TdmPictureCategory
+ * Class TdmpictureCategory
  */
-class TdmPictureCategory extends XoopsObject
+class TdmpictureCategory extends XoopsObject
 {
     // constructor
     /**
-     * TdmPictureCategory constructor.
+     * TdmpictureCategory constructor.
      */
     public function __construct()
     {
@@ -188,16 +188,16 @@ class TdmPictureCategory extends XoopsObject
 }
 
 /**
- * Class TdmPictureCategoryHandler
+ * Class TdmpictureCategoryHandler
  */
-class TdmPictureCategoryHandler extends XoopsPersistableObjectHandler
+class TdmpictureCategoryHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * TdmPictureCategoryHandler constructor.
+     * TdmpictureCategoryHandler constructor.
      * @param XoopsDatabase $db
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'tdmpicture_cat', 'TdmPictureCategory', 'cat_id', 'cat_title');
+        parent::__construct($db, 'tdmpicture_cat', 'TdmpictureCategory', 'cat_id', 'cat_title');
     }
 }

@@ -23,13 +23,13 @@ use Xmf\Module\Helper;
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
- * Class TdmPictureFile
+ * Class TdmpictureFile
  */
-class TdmPictureFile extends XoopsObject
+class TdmpictureFile extends XoopsObject
 {
     // constructor
     /**
-     * TdmPictureFile constructor.
+     * TdmpictureFile constructor.
      */
     public function __construct()
     {
@@ -378,9 +378,9 @@ $tdmpicture(document).ready( function() {
 }
 
 /**
- * Class TdmPictureFileHandler
+ * Class TdmpictureFileHandler
  */
-class TdmPictureFileHandler extends XoopsPersistableObjectHandler
+class TdmpictureFileHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param null       $criteria
@@ -447,13 +447,13 @@ class TdmPictureFileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * TdmPictureFileHandler constructor.
+     * TdmpictureFileHandler constructor.
      * @param XoopsDatabase $db
      */
     public function __construct(XoopsDatabase $db)
     {
         $this->_dirname = basename(dirname(__DIR__));
-        parent::__construct($db, 'tdmpicture_file', 'TdmPictureFile', 'file_id', 'file_title');
+        parent::__construct($db, 'tdmpicture_file', 'TdmpictureFile', 'file_id', 'file_title');
     }
 
     /**

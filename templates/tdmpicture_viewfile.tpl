@@ -37,8 +37,7 @@
                             title="<{$smarty.const._MD_TDMPICTURE_FULLSCREEN}>"></a>
                 <a href="javascript:masque('1');"><img src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/link.png"
                                                        title="<{$smarty.const._MD_TDMPICTURE_LINK}>"/></a>
-                <{if $file.useralb }><a href="<{$smarty.const.TDMPICTURE_URL}>/user.php?ut=<{$file.uid}>" ><img
-                            src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/photo.png"
+                <{if $file.useralb }><a href="<{$smarty.const.TDMPICTURE_URL}>/user.php?ut=<{$file.uid}>" ><img src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/photo.png"
                             title="<{$smarty.const._MD_TDMPICTURE_VIEWALBUM}> <{$file.postername}>"></a><{/if}>
                 <{if $perm_submit}><a href="<{$smarty.const.TDMPICTURE_URL}>/submit.php" ><img
                             src="<{$smarty.const.TDMPICTURE_IMAGES_URL}>/upload.png"

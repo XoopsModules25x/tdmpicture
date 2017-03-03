@@ -256,7 +256,7 @@ global $xoopsUser;
 $gpermHandler = xoops_getHandler('groupperm');
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
-$xoopsModule   = $moduleHandler->getByDirname($modversion['dirname']);
+$xoopsModule   = $moduleHandler->getByDirname($moduleDirName);
 
 //permission
 if (is_object($xoopsUser)) {
@@ -293,7 +293,7 @@ $modversion['config'][] = array(
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
     //'default'     => '/modules/' . $modversion['dirname' . '/upload/',
-    'default'     => '/uploads/' . $modversion['dirname']
+    'default'     => '/uploads/' . $moduleDirName
 );
 
 $modversion['config'][] = array(
@@ -303,7 +303,7 @@ $modversion['config'][] = array(
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
     //'default'     => '/modules/' . $modversion['dirname' . '/upload/thumb/',
-    'default'     => '/uploads/' . $modversion['dirname'] . '/thumb'
+    'default'     => '/uploads/' . $moduleDirName . '/thumb'
 );
 
 $modversion['config'][] = array(

@@ -33,7 +33,7 @@ define('_AM_TDMPICTURE_TEST', 'Beta Testers');
 
 // index.php
 define('_AM_TDMPICTURE_MANAGE_CAT', 'Manage Categories');
-define('_AM_TDMPICTURE_THEREARE_CAT', "There are <span style='color: #FF0000; font-weight: bold'> %s </span> categories in the Database");
+define('_AM_TDMPICTURE_THEREARE_CAT', "There are <span style='color: #FF0000; font-weight: bold;'> %s </span> categories in the Database");
 define('_AM_TDMPICTURE_THEREARE_CAT_WAITING', "There are <span style='color: #FF0000; font-weight: bold'> %s </span> categories awaiting validation");
 
 //admin menu

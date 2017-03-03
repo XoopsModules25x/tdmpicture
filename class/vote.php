@@ -18,11 +18,11 @@
  */
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class TdmPictureVote extends XoopsObject
+class TdmpictureVote extends XoopsObject
 {
     // constructor
     /**
-     * TdmPictureVote constructor.
+     * TdmpictureVote constructor.
      */
     public function __construct()
     {
@@ -36,16 +36,16 @@ class TdmPictureVote extends XoopsObject
 }
 
 /**
- * Class TdmPictureVoteHandler
+ * Class TdmpictureVoteHandler
  */
-class TdmPictureVoteHandler extends XoopsPersistableObjectHandler
+class TdmpictureVoteHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * TdmPictureVoteHandler constructor.
+     * TdmpictureVoteHandler constructor.
      * @param XoopsDatabase $db
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'tdmpicture_vote', 'TdmPictureVote', 'vote_id', 'vote_ip');
+        parent::__construct($db, 'tdmpicture_vote', 'TdmpictureVote', 'vote_id', 'vote_ip');
     }
 }

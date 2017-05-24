@@ -28,7 +28,7 @@ $adminObject->addInfoBox(_AM_TDMPICTURE_TEST);
 $adminObject->addInfoBoxLine($file_protection, '', '', 'information');
 
 $adminObject->displayNavigation(basename(__FILE__));
-\Xmf\Module\Admin::setPaypal('6KJ7RW5DR3VTJ');
+\Xmf\Module\Admin::setPaypal('xoopsfoundation@gmail.com');
 $adminObject->displayAbout(false);
 
 require_once __DIR__ . '/admin_footer.php';

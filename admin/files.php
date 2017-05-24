@@ -1,7 +1,5 @@
 <?php
 
-use Xmf\Module\Helper;
-
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -20,24 +18,27 @@ use Xmf\Module\Helper;
  * ****************************************************************************
  */
 
-include_once __DIR__ . '/admin_header.php';
+use Xmf\Module\Helper;
+use Xmf\Request;
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $moduleDirName = basename(dirname(__DIR__));
 $moduleHelper  = Helper::getHelper($moduleDirName);
 
-TdmPictureUtilities::adminheader();
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+TdmpictureUtility::getAdminHeader();
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
 $myts         = MyTextSanitizer::getInstance();
-$op           = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
-$order        = isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
-$sort         = isset($_REQUEST['sort']) ? $_REQUEST['sort'] : 'file_indate';
-$file_cat     = isset($_REQUEST['file_cat']) ? $_REQUEST['file_cat'] : 0;
-$file_display = isset($_REQUEST['file_display']) ? $_REQUEST['file_display'] : 1;
-$file_id      = isset($_REQUEST['file_id']) ? $_REQUEST['file_id'] : 0;
-$start        = isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
+$op           = Request::getVar('op', 'list'); //isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
+$order        = Request::getString('order', 'desc'); //isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
+$sort         = Request::getString('sort', 'file_indate'); //isset($_REQUEST['sort']) ? $_REQUEST['sort'] : 'file_indate';
+$file_cat     = Request::getInt('file_cat', 0); //isset($_REQUEST['file_cat']) ? $_REQUEST['file_cat'] : 0;
+$file_display = Request::getInt('file_display', 1); //isset($_REQUEST['file_display']) ? $_REQUEST['file_display'] : 1;
+$file_id      = Request::getInt('file_id', 0); //isset($_REQUEST['file_id']) ? $_REQUEST['file_id'] : 0;
+$start        = Request::getInt('start', 0); //isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
 
 //$redirect_page = XOOPS_URL . '/modules/system/admin.php?fct=comments&amp;com_modid=' . $com_modid . '&amp;com_itemid';
 
@@ -55,10 +56,10 @@ switch ($op) {
     case 'upload':
 
         //menu admin
-        $category_admin = new ModuleAdmin();
-        echo $category_admin->addNavigation(basename(__FILE__));
-        $category_admin->addItemButton(_AM_TDMPICTURE_LIST_FILE, 'files.php?op=list', 'list');
-        echo $category_admin->renderButton('left');
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
+        $adminObject->addItemButton(_AM_TDMPICTURE_LIST_FILE, 'files.php?op=list', 'list');
+        $adminObject->displayButton('left');
 
         // Affichage du formulaire de cr?ation de cat?gories
         $obj  = $fileHandler->create();
@@ -89,8 +90,8 @@ switch ($op) {
         $uploader = new XoopsMediaUploader($path['image_path'], $mimetype, $moduleHelper->getConfig('tdmpicture_mimemax'), null, null);
 
         //variable commune
-        $obj->setVar('file_cat', $_REQUEST['file_cat']);
-        $obj->setVar('file_display', $_REQUEST['file_display']);
+        $obj->setVar('file_cat', Request::getString('file_cat', '')); //$_REQUEST['file_cat']);
+        $obj->setVar('file_display', Request::getString('file_display', '')); //$_REQUEST['file_display']);
         $obj->setVar('file_indate', time());
         $obj->setVar('file_uid', !empty($xoopsUser) ? $xoopsUser->getVar('uid') : 0);
         //$obj->setVar('file_ext', $_REQUEST['file_ext']);
@@ -145,7 +146,7 @@ switch ($op) {
         }
         //include_once(__DIR__ . '/../include/forms.php');
         echo $obj->getHtmlErrors();
-        $form =& $obj->getForm();
+        $form = $obj->getForm();
         $form->display();
         break;
 
@@ -154,21 +155,21 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('index.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (isset($_REQUEST['file_id'])) {
-            $obj = $fileHandler->get($_REQUEST['file_id']);
+        if (Request::hasVar('file_id')) {
+            $obj = $fileHandler->get(Request::getInt('file_id'));
         } else {
             $obj = $fileHandler->create();
         }
 
         //fichier commun
-        $obj->setVar('file_title', $_REQUEST['file_title']);
-        $obj->setVar('file_display', $_REQUEST['file_display']);
-        $obj->setVar('file_cat', $_REQUEST['file_cat']);
+        $obj->setVar('file_title', Request::getInt('file_title', 0)); //$_REQUEST['file_title']);
+        $obj->setVar('file_display', Request::getInt('file_display', 0)); //$_REQUEST['file_display']);
+        $obj->setVar('file_cat', Request::getInt('file_cat', 0)); //$_REQUEST['file_cat']);
         $obj->setVar('file_indate', time());
-        $obj->setVar('file_text', $_REQUEST['file_text']);
-        $obj->setVar('file_size', $_REQUEST['file_size']);
-        $obj->setVar('file_res_x', $_REQUEST['file_res_x']);
-        $obj->setVar('file_res_y', $_REQUEST['file_res_y']);
+        $obj->setVar('file_text', Request::getInt('file_text', 0)); //$_REQUEST['file_text']);
+        $obj->setVar('file_size', Request::getInt('file_size', 0)); //$_REQUEST['file_size']);
+        $obj->setVar('file_res_x', Request::getInt('file_res_x', 0)); //$_REQUEST['file_res_x']);
+        $obj->setVar('file_res_y', Request::getInt('file_res_y', 0)); //$_REQUEST['file_res_y']);
 
         $erreur = $fileHandler->insert($obj);
 
@@ -181,11 +182,11 @@ switch ($op) {
 
     case 'edit':
         //admin menu
-        $category_admin = new ModuleAdmin();
-        echo $category_admin->addNavigation(basename(__FILE__));
-        $category_admin->addItemButton(_AM_TDMPICTURE_FILE_UPLOAD, 'files.php?op=upload', 'add');
-        $category_admin->addItemButton(_AM_TDMPICTURE_LIST_FILE, 'files.php?op=list', 'list');
-        echo $category_admin->renderButton('left');
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
+        $adminObject->addItemButton(_AM_TDMPICTURE_FILE_UPLOAD, 'files.php?op=upload', 'add');
+        $adminObject->addItemButton(_AM_TDMPICTURE_LIST_FILE, 'files.php?op=list', 'list');
+        $adminObject->displayButton('left');
 
         $obj  = $fileHandler->get($_REQUEST['file_id']);
         $form = $obj->getForm();
@@ -206,9 +207,9 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            $obj            = $fileHandler->get($_REQUEST['file_id']);
-            $category_admin = new ModuleAdmin();
-            echo $category_admin->addNavigation(basename(__FILE__));
+            $obj         = $fileHandler->get($_REQUEST['file_id']);
+            $adminObject = \Xmf\Module\Admin::getInstance();
+            $adminObject->displayNavigation(basename(__FILE__));
 
             xoops_confirm(array('ok'      => 1,
                                 'file_id' => $_REQUEST['file_id'],
@@ -217,7 +218,7 @@ switch ($op) {
         }
         break;
 
-    case _AM_TDMPICTURE_DELETE :
+    case _AM_TDMPICTURE_DELETE:
 
         if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -233,8 +234,8 @@ switch ($op) {
                 redirect_header('files.php', 2, _AM_TDMPICTURE_BASEERROR);
             }
         } else {
-            $category_admin = new ModuleAdmin();
-            echo $category_admin->addNavigation(basename(__FILE__));
+            $adminObject = \Xmf\Module\Admin::getInstance();
+            $adminObject->displayNavigation(basename(__FILE__));
 
             xoops_confirm(array(
                               'ok'      => 1,
@@ -317,18 +318,18 @@ switch ($op) {
         }
 
         //menu admin
-        $category_admin = new ModuleAdmin();
-        echo $category_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         if ($file_waiting != 0 && !isset($_REQUEST['file_display'])) {
             $waitString = _AM_TDMPICTURE_BUTTON_FILES_WAITING . $file_waiting;
-            //$category_admin->addItemButton(sprintf(_AM_TDMPICTURE_THEREARE_FILE_WAITING,$file_waiting), 'files.php?op=list&file_display=0', 'update');
-            $category_admin->addItemButton($waitString, 'files.php?op=list&file_display=0', 'update');
+            //$adminObject->addItemButton(sprintf(_AM_TDMPICTURE_THEREARE_FILE_WAITING,$file_waiting), 'files.php?op=list&file_display=0', 'update');
+            $adminObject->addItemButton($waitString, 'files.php?op=list&file_display=0', 'update');
         }
         if (isset($_REQUEST['file_display'])) {
-            $category_admin->addItemButton(_AM_TDMPICTURE_LIST_FILE, 'files.php?op=list', 'list');
+            $adminObject->addItemButton(_AM_TDMPICTURE_LIST_FILE, 'files.php?op=list', 'list');
         }
-        $category_admin->addItemButton(_AM_TDMPICTURE_FILE_UPLOAD, 'files.php?op=upload', 'add');
-        echo $category_admin->renderButton('left');
+        $adminObject->addItemButton(_AM_TDMPICTURE_FILE_UPLOAD, 'files.php?op=upload', 'add');
+        $adminObject->displayButton('left');
 
         //creation du formulaire de tris
         $form = new XoopsThemeForm(_SEARCH, 'tris', 'files.php');
@@ -381,9 +382,7 @@ switch ($op) {
 
         //nav
         if ($numrows > 10) {
-            $pagenav = new XoopsPageNav($numrows, 10, $start, 'start',
-                                        'op=list&file_display=' . $file_display . '&file_cat=' . $file_cat . '&sort=' . $sort . '&order=' . $order
-                                        . '');
+            $pagenav = new XoopsPageNav($numrows, 10, $start, 'start', 'op=list&file_display=' . $file_display . '&file_cat=' . $file_cat . '&sort=' . $sort . '&order=' . $order . '');
             $pagenav = $pagenav->renderNav(2);
         } else {
             $pagenav = '';
@@ -396,12 +395,12 @@ switch ($op) {
             echo '<th align="center" width="5%"><input name="allbox" id="allbox" onclick="xoopsCheckAll(\'form\', \'allbox\');" type="checkbox" value="Check All" /></th>';
             echo '<th align="center" width="10%">' . _AM_TDMPICTURE_IMG . '</th>';
             echo '<th align="center" width="10%">' . _AM_TDMPICTURE_CAT . '</th>';
-            echo '<th align="center" width="25%">' . TdmPictureUtilities::switchselect(_AM_TDMPICTURE_TITLE, 'file_title') . '</th>';
-            echo '<th align="center" width="7%">' . TdmPictureUtilities::switchselect(_AM_TDMPICTURE_WIDTH, 'file_res_x') . '</th>';
-            echo '<th align="center" width="7%">' . TdmPictureUtilities::switchselect(_AM_TDMPICTURE_HEIGHT, 'file_res_y') . '</th>';
-            echo '<th align="center" width="5%">' . TdmPictureUtilities::switchselect(_AM_TDMPICTURE_TYPE, 'file_type') . '</th>';
-            echo '<th align="center" width="5%">' . TdmPictureUtilities::switchselect(_AM_TDMPICTURE_WEIGHT, 'file_size') . '</th>';
-            echo '<th align="center" width="7%">' . TdmPictureUtilities::switchselect(_AM_TDMPICTURE_HITS, 'file_hits') . '</th>';
+            echo '<th align="center" width="25%">' . TdmpictureUtility::selectSorting(_AM_TDMPICTURE_TITLE, 'file_title') . '</th>';
+            echo '<th align="center" width="7%">' . TdmpictureUtility::selectSorting(_AM_TDMPICTURE_WIDTH, 'file_res_x') . '</th>';
+            echo '<th align="center" width="7%">' . TdmpictureUtility::selectSorting(_AM_TDMPICTURE_HEIGHT, 'file_res_y') . '</th>';
+            echo '<th align="center" width="5%">' . TdmpictureUtility::selectSorting(_AM_TDMPICTURE_TYPE, 'file_type') . '</th>';
+            echo '<th align="center" width="5%">' . TdmpictureUtility::selectSorting(_AM_TDMPICTURE_WEIGHT, 'file_size') . '</th>';
+            echo '<th align="center" width="7%">' . TdmpictureUtility::selectSorting(_AM_TDMPICTURE_HITS, 'file_hits') . '</th>';
             echo '<th align="center" width="5%">' . _AM_TDMPICTURE_THUMB . '</th>';
             echo '<th align="center" width="5%">' . _AM_TDMPICTURE_DISPLAY . '</th>';
             echo '<th align="center" width="10%">' . _AM_TDMPICTURE_ACTION . '</th>';
@@ -420,10 +419,8 @@ switch ($op) {
                 $file_hits  = $arr[$i]->getVar('file_hits');
 
                 $display = $arr[$i]->getVar('file_display') == 1 ? "<a href='files.php?op=display&file_id=" . $file_id . "'><img src='" . $pathIcon16
-                                                                   . "/1.png' border='0'></a>" : "<a href='files.php?op=display&file_id=" . $file_id
-                                                                                                 . "'><img alt='" . _AM_TDMPICTURE_DISPLAY
-                                                                                                 . "' title='" . _AM_TDMPICTURE_DISPLAY . "' src='"
-                                                                                                 . $pathIcon16 . "/0.png' border='0'></a>";
+                                                                   . "/1.png' border='0'></a>" : "<a href='files.php?op=display&file_id=" . $file_id . "'><img alt='" . _AM_TDMPICTURE_DISPLAY
+                                                                                                 . "' title='" . _AM_TDMPICTURE_DISPLAY . "' src='" . $pathIcon16 . "/0.png' border='0'></a>";
 
                 //apelle lien image
                 $file_path = $arr[$i]->getFilePath($arr[$i]->getVar('file_file'));
@@ -437,34 +434,31 @@ switch ($op) {
                 //on test l'existance du thumb
                 $thumb_img = "<a href='files.php?op=thumb&file_id=" . $file_id . "'>";
                 if (file_exists($file_path['thumb_path'])) {
-                    $thumb_img .= "<img alt='" . _AM_TDMPICTURE_ADDTHUMB . "' title='" . _AM_TDMPICTURE_ADDTHUMB . "' src='" . $pathIcon16
-                                  . "/1.png' border='0'>";
+                    $thumb_img .= "<img alt='" . _AM_TDMPICTURE_ADDTHUMB . "' title='" . _AM_TDMPICTURE_ADDTHUMB . "' src='" . $pathIcon16 . "/1.png' border='0'>";
                 } else {
-                    $thumb_img .= "<img alt='" . _AM_TDMPICTURE_ADDTHUMB . "' title='" . _AM_TDMPICTURE_ADDTHUMB . "' src='" . $pathIcon16
-                                  . "/0.png' border='0'>";
+                    $thumb_img .= "<img alt='" . _AM_TDMPICTURE_ADDTHUMB . "' title='" . _AM_TDMPICTURE_ADDTHUMB . "' src='" . $pathIcon16 . "/0.png' border='0'>";
                 }
                 $thumb_img .= '</a>';
 
                 echo '<tr class="' . $class . '">';
-                echo '<td align="center" style="vertical-align:middle;"><input type="checkbox" name="id[]" id="id[]" value="'
-                     . $arr[$i]->getVar('file_id') . '" /></td>';
+                echo '<td align="center" style="vertical-align:middle;"><input type="checkbox" name="id[]" id="id[]" value="' . $arr[$i]->getVar('file_id') . '" /></td>';
                 echo '<td align="center" style="vertical-align:middle;"><img src="' . $file_img . '" alt="" title="" height="60"></td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $file_cattitle . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $file_title . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $arr[$i]->getVar('file_res_x') . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $arr[$i]->getVar('file_res_y') . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $file_type . '</td>';
-                echo '<td align="center" style="vertical-align:middle;">' . TdmPictureUtilities::prettySize($file_size) . '</td>';
+                echo '<td align="center" style="vertical-align:middle;">' . TdmpictureUtility::getPrettySize($file_size) . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $file_hits . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $thumb_img . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">' . $display . '</td>';
                 echo '<td align="center" style="vertical-align:middle;">';
-                echo '<a href="files.php?op=update&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/up.png border="0" alt="'
-                     . _AM_TDMPICTURE_UPDATE . '" title="' . _AM_TDMPICTURE_UPDATE . '"></a>';
-                echo '<a href="files.php?op=edit&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/edit.png border="0" alt="'
-                     . _AM_TDMPICTURE_MODIFY . '" title="' . _AM_TDMPICTURE_MODIFY . '"></a>';
-                echo '<a href="files.php?op=delete&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/delete.png border="0" alt="'
-                     . _AM_TDMPICTURE_DELETE . '" title="' . _AM_TDMPICTURE_DELETE . '"></a>';
+                echo '<a href="files.php?op=update&file_id=' . $file_id . '"> <img src=' . $pathIcon16 . '/up.png border="0" alt="' . _AM_TDMPICTURE_UPDATE . '" title="' . _AM_TDMPICTURE_UPDATE
+                     . '"></a>';
+                echo '<a href="files.php?op=edit&file_id=' . $file_id . '"> <img src=' . $pathIcon16 . '/edit.png border="0" alt="' . _AM_TDMPICTURE_MODIFY . '" title="' . _AM_TDMPICTURE_MODIFY
+                     . '"></a>';
+                echo '<a href="files.php?op=delete&file_id=' . $file_id . '"><img src=' . $pathIcon16 . '/delete.png border="0" alt="' . _AM_TDMPICTURE_DELETE . '" title="' . _AM_TDMPICTURE_DELETE
+                     . '"></a>';
                 //echo '<a href="files.php?op=edit_img&file_id='.$file_id.'"><img src="./../assets/images/picture_edit.png" border="0" alt="'._AM_TDMPICTURE_EDITIMG.'" title="'._AM_TDMPICTURE_EDITIMG.'"></a>';
                 echo '</td>';
                 echo '</tr>';
@@ -485,4 +479,4 @@ switch ($op) {
 
 }
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

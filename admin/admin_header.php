@@ -1,8 +1,4 @@
 <?php
-
-//use Xmf\Module\Admin;
-use Xmf\Module\Helper;
-
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -21,27 +17,41 @@ use Xmf\Module\Helper;
  * ****************************************************************************
  */
 
+use Xmf\Language;
+use Xmf\Module\Admin;
+use Xmf\Module\Helper;
+use Xmf\Request;
+
 include_once __DIR__ . '/../../../include/cp_header.php';
-include_once __DIR__ . '/../class/utilities.php';
+include_once __DIR__ . '/../class/utility.php';
 include_once __DIR__ . '/../include/common.php';
-//require __DIR__ . '/../class/utilities.php';
+
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once XOOPS_ROOT_PATH . '/class/tree.php';
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
-$moduleDirName = basename(dirname(__DIR__));
-$moduleHelper  = Helper::getHelper($moduleDirName);
+if (!isset($moduleDirName)) {
+    $moduleDirName = basename(dirname(__DIR__));
+}
 
-global $xoopsModule;
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
 $pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
 $pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
-$pathModIcon32 = XOOPS_URL . '/' . $moduleHelper->getConfig('modicons32');
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
-//Load languages
-xoops_loadLanguage('admin', $xoopsModule->getVar('dirname'));
-xoops_loadLanguage('modinfo', $xoopsModule->getVar('dirname'));
-xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
+// Load language files
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
 
-/** @var Xmf\Module\Admin $adminObject */
-$adminObject = \Xmf\Module\Admin::getInstance();
-$myts        = MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    include_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}

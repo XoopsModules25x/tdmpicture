@@ -1,7 +1,4 @@
 <?php
-
-use Xmf\Module\Helper;
-
 /**
  * ****************************************************************************
  *  - TDMPicture By TDM   - TEAM DEV MODULE FOR XOOPS
@@ -20,6 +17,8 @@ use Xmf\Module\Helper;
  * ****************************************************************************
  */
 
+use Xmf\Module\Helper;
+
 require __DIR__ . '/../../../mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';
 
@@ -31,19 +30,19 @@ global $xoopsUser, $xoopsModule;
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 
 //load class
-$fileHandler  = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler   = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
-$plHandler    = xoops_getModuleHandler('tdmpicture_pl', $moduleDirName);
-$voteHandler  = xoops_getModuleHandler('tdmpicture_vote', $moduleDirName);
+$fileHandler  = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler   = xoops_getModuleHandler('category', $moduleDirName);
+$plHandler    = xoops_getModuleHandler('playlist', $moduleDirName);
+$voteHandler  = xoops_getModuleHandler('vote', $moduleDirName);
 $gpermHandler = xoops_getHandler('groupperm');
 
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $xoopsModule   = $moduleHandler->getByDirname($moduleDirName);
 
-if (!isset($GLOBALS['xoopsModuleConfig'])) {
-    $configHandler    = xoops_getHandler('config');
-    $GLOBALS['xoopsModuleConfig'] = &$configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+if (!isset($xoopsModuleConfig)) {
+    $configHandler     = xoops_getHandler('config');
+    $xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 }
 
 include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/common.php';
@@ -168,7 +167,7 @@ switch ($op) {
                     $thumb = new Thumbnail(TDMPICTURE_UPLOADS_PATH . $uploader->getSavedFileName());
                     $thumb->resize($moduleHelper->getConfig('tdmpicture_thumb_width'), $moduleHelper->getConfig('tdmpicture_thumb_heigth'));
                     $thumb->save(TDMPICTURE_THUMB_PATH . $uploader->getSavedFileName(), $moduleHelper->getConfig('tdmpicture_thumb_quality'));
-                    //$thumb->save($uploaddir.'thumb/'.$uploader->getSavedFileName(),$moduleHelper->getConfig('TDMPicture_thumb_quality'));
+                    //$thumb->save($uploaddir.'thumb/'.$uploader->getSavedFileName(),$moduleHelper->getConfig('TdmPicture_thumb_quality'));
                     //$msgError = TDMPICTURE_UPLOADS_PATH;
                     $fileHandler->insert($obj);
                 }

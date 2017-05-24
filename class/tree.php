@@ -1,7 +1,5 @@
 <?php
 
-use Xmf\Module\Helper;
-
 /* ****************************************************************************
  * TDMMoney - MODULE FOR XOOPS
  * Copyright (c) G. Mage (www.tdmxoops.net)
@@ -19,6 +17,9 @@ use Xmf\Module\Helper;
  * @author          G. Mage (www.tdmxoops.net)
  *
  * ***************************************************************************/
+
+use Xmf\Module\Helper;
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 include_once XOOPS_ROOT_PATH . '/class/tree.php';
@@ -101,14 +102,11 @@ class TDMObjectTree extends XoopsObjectTree
             //recherche image
             $imgpath = TDMPICTURE_CAT_PATH . $this->tree[$key]['obj']->getVar('cat_img');
             if (file_exists($imgpath) && $this->tree[$key]['obj']->getVar('cat_img') !== 'blank.png') {
-                $picture = '<a href ="' . $cat_link . '" title="' . $this->tree[$key]['obj']->getVar('cat_title') . '"><img src="'
-                           . TDMPICTURE_CAT_URL . $this->tree[$key]['obj']->getVar('cat_img') . '" class="img" width="'
-                           . $moduleHelper->getConfig('tdmpicture_cat_width') . '"  height="' . $moduleHelper->getConfig('tdmpicture_cat_height')
-                           . '"></a>';
+                $picture = '<a href ="' . $cat_link . '" title="' . $this->tree[$key]['obj']->getVar('cat_title') . '"><img src="' . TDMPICTURE_CAT_URL . $this->tree[$key]['obj']->getVar('cat_img')
+                           . '" class="img" width="' . $moduleHelper->getConfig('tdmpicture_cat_width') . '"  height="' . $moduleHelper->getConfig('tdmpicture_cat_height') . '"></a>';
             } else {
-                $picture = '<a href ="' . $cat_link . '" title="' . $this->tree[$key]['obj']->getVar('cat_title') . '"><img src="'
-                           . TDMPICTURE_CAT_URL . 'no_picture.png" class="img" width="' . $moduleHelper->getConfig('tdmpicture_cat_width')
-                           . '"  height="' . $moduleHelper->getConfig('tdmpicture_cat_height') . '"></a>';
+                $picture = '<a href ="' . $cat_link . '" title="' . $this->tree[$key]['obj']->getVar('cat_title') . '"><img src="' . TDMPICTURE_CAT_URL . 'no_picture.png" class="img" width="'
+                           . $moduleHelper->getConfig('tdmpicture_cat_width') . '"  height="' . $moduleHelper->getConfig('tdmpicture_cat_height') . '"></a>';
             }
 
             if (isset($selected) && $value == $selected) {
@@ -118,10 +116,8 @@ class TDMObjectTree extends XoopsObjectTree
                 $navtrie = $this->makeSelTris((int)$value, $tris);
 
                 if (isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
-                    $parent_link = TDMPICTURE_URL . '/viewcat.php?ct=' . $this->tree[$this->tree[$key]['parent']]['obj']->getVar('cat_id') . '&tris='
-                                   . $tris . '&limit=' . $limit;
-                    $GLOBALS['navbar'] .= '<a href ="' . $parent_link . '" title="'
-                                          . $this->tree[$this->tree[$key]['parent']]['obj']->getVar('cat_title') . '">'
+                    $parent_link       = TDMPICTURE_URL . '/viewcat.php?ct=' . $this->tree[$this->tree[$key]['parent']]['obj']->getVar('cat_id') . '&tris=' . $tris . '&limit=' . $limit;
+                    $GLOBALS['navbar'] .= '<a href ="' . $parent_link . '" title="' . $this->tree[$this->tree[$key]['parent']]['obj']->getVar('cat_title') . '">'
                                           . $this->tree[$this->tree[$key]['parent']]['obj']->getVar('cat_title') . '</a> > ';
                 }
 
@@ -130,12 +126,10 @@ class TDMObjectTree extends XoopsObjectTree
 
                 $select = $this->makeSelBox('cat_pid', 'cat_title', '-', $selected, '', $this->tree[$key]['obj']->getVar('cat_id'),
                                             "OnChange='window.document.location=this.options[this.selectedIndex].value;'", 'tdmpicture_catview');
-                $ret2   = '<li class="' . $GLOBALS['class'] . '"><div><div id="img">' . $picture . '<br><span id="tree_num"> (' . $count
-                          . ')</span></div><div id="tree_detail"><h2><a href ="' . $cat_link . '" title="'
-                          . $this->tree[$key]['obj']->getVar('cat_title') . '">' . $this->tree[$key]['obj']->getVar($fieldName)
-                          . '</h2></a><span id="tree_text">' . $this->tree[$key]['obj']->getVar('cat_text')
-                          . '</span></div><br style="clear: both;" /><div id="tree_form">' . $GLOBALS['navbar'] . $select . ' | '
-                          . _MD_TDMPICTURE_TRIBY . ' > ' . $navtrie . '</div></div></div></li>';
+                $ret2   = '<li class="' . $GLOBALS['class'] . '"><div><div id="img">' . $picture . '<br><span id="tree_num"> (' . $count . ')</span></div><div id="tree_detail"><h2><a href ="'
+                          . $cat_link . '" title="' . $this->tree[$key]['obj']->getVar('cat_title') . '">' . $this->tree[$key]['obj']->getVar($fieldName) . '</h2></a><span id="tree_text">'
+                          . $this->tree[$key]['obj']->getVar('cat_text') . '</span></div><br style="clear: both;" /><div id="tree_form">' . $GLOBALS['navbar'] . $select . ' | ' . _MD_TDMPICTURE_TRIBY
+                          . ' > ' . $navtrie . '</div></div></div></li>';
             }
 
             //if ((!$prefix_curr) && ($this->tree[$key]['obj']->getVar('cat_pid') == $selected)) {
@@ -143,22 +137,18 @@ class TDMObjectTree extends XoopsObjectTree
                 if ((!$prefix_curr) || $moduleHelper->getConfig('tdmpicture_cat_display')) {
                     if (!empty($this->tree[$key]['child']) && $moduleHelper->getConfig('tdmpicture_cat_select')) {
                         $select = $this->makeSelBox('cat_pid', 'cat_title', '-', 0, '', $this->tree[$key]['obj']->getVar('cat_id'),
-                                                    "OnChange='window.document.location=this.options[this.selectedIndex].value;'",
-                                                    'tdmpicture_catview');
+                                                    "OnChange='window.document.location=this.options[this.selectedIndex].value;'", 'tdmpicture_catview');
                     } else {
                         $select = false;
                     }
 
-                    $cat_title = (strlen($this->tree[$key]['obj']->getVar('cat_title')) > 30 ? substr($this->tree[$key]['obj']->getVar('cat_title'),
-                                                                                                      0,
+                    $cat_title = (strlen($this->tree[$key]['obj']->getVar('cat_title')) > 30 ? substr($this->tree[$key]['obj']->getVar('cat_title'), 0,
                                                                                                       30) : $this->tree[$key]['obj']->getVar('cat_title'));
-                    $cat_text  = (strlen($this->tree[$key]['obj']->getVar('cat_text')) > 120 ? substr($this->tree[$key]['obj']->getVar('cat_text'), 0,
-                                                                                                      120)
+                    $cat_text  = (strlen($this->tree[$key]['obj']->getVar('cat_text')) > 120 ? substr($this->tree[$key]['obj']->getVar('cat_text'), 0, 120)
                                                                                                . '...' : $this->tree[$key]['obj']->getVar('cat_text'));
-                    $ret .= '<li style="width:46%;" class="' . $GLOBALS['class'] . '"><div><div id="img">' . $picture . '<br><span id="tree_num"> ('
-                            . $count . ')</span></div><div id="tree_detail"><h2><a href ="' . $cat_link . '" title="'
-                            . $this->tree[$key]['obj']->getVar('cat_title') . '">' . $cat_title . '</h2></a><span id="tree_text">' . $cat_text
-                            . '</span></div><br style="clear: both;" /><div id="tree_form">' . $select . '</div></div></div></li>';
+                    $ret       .= '<li style="width:46%;" class="' . $GLOBALS['class'] . '"><div><div id="img">' . $picture . '<br><span id="tree_num"> (' . $count
+                                  . ')</span></div><div id="tree_detail"><h2><a href ="' . $cat_link . '" title="' . $this->tree[$key]['obj']->getVar('cat_title') . '">' . $cat_title
+                                  . '</h2></a><span id="tree_text">' . $cat_text . '</span></div><br style="clear: both;" /><div id="tree_form">' . $select . '</div></div></div></li>';
                 }
             }
 
@@ -266,6 +256,7 @@ class TDMObjectTree extends XoopsObjectTree
     }
 
     //fonction du trie
+
     /**
      * @param $cat
      * @param $tris
@@ -290,7 +281,7 @@ class TDMObjectTree extends XoopsObjectTree
         foreach ($option as $key => $value) {
             $select   = ($tris == $key) ? 'selected' : false;
             $cat_link = TDMPICTURE_URL . '/viewcat.php?ct=' . $cat . '&tris=' . $key;
-            $ret .= '<option ' . $select . ' value="' . $cat_link . '">' . $value . '</option>';
+            $ret      .= '<option ' . $select . ' value="' . $cat_link . '">' . $value . '</option>';
         }
         $ret .= '</select>';
 
@@ -298,6 +289,7 @@ class TDMObjectTree extends XoopsObjectTree
     }
 
     //makeCatBox($itemHandler,name cat, )
+
     /**
      * @param        $itemHandler
      * @param        $fieldName

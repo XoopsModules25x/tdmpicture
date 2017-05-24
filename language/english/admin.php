@@ -33,7 +33,7 @@ define('_AM_TDMPICTURE_TEST', 'Beta Testers');
 
 // index.php
 define('_AM_TDMPICTURE_MANAGE_CAT', 'Manage Categories');
-define('_AM_TDMPICTURE_THEREARE_CAT', "There are <span style='color: #FF0000; font-weight: bold'> %s </span> categories in the Database");
+define('_AM_TDMPICTURE_THEREARE_CAT', "There are <span style='color: #FF0000; font-weight: bold;'> %s </span> categories in the Database");
 define('_AM_TDMPICTURE_THEREARE_CAT_WAITING', "There are <span style='color: #FF0000; font-weight: bold'> %s </span> categories awaiting validation");
 
 //admin menu
@@ -119,8 +119,7 @@ define('_AM_TDMPICTURE_CATERROR', 'Error: You must create a Type');
 define('_AM_TDMPICTURE_ARTERROR', 'Error: You must create an Author');
 //suprime
 define('_AM_TDMPICTURE_FORMSUREDEL', "Are you sure to delete File: <span style='color: Red'>%s </span> </b>");
-define('_AM_TDMPICTURE_FORMSUREDELCAT',
-       "Are you sure to delete Category:  <span style='color: Red'>%s </span> </b>, the children of the category will be deleted but the files will not be erased ");
+define('_AM_TDMPICTURE_FORMSUREDELCAT', "Are you sure to delete Category:  <span style='color: Red'>%s </span> </b>, the children of the category will be deleted but the files will not be erased ");
 //About (about.php)
 define('_AM_ABOUT_RELEASEDATE', 'Release Date');
 define('_AM_ABOUT_AUTHOR', 'Author');
@@ -176,3 +175,75 @@ define('_AM_TDMPICTURE_BATCH_DELETE', 'Delete Source Files');
 define('_AM_TDMPICTURE_LIMIT', 'Limit');
 define('_AM_TDMPICTURE_BATCH_LIMIT', 'Photo processed in the same batch');
 define('_AM_TDMPICTURE_BATCH_NEXT', '%d added, remain %d. Click to continue.');
+define('_AM_TDMPICTURE_IMPORT_PHOTOS', 'Photos: ');
+define('_AM_TDMPICTURE_IMPORT_CATEGORIES', 'Categories: ');
+define('_AM_TDMPICTURE_IMPORT_COMMENTS', 'Comments: ');
+//1.08
+define('_AM_TDMPICTURE_UPGRADEFAILED0', "Update failed - couldn't rename field '%s'");
+define('_AM_TDMPICTURE_UPGRADEFAILED1', "Update failed - couldn't add new fields");
+define('_AM_TDMPICTURE_UPGRADEFAILED2', "Update failed - couldn't rename table '%s'");
+define('_AM_TDMPICTURE_ERROR_COLUMN', 'Could not create column in database : %s');
+define('_AM_TDMPICTURE_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');
+define('_AM_TDMPICTURE_ERROR_BAD_PHP', 'This module requires PHP version %s+ (%s installed)');
+define('_AM_TDMPICTURE_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');
+
+// Upload defines
+define('_AM_TDMPICTURE_DOWN_IMAGEUPLOAD', 'Image successfully uploaded to the server');
+define('_AM_TDMPICTURE_DOWN_NOIMAGEEXIST', 'Error: No file was selected for uploading. Please try again!');
+define('_AM_TDMPICTURE_DOWN_IMAGEEXIST', 'Image already exists in upload area!');
+define('_AM_TDMPICTURE_DOWN_FILEDELETED', 'File has been deleted.');
+define('_AM_TDMPICTURE_DOWN_FILEERRORDELETE', 'Error deleting file: file not found on the server.');
+define('_AM_TDMPICTURE_DOWN_NOFILEERROR', 'Error deleting file: No file selected for deleting.');
+define('_AM_TDMPICTURE_DOWN_DELETEFILE', 'WARNING: Are you sure you want to delete this image file?');
+define('_AM_TDMPICTURE_DOWN_IMAGEINFO', 'Server status');
+define('_AM_TDMPICTURE_DOWN_NOTSET', 'Upload path not set');
+define('_AM_TDMPICTURE_DOWN_SERVERPATH', 'Server path to XOOPS root: ');
+define('_AM_TDMPICTURE_DOWN_UPLOADPATH', 'Current upload path: ');
+//1.08
+//Server Information
+define('_AM_TDMPICTURE_SERVERSTATS', 'Server Information');
+define('_AM_TDMPICTURE_UPLOADMAX', 'Maximum upload size: ');
+define('_AM_TDMPICTURE_POSTMAX', 'Maximum post size: ');
+define('_AM_TDMPICTURE_UPLOADS', 'Uploads allowed: ');
+define('_AM_TDMPICTURE_UPLOAD_ON', 'On');
+define('_AM_TDMPICTURE_UPLOAD_OFF', 'Off');
+define('_AM_TDMPICTURE_GDIMGSPPRT', 'GD image lib supported: ');
+define('_AM_TDMPICTURE_GDIMGON', 'Yes');
+define('_AM_TDMPICTURE_GDIMGOFF', 'No');
+define('_AM_TDMPICTURE_GDIMGVRSN', 'GD image lib version: ');
+
+//Server Status
+define('_AM_TDMPICTURE_DOWN_METAVERSION', "<span style='font-weight: bold;'>Downloads meta version:</span> ");
+define('_AM_TDMPICTURE_DOWN_SPHPINI', "<span style='font-weight: bold;'>Information taken from PHP ini file:</span>");
+define('_AM_TDMPICTURE_DOWN_SAFEMODESTATUS', 'Safe mode status: ');
+define('_AM_TDMPICTURE_DOWN_REGISTERGLOBALS', 'Register globals: ');
+define('_AM_TDMPICTURE_DOWN_SERVERUPLOADSTATUS', 'Server uploads status: ');
+define('_AM_TDMPICTURE_DOWN_MAXUPLOADSIZE', 'Max upload size permitted (upload_max_filesize directive in php.ini): ');
+define('_AM_TDMPICTURE_DOWN_MAXPOSTSIZE', 'Max post size permitted (post_max_size directive in php.ini): ');
+define('_AM_TDMPICTURE_DOWN_SAFEMODEPROBLEMS', ' (This may cause problems)');
+define('_AM_TDMPICTURE_DOWN_GDLIBSTATUS', 'GD library support: ');
+define('_AM_TDMPICTURE_DOWN_GDLIBVERSION', 'GD Library version: ');
+define('_AM_TDMPICTURE_DOWN_GDON', "<span style='font-weight: bold;'>Enabled</span> (Thumbsnails available)");
+define('_AM_TDMPICTURE_DOWN_GDOFF', "<span style='font-weight: bold;'>Disabled</span> (No thumbnails available)");
+define('_AM_TDMPICTURE_DOWN_OFF', "<span style='font-weight: bold;'>OFF</span>");
+define('_AM_TDMPICTURE_DOWN_ON', "<span style='font-weight: bold;'>ON</span>");
+define('_AM_TDMPICTURE_DOWN_CATIMAGE', 'Category images');
+define('_AM_TDMPICTURE_DOWN_SCREENSHOTS', 'Screenshot images');
+define('_AM_TDMPICTURE_DOWN_MAINIMAGEDIR', 'Main images');
+define('_AM_TDMPICTURE_DOWN_FCATIMAGE', 'Category image path');
+define('_AM_TDMPICTURE_DOWN_FSCREENSHOTS', 'Screenshot image path');
+define('_AM_TDMPICTURE_DOWN_FMAINIMAGEDIR', 'Main image path');
+define('_AM_TDMPICTURE_DOWN_FUPLOADIMAGETO', 'Upload image: ');
+define('_AM_TDMPICTURE_DOWN_FUPLOADPATH', 'Upload path:');
+define('_AM_TDMPICTURE_DOWN_FUPLOADURL', 'Upload URL:');
+define('_AM_TDMPICTURE_DOWN_FOLDERSELECTION', 'Select upload destination');
+define('_AM_TDMPICTURE_DOWN_FSHOWSELECTEDIMAGE', 'Display selected image');
+define('_AM_TDMPICTURE_DOWN_FUPLOADIMAGE', 'Upload new image to selected destination');
+define('_AM_TDMPICTURE_DOWN_UPLOADPATHDSC', 'Note. Upload path *MUST* contain the full server path of your upload folder.');
+
+define('_AM_TDMPICTURE_TEXTOPTIONS_DESC', 'Description and Summary text options');
+define('_AM_TDMPICTURE_FCATEGORY_DESCRIPTION_DESC', '');
+define('_AM_TDMPICTURE_FCATEGORY_SUMMARY_DESC', '');
+define('_AM_TDMPICTURE_DOWN_MEMORYLIMIT', 'Memory limit (memory_limit directive in php.ini): ');
+define('_AM_TDMPICTURE_DOWN_MODULE_MAXFILESIZE', 'Module max file size: %s (module config value)');
+define('_AM_TDMPICTURE_UPLOAD_MAXFILESIZE', 'Upload file size limit: %s');

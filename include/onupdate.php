@@ -1,23 +1,27 @@
 <?php
-/**
- * ****************************************************************************
- *  - TDMSpot By TDM   - TEAM DEV MODULE FOR XOOPS
- *  - Licence PRO Copyright (c)  (http://www.)
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
  *
- * Cette licence, contient des limitations
- *
- * 1. Vous devez posséder une permission d'exécuter le logiciel, pour n'importe quel usage.
- * 2. Vous ne devez pas l' étudier ni l'adapter à vos besoins,
- * 3. Vous ne devez le redistribuer ni en faire des copies,
- * 4. Vous n'avez pas la liberté de l'améliorer ni de rendre publiques les modifications
- *
- * @license     TDMFR GNU public license
- * @author      TDMFR ; TEAM DEV MODULE
- *
- * ****************************************************************************
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser) || !$GLOBALS['xoopsUser']->IsAdmin()) {
+/**
+ * @copyright    XOOPS Project http://xoops.org/
+ * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package
+ * @since
+ * @author       XOOPS Development Team
+ */
+
+use Xmf\Language;
+
+if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
+    || !$GLOBALS['xoopsUser']->IsAdmin()
+) {
     exit('Restricted access' . PHP_EOL);
 }
 
@@ -56,17 +60,17 @@ function FieldExists($fieldname, $table)
 function xoops_module_pre_update_tdmpicture(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $className     = ucfirst($moduleDirName) . 'Utilities';
+    $className     = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($className)) {
-        xoops_load('utilities', $moduleDirName);
+        xoops_load('utility', $moduleDirName);
     }
     //check for minimum XOOPS version
-    if (!$className::checkXoopsVer($module)) {
+    if (!$className::checkVerXoops($module)) {
         return false;
     }
 
     // check for minimum PHP version
-    if (!$className::checkPHPVer($module)) {
+    if (!$className::checkVerPhp($module)) {
         return false;
     }
 
@@ -74,14 +78,18 @@ function xoops_module_pre_update_tdmpicture(XoopsModule $module)
 }
 
 /**
- * @param XoopsModule|XoopsObject $xoopsModule
- * @param null|int                $previousVersion
- * @return bool
+ *
+ * Performs tasks required during update of the module
+ * @param XoopsModule $xoopsModule {@link XoopsModule}
+ * @param null        $previousVersion
+ *
+ * @return bool true if update successful, false if not
  */
 function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersion = null)
 {
     global $xoopsConfig, $xoopsDB, $xoopsUser;
     $moduleDirName = basename(dirname(__DIR__));
+    $capsDirName   = strtoupper($moduleDirName);
 
     if ($previousVersion < 106) {
         $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/sql/mysql1.06.sql');
@@ -91,11 +99,10 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
         $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/sql/mysql1.07.sql');
     }
     if ($previousVersion < 109) {
-
         $configurator = include __DIR__ . '/config.php';
-        $classUtilities = ucfirst($moduleDirName) . 'Utilities';
-        if (!class_exists($classUtilities)) {
-            xoops_load('utilities', $moduleDirName);
+        $classUtility = ucfirst($moduleDirName) . 'Utility';
+        if (!class_exists($classUtility)) {
+            xoops_load('utility', $moduleDirName);
         }
 
         //delete old HTML templates
@@ -103,10 +110,7 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
             foreach ($configurator['templateFolders'] as $folder) {
                 $templateFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $folder);
                 if (is_dir($templateFolder)) {
-                    $templateList = array_diff(scandir($templateFolder), array(
-                        '..',
-                        '.'
-                    ));
+                    $templateList = array_diff(scandir($templateFolder), array('..', '.'));
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
                         if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
@@ -146,7 +150,7 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
         if (count($configurator['uploadFolders']) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator['uploadFolders']) as $i) {
-                $classUtilities::createFolder($configurator['uploadFolders'][$i]);
+                $classUtility::createFolder($configurator['uploadFolders'][$i]);
             }
         }
 
@@ -155,15 +159,14 @@ function xoops_module_update_tdmpicture(XoopsModule $xoopsModule, $previousVersi
             $file = __DIR__ . '/../assets/images/blank.png';
             foreach (array_keys($configurator['copyFiles']) as $i) {
                 $dest = $configurator['copyFiles'][$i] . '/blank.png';
-                $classUtilities::copyFile($file, $dest);
+                $classUtility::copyFile($file, $dest);
             }
         }
 
         //delete .html entries from the tpl table
-        $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n')
-               . "' AND `tpl_file` LIKE '%.html%'";
+        $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
         $xoopsDB->queryF($sql);
-
     }
+
     return true;
 }

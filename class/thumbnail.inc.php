@@ -161,8 +161,9 @@ class Thumbnail
             }
 
             $size                    = getimagesize($this->fileName);
-            $this->currentDimensions = array('width'  => $size[0],
-                                             'height' => $size[1]
+            $this->currentDimensions = array(
+                'width'  => $size[0],
+                'height' => $size[1]
             );
             $this->newImage          = $this->oldImage;
             $this->gatherImageMeta();
@@ -244,8 +245,9 @@ class Thumbnail
         $newWp     = (100 * $this->maxWidth) / $width;
         $newHeight = ($height * $newWp) / 100;
 
-        return array('newWidth'  => (int)$this->maxWidth,
-                     'newHeight' => (int)$newHeight
+        return array(
+            'newWidth'  => (int)$this->maxWidth,
+            'newHeight' => (int)$newHeight
         );
     }
 
@@ -261,8 +263,9 @@ class Thumbnail
         $newHp    = (100 * $this->maxHeight) / $height;
         $newWidth = ($width * $newHp) / 100;
 
-        return array('newWidth'  => (int)$newWidth,
-                     'newHeight' => (int)$this->maxHeight
+        return array(
+            'newWidth'  => (int)$newWidth,
+            'newHeight' => (int)$this->maxHeight
         );
     }
 
@@ -278,8 +281,9 @@ class Thumbnail
         $newWidth  = ($width * $this->percent) / 100;
         $newHeight = ($height * $this->percent) / 100;
 
-        return array('newWidth'  => (int)$newWidth,
-                     'newHeight' => (int)$newHeight
+        return array(
+            'newWidth'  => (int)$newWidth,
+            'newHeight' => (int)$newHeight
         );
     }
 
@@ -291,8 +295,9 @@ class Thumbnail
      */
     private function calcImageSize($width, $height)
     {
-        $newSize = array('newWidth'  => $width,
-                         'newHeight' => $height
+        $newSize = array(
+            'newWidth'  => $width,
+            'newHeight' => $height
         );
 
         if ($this->maxWidth > 0) {
@@ -410,8 +415,7 @@ class Thumbnail
             $this->workingImage = imagecreate($this->newDimensions['newWidth'], $this->newDimensions['newHeight']);
         }
 
-        imagecopyresampled($this->workingImage, $this->oldImage, 0, 0, 0, 0, $this->newDimensions['newWidth'], $this->newDimensions['newHeight'],
-                           $this->currentDimensions['width'], $this->currentDimensions['height']);
+        imagecopyresampled($this->workingImage, $this->oldImage, 0, 0, 0, 0, $this->newDimensions['newWidth'], $this->newDimensions['newHeight'], $this->currentDimensions['width'], $this->currentDimensions['height']);
 
         $this->oldImage                    = $this->workingImage;
         $this->newImage                    = $this->workingImage;
@@ -436,8 +440,7 @@ class Thumbnail
             $this->workingImage = imagecreate($this->newDimensions['newWidth'], $this->newDimensions['newHeight']);
         }
 
-        imagecopyresampled($this->workingImage, $this->oldImage, 0, 0, 0, 0, $this->newDimensions['newWidth'], $this->newDimensions['newHeight'],
-                           $this->currentDimensions['width'], $this->currentDimensions['height']);
+        imagecopyresampled($this->workingImage, $this->oldImage, 0, 0, 0, 0, $this->newDimensions['newWidth'], $this->newDimensions['newHeight'], $this->currentDimensions['width'], $this->currentDimensions['height']);
 
         $this->oldImage                    = $this->workingImage;
         $this->newImage                    = $this->workingImage;
@@ -522,6 +525,7 @@ class Thumbnail
     }
 
     //ajout
+
     /**
      * @param $width
      * @param $height
@@ -634,8 +638,7 @@ class Thumbnail
         $colorToPaint = imagecolorallocatealpha($this->workingImage, 255, 255, 255, 0);
         imagefilledrectangle($this->workingImage, 0, 0, $width, $newHeight, $colorToPaint);
 
-        imagecopyresampled($this->workingImage, $this->newImage, 0, 0, 0, $reflectedPart, $width, $reflectionHeight, $width,
-                           $height - $reflectedPart);
+        imagecopyresampled($this->workingImage, $this->newImage, 0, 0, 0, $reflectedPart, $width, $reflectionHeight, $width, $height - $reflectedPart);
         $this->imageFlipVertical();
 
         imagecopy($this->workingImage, $this->newImage, 0, 0, 0, 0, $width, $height);

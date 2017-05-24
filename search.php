@@ -39,8 +39,8 @@ $xoopsTpl->assign('perm_cat', $perm_cat);
 $userid = isset($_REQUEST['userid']) ? (int)$_REQUEST['userid'] : false;
 
 //load class
-$fileHandler   = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler    = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler   = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler    = xoops_getModuleHandler('category', $moduleDirName);
 $memberHandler = xoops_getHandler('member');
 
 //news categorie
@@ -113,11 +113,10 @@ foreach (array_keys($file_arr) as $i) {
         //poster
         $poster_image = XOOPS_ROOT_PATH . '/uploads/' . $members->getVar('user_avatar');
         if (file_exists($poster_image) && $members->getVar('user_avatar') !== 'blank.png') {
-            $file['user_img'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $members->getVar('user_avatar') . "' height='60px' title="
-                                . $members->getVar('uname') . " style='border: 1px solid #CCC;' alt=" . $members->getVar('uname') . '>';
+            $file['user_img'] = "<img class='img'src='" . XOOPS_URL . '/uploads/' . $members->getVar('user_avatar') . "' height='60px' title=" . $members->getVar('uname')
+                                . " style='border: 1px solid #CCC;' alt=" . $members->getVar('uname') . '>';
         } else {
-            $file['user_img'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL
-                                . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
+            $file['user_img'] = "<img class='img' src='" . TDMPICTURE_IMAGES_URL . "/user.gif'  height='60px' style='border: 1px solid #CCC' title='Anonyme' alt='Anonyme'>";
         }
     }
 
@@ -133,14 +132,14 @@ if ($numrows > $limit) {
 $xoopsTpl->assign('pagenav', $pagenav);
 // référencement
 // titre de la page
-TdmPictureUtilities::header();
+TdmpictureUtility::getHeader();
 $xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($xoopsModule->name()));
 
 if (isset($xoTheme) && is_object($xoTheme)) {
-    $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($moduleHelper->getConfig('tdmpicture_keywords')));
+    $xoTheme->addMeta('meta', 'keywords', TdmpictureUtility::getKeywords($moduleHelper->getConfig('tdmpicture_keywords')));
     $xoTheme->addMeta('meta', 'description', $moduleHelper->getConfig('tdmpicture_description'));
 } else {    // Compatibility for old Xoops versions
-    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($moduleHelper->getConfig('tdmpicture_keywords')));
+    $xoopsTpl->assign('xoops_meta_keywords', TdmpictureUtility::getKeywords($moduleHelper->getConfig('tdmpicture_keywords')));
     $xoopsTpl->assign('xoops_meta_description', $moduleHelper->getConfig('tdmpicture_description'));
 }
 include XOOPS_ROOT_PATH . '/footer.php';

@@ -79,8 +79,8 @@ switch ($option) {
     //pdf pour l'affichage full
     case 'auto':
         //load class
-        $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-        $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+        $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+        $catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
         $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
@@ -167,8 +167,8 @@ switch ($option) {
 
     case 'A4':
         //load class
-        $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-        $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+        $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+        $catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
         $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
@@ -198,8 +198,8 @@ switch ($option) {
 
     case 'A3':
         //load class
-        $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-        $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+        $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+        $catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
         $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
@@ -229,8 +229,8 @@ switch ($option) {
 
     case 'A2':
         //load class
-        $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-        $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+        $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+        $catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
         $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));
@@ -260,8 +260,8 @@ switch ($option) {
 
     case 'A1':
         //load class
-        $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-        $catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+        $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+        $catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
         $file      = $fileHandler->get($_REQUEST['st']);
         $file_path = $file->getFilePath($file->getVar('file_file'));

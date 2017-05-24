@@ -20,19 +20,18 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 $moduleDirName = basename(__DIR__);
+
 // ------------------- Informations ------------------- //
 $modversion = array(
-    'name'                => _MI_TDMPICTURE_NAME,
-    'description'         => _MI_TDMPICTURE_DESC,
     'version'             => 1.08,
-    'module_status'       => 'RC 1',
-    'release_date'        => '2016/10/14',
-    //yyyy/mm/dd
-    //    'release'             => '2015-04-04',
-    'official'            => 1,
-    //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+    'module_status'       => 'RC 2',
+    'release_date'        => '2017/02/25',
+    'name'                => _MI_TDMPICTURE_NAME,
+    'description'         => _MI_TDMPICTURE_NAME_DESC,
+    'official'            => 0,
+    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
     'author'              => 'TDM, Venom',
-    'pseudo'              => 'Venom',
+    //'pseudo'              => 'Venom',
     'author_mail'         => 'author-email',
     'author_website_url'  => 'http://xoops.org',
     'author_website_name' => 'XOOPS',
@@ -40,10 +39,12 @@ $modversion = array(
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
     'help'                => 'page=help',
+    // ------------------- Folders & Files -------------------
     'release_info'        => 'Changelog',
-    'release_file'        => XOOPS_URL . "/modules/$moduleDirName/docs/changelog file",
+    'release_file'        => XOOPS_URL . "/modules/$moduleDirName/docs/changelog.txt",
     'manual'              => 'link to manual file',
     'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
+    // ------------------- Min Requirements -------------------
     'min_php'             => '5.5',
     'min_xoops'           => '2.5.8',
     'min_admin'           => '1.2',
@@ -60,40 +61,49 @@ $modversion = array(
     // Local path icons
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',
-    //About    
+    'modimages'           => 'assets/images',
+    //About
     'demo_site_url'       => 'http://www.xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
     'support_url'         => 'http://xoops.org/modules/newbb/viewforum.php?forum=28/',
     'support_name'        => 'Support Forum',
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
-
-    // paypal
-    //    'paypal' => array(
-    //        'business' => 'XXX@email.com',
-    //        'item_name' => 'Donation : ' . _AM_MODULE_DESC,
-    //        'amount' => 0,
-    //        'currency_code' => 'USD'
-    //    ),
-
-    // Admin system menu
+    // ------------------- Admin Menu -------------------
     'system_menu'         => 1,
-    // Admin menu
     'hasAdmin'            => 1,
     'adminindex'          => 'admin/index.php',
     'adminmenu'           => 'admin/menu.php',
-    // Main menu
+    // ------------------- Main Menu -------------------
     'hasMain'             => 1,
-    //    'sub'                 => array(
-    //        array('name' => _MI_FM_SUB_SMNAME1, 'url' => 'movies.php'),
-    //        array('name' => _MI_FM_SUB_SMNAME2, 'url' => 'clips.php')),
-
-    //Search & Comments
+    'sub'                 => array(
+//        array(
+//            'name' => _MI_TDMPICTURE_SUB_SMNAME1,
+//            'url'  => 'movies.php'
+//        ),
+//        array(
+//            'name' => _MI_TDMPICTURE_SUB_SMNAME2,
+//            'url'  => 'clips.php'
+//        ),
+        array(
+            'name' => _MI_TDMPICTURE_VIEWALBUM,
+            'url'  => 'search.php'
+        ),
+    ),
+    // -------------------  PayPal ---------------------------
+    'paypal'              => array(
+        'business'      => 'foundation@xoops.org',
+        'item_name'     => 'Donation : ' . _MI_TDMPICTURE_NAME,
+        'amount'        => 0,
+        'currency_code' => 'USD'
+    ),
+    // ------------------- Search ---------------------------
     'hasSearch'           => 1,
     'search'              => array(
         'file' => 'include/search.inc.php',
         'func' => 'tdmpicture_search'
     ),
+    // ------------------- Comments -------------------------
     'hasComments'         => 1,
     'comments'            => array(
         'pageName'     => 'viewfile.php',
@@ -104,26 +114,42 @@ $modversion = array(
             'update'  => 'picture_comments_update'
         ),
     ),
-    // Notification
+    // ------------------- Notification ----------------------
     'hasNotification'     => 0,
-    // Install/Update
+    // ------------------- Install/Update -------------------
     'onInstall'           => 'include/oninstall.php',
-    'onUpdate'            => 'include/onupdate.php'
-    //  'onUninstall'         => 'include/onuninstall.php'
-
+    'onUpdate'            => 'include/onupdate.php',
+    'onUninstall'         => 'include/onuninstall.php',
+    // ------------------- Mysql -----------------------------
+    'sqlfile'             => array('mysql' => 'sql/mysql.sql'),
+    // ------------------- Tables ----------------------------
+    'tables'              => array(
+        $moduleDirName . '_' . 'file',
+        $moduleDirName . '_' . 'cat',
+        $moduleDirName . '_' . 'pl',
+        $moduleDirName . '_' . 'vote',
+    )
 );
 
-// ------------------- Mysql ------------------- //
-$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-
-// Tables created by sql file (without prefix!)
-$modversion['tables'] = array(
-    $moduleDirName . '_' . 'file',
-    $moduleDirName . '_' . 'cat',
-    $moduleDirName . '_' . 'pl',
-    $moduleDirName . '_' . 'vote'
+// ------------------- Help files ------------------- //
+$modversion['helpsection'] = array(
+    array(
+        'name' => _MI_TDMPICTURE_HELP_OVERVIEW,
+        'link' => 'page=help'
+    ),
+    array(
+        'name' => _MI_TDMPICTURE_HELP_OVERVIEW,
+        'link' => 'page=disclaimer'
+    ),
+    array(
+        'name' => _MI_TDMPICTURE_LICENSE,
+        'link' => 'page=license'
+    ),
+    array(
+        'name' => _MI_TDMPICTURE_SUPPORT,
+        'link' => 'page=support'
+    ),
 );
-
 // ------------------- Templates ------------------- //
 $modversion['templates'] = array(
     array(
@@ -161,7 +187,7 @@ $modversion['templates'] = array(
     array(
         'file'        => 'tdmpicture_rss.tpl',
         'description' => 'RSS'
-    )
+    ),
 );
 
 // ------------------- Blocks ------------------- //
@@ -230,7 +256,7 @@ global $xoopsUser;
 $gpermHandler = xoops_getHandler('groupperm');
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
-$xoopsModule   = $moduleHandler->getByDirname($modversion['dirname']);
+$xoopsModule   = $moduleHandler->getByDirname($moduleDirName);
 
 //permission
 if (is_object($xoopsUser)) {
@@ -259,9 +285,6 @@ if ($xoopsModule) {
     }
 }
 
-$modversion['sub'][4]['name'] = _MI_TDMPICTURE_VIEWALBUM;
-$modversion['sub'][4]['url']  = 'search.php';
-
 // ------------------- Config Options ------------------- //
 $modversion['config'][] = array(
     'name'        => 'tdm_upload_path',
@@ -270,7 +293,7 @@ $modversion['config'][] = array(
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
     //'default'     => '/modules/' . $modversion['dirname' . '/upload/',
-    'default'     => '/uploads/' . $modversion['dirname']
+    'default'     => '/uploads/' . $moduleDirName
 );
 
 $modversion['config'][] = array(
@@ -280,7 +303,7 @@ $modversion['config'][] = array(
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
     //'default'     => '/modules/' . $modversion['dirname' . '/upload/thumb/',
-    'default'     => '/uploads/' . $modversion['dirname'] . '/thumb'
+    'default'     => '/uploads/' . $moduleDirName . '/thumb'
 );
 
 $modversion['config'][] = array(
@@ -363,6 +386,7 @@ $modversion['config'][] = array(
 //'formtype' => 'textbox',
 //'valuetype' => 'int',
 //'default' => 640);
+
 //$modversion['config'][] = array(
 //'name' => 'tdmpicture_java_heigth',
 //'title' => '_MI_TDMPICTURE_JAVA_HEIGTH',

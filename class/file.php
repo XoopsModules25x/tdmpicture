@@ -1,5 +1,4 @@
 <?php
-use Xmf\Module\Helper;
 
 /**
  * ****************************************************************************
@@ -18,13 +17,19 @@ use Xmf\Module\Helper;
  *
  * ****************************************************************************
  */
+
+use Xmf\Module\Helper;
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class TDMPicture_file extends XoopsObject
+/**
+ * Class TdmpictureFile
+ */
+class TdmpictureFile extends XoopsObject
 {
     // constructor
     /**
-     * TDMPicture_file constructor.
+     * TdmpictureFile constructor.
      */
     public function __construct()
     {
@@ -120,14 +125,11 @@ class TDMPicture_file extends XoopsObject
         $url       = TDMPICTURE_URL . '/viewfile.php?st=' . $this->getVar('file_id');
         $form      = new XoopsSimpleForm('', 'form', '', 'post', true);
         $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINK, '', 100, 255, $url));
-        $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFULLSCREEN, '', 100, 255,
-                                            TDMPICTURE_URL . '/get.php?st=' . $this->getVar('file_id') . '&size=full'));
+        $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFULLSCREEN, '', 100, 255, TDMPICTURE_URL . '/get.php?st=' . $this->getVar('file_id') . '&size=full'));
         $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKDHUMB, '', 100, 255, TDMPICTURE_URL . '/get.php?st=' . $this->getVar('file_id')));
         $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFORUM, '', 100, 255, '[url=' . $url . '][img]' . $file_path . '[/img][/url]'));
         $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKFORUM1, '', 100, 255, '[url=' . $url . '][img=' . $file_path . '][/url]'));
-        $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKHTML, '', 100, 255,
-                                            '<a href="' . $url . '" target="_blank"><img src="' . $file_path . '" border="0" alt="'
-                                            . $this->getVar('file_title') . '"/></a>'));
+        $form->addElement(new XoopsFormText(_MD_TDMPICTURE_LINKHTML, '', 100, 255, '<a href="' . $url . '" target="_blank"><img src="' . $file_path . '" border="0" alt="' . $this->getVar('file_title') . '"/></a>'));
 
         return $form;
     }
@@ -176,7 +178,7 @@ class TDMPicture_file extends XoopsObject
             $form->addElement($button_file);
 
             //categorie
-            $catHandler = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+            $catHandler = xoops_getModuleHandler('category', $moduleDirName);
 
             $criteriaDisplay = new CriteriaCompo();
             $criteriaDisplay->add(new Criteria('cat_display', 1));
@@ -189,10 +191,12 @@ class TDMPicture_file extends XoopsObject
 
             $arr    = $catHandler->getall($criteriaUser);
             $mytree = new TDMObjectTree($arr, 'cat_id', 'cat_pid');
-            $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT,
-                                                 $mytree->makeSelBox('file_cat', 'cat_title', '-', $this->getVar('file_cat'), '', 0, '',
-                                                                     'tdmpicture_catview')));
-
+            if (TdmpictureUtility::checkXoopsVersion('2', '5', '9', '>=')) {
+                $catSelect = new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelectElement('file_cat', 'cat_title', '-', $this->getVar('file_cat'), true, 0, '', 'tdmpicture_catview'));
+                $form->addElement($catSelect);
+            } else {
+                $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelBox('file_cat', 'cat_title', '-', $this->getVar('file_cat'), '', 0, '', 'tdmpicture_catview')));
+            }
             //
 
             //editor
@@ -239,7 +243,7 @@ class TDMPicture_file extends XoopsObject
         if ($this->isNew()) {
 
             //categorie
-            $catHandler = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+            $catHandler = xoops_getModuleHandler('category', $moduleDirName);
 
             $criteriaDisplay = new CriteriaCompo();
             $criteriaDisplay->add(new Criteria('cat_display', 1));
@@ -255,10 +259,12 @@ class TDMPicture_file extends XoopsObject
             //$form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelBox('file_cat', 'cat_title','-', $this->getVar('cat_pid'), true)), true);
 
             $mytree = new TDMObjectTree($arr, 'cat_id', 'cat_pid');
-            $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT,
-                                                 $mytree->makeSelBox('file_cat', 'cat_title', '-', $this->getVar('cat_pid'), '', 0, '',
-                                                                     'tdmpicture_catview')));
-
+            if (TdmpictureUtility::checkXoopsVersion('2', '5', '9', '>=')) {
+                $catSelect = new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelectElement('file_cat', 'cat_title', '-', $this->getVar('cat_pid'), true, 0, '', 'tdmpicture_catview'));
+                $form->addElement($catSelect);
+            } else {
+                $form->addElement(new XoopsFormLabel(_MD_TDMPICTURE_CAT, $mytree->makeSelBox('file_cat', 'cat_title', '-', $this->getVar('cat_pid'), '', 0, '', 'tdmpicture_catview')));
+            }
             //
 
             if (is_object($xoopsUser) && $xoopsUser->isAdmin()) {
@@ -282,8 +288,8 @@ class TDMPicture_file extends XoopsObject
 
             //javascript
             //echo '<script language="JavaScript" type="text/javascript">
-            //    if (_ie == true) document.writeln(\'<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" WIDTH = "0" HEIGHT = "0" NAME = "JUploadApplet"  codebase="http://java.sun.com/update/1.5.0/jinstall-1_5-windows-i586.cab#Version=5,0,0,3"><noembed><xmp>\');
-            //    else if (_ns == true && _ns6 == false) document.writeln(\'<embed \' +
+            //    if (_ie === true) document.writeln(\'<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" WIDTH = "0" HEIGHT = "0" NAME = "JUploadApplet"  codebase="http://java.sun.com/update/1.5.0/jinstall-1_5-windows-i586.cab#Version=5,0,0,3"><noembed><xmp>\');
+            //    else if (_ns === true && _ns6 === false) document.writeln(\'<embed \' +
             //      \'type="application/x-java-applet;version=1.5" \
             //            CODE = "wjhk.jupload2.EmptyApplet" \
             //            ARCHIVE = "'.TDMPICTURE_URL.'/jupload/wjhk.jupload.jar" \
@@ -372,9 +378,9 @@ $tdmpicture(document).ready( function() {
 }
 
 /**
- * Class TDMPicturetdmpicture_fileHandler
+ * Class TdmpictureFileHandler
  */
-class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
+class TdmpictureFileHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param null       $criteria
@@ -402,7 +408,7 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
                 $sql .= ' ' . $groupby;
             }
             if ($sort = $criteria->getSort()) {
-                $sql .= " ORDER BY {$sort} " . $criteria->getOrder();
+                $sql      .= " ORDER BY {$sort} " . $criteria->getOrder();
                 $orderSet = true;
             }
             $limit = $criteria->getLimit();
@@ -441,13 +447,13 @@ class TDMPicturetdmpicture_fileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * TDMPicturetdmpicture_fileHandler constructor.
+     * TdmpictureFileHandler constructor.
      * @param XoopsDatabase $db
      */
     public function __construct(XoopsDatabase $db)
     {
         $this->_dirname = basename(dirname(__DIR__));
-        parent::__construct($db, 'tdmpicture_file', 'TDMPicture_file', 'file_id', 'file_title');
+        parent::__construct($db, 'tdmpicture_file', 'TdmpictureFile', 'file_id', 'file_title');
     }
 
     /**

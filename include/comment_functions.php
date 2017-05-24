@@ -27,9 +27,9 @@ function picture_comments_update($file_id, $total_num)
 {
     global $xoopsDB;
 
-    $fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-    $view         = $fileHandler->get($file_id);
-    $hits         = $view->getVar('file_comments');
+    $fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+    $view        = $fileHandler->get($file_id);
+    $hits        = $view->getVar('file_comments');
     ++$hits;
     $obj = $fileHandler->get($file_id);
     $obj->setVar('file_comments', $hits);

@@ -17,12 +17,14 @@
  * ****************************************************************************
  */
 
-include_once __DIR__ . '/admin_header.php';
+use Xmf\Request;
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 //$moduleDirName = basename(dirname(__DIR__));
 //load class
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 //compte les cat
 $numcat = $catHandler->getCount();
 //compte les genres en attente
@@ -46,15 +48,15 @@ $folder = array(
     TDMPICTURE_CAT_PATH
 );
 //test GD
-if (!extension_loaded('gd')) {
-    if (!dl('gd.so')) {
-        $veriffile = '<span style="color: red;"><img src="' . $pathIcon16 . '0.png"> ' . _AM_TDMPICTURE_MANAGE_GDERROR . '</a>';
-    }
-} else {
-    $veriffile = '<span style="color: green;"><img src="' . $pathIcon16 . '1.png" >' . _AM_TDMPICTURE_MANAGE_GDOK . '</span>';
-}
+//if (!extension_loaded('gd')) {
+//    if (!dl('gd.so')) {
+//        $veriffile = '<span style="color: red;"><img src="' . $pathIcon16 . '0.png"> ' . _AM_TDMPICTURE_MANAGE_GDERROR . '</a>';
+//    }
+//} else {
+//    $veriffile = '<span style="color: green;"><img src="' . $pathIcon16 . '1.png" >' . _AM_TDMPICTURE_MANAGE_GDOK . '</span>';
+//}
 
-//$adminObject = new ModuleAdmin();
+//$adminObject = \Xmf\Module\Admin::getInstance();
 $adminObject->addInfoBox(_AM_TDMPICTURE_MANAGE_CAT);
 $adminObject->addInfoBoxLine(sprintf(_AM_TDMPICTURE_THEREARE_CAT, $numcat));
 if ($cat_waiting == 0) {
@@ -75,12 +77,12 @@ if ($file_waiting == 0) {
 //    $adminObject->addConfigBoxLine($folder[$i], 'folder');
 //    $adminObject->addConfigBoxLine(array($folder[$i], '777'), 'chmod');
 //}
-$adminObject->addConfigBoxLine($veriffile);
+//$adminObject->addConfigBoxLine($veriffile);
 
 $configurator = include __DIR__ . '/../include/config.php';
-$classUtilities = ucfirst($moduleDirName) . 'Utilities';
-if (!class_exists($classUtilities)) {
-    xoops_load('utilities', $moduleDirName);
+$classUtility = ucfirst($moduleDirName) . 'Utility';
+if (!class_exists($classUtility)) {
+    xoops_load('utility', $moduleDirName);
 }
 
 //  ---  CHECK FOLDERS ---------------
@@ -90,14 +92,17 @@ if (count($configurator['uploadFolders']) > 0) {
     }
 }
 
-echo $adminObject->displayNavigation(basename(__FILE__));
-echo $adminObject->renderIndex();
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->displayIndex();
+
+//TdmpictureUtility::getServerInfo();
+//TdmpictureUtility::getServerStatus();
 
 //if ( !is_readable(XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php")) {
-//TdmPictureUtilities::adminmenu(0, _AM_TDMPICTURE_INDEXDESC);
+//TdmpictureUtility::getAdminMenu(0, _AM_TDMPICTURE_INDEXDESC);
 //} else {
 //include_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
 //loadModuleAdminMenu (0, _AM_TDMPICTURE_INDEXDESC);
 //}
 
-xoops_cp_footer();
+require_once __DIR__ . '/admin_footer.php';

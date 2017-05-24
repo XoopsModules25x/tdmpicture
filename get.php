@@ -19,8 +19,8 @@
 
 include_once __DIR__ . '/header.php';
 include_once XOOPS_ROOT_PATH . '/header.php';
-$myts         = MyTextSanitizer::getInstance();
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
+$myts        = MyTextSanitizer::getInstance();
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
 
 $post_st   = isset($_REQUEST['st']) ? $_REQUEST['st'] : false;
 $post_size = isset($_REQUEST['size']) ? $_REQUEST['size'] : false;
@@ -62,4 +62,4 @@ $dl = $document->getVar('file_hits');
 $document->setVar('file_hits', $dl);
 $fileHandler->insert($document);
 
-echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; URL=" . $imageUrl . "\"></meta></head><body></body></html>";
+echo '<html><head><meta http-equiv="Refresh" content="0; URL=' . $imageUrl . '"></meta></head><body></body></html>';

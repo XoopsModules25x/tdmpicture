@@ -18,6 +18,8 @@
  * ****************************************************************************
  */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();
 
@@ -27,8 +29,8 @@ include_once XOOPS_ROOT_PATH . '/header.php';
 $xoopsTpl->assign('dirname', $moduleDirName);
 
 //load class
-$fileHandler = xoops_getModuleHandler('tdmpicture_file', $moduleDirName);
-$catHandler  = xoops_getModuleHandler('tdmpicture_cat', $moduleDirName);
+$fileHandler = xoops_getModuleHandler('file', $moduleDirName);
+$catHandler  = xoops_getModuleHandler('category', $moduleDirName);
 
 //perm
 $xoopsTpl->assign('perm_submit', $perm_submit);
@@ -38,12 +40,12 @@ $xoopsTpl->assign('perm_dl', $perm_dl);
 $xoopsTpl->assign('perm_cat', $perm_cat);
 
 //variable post
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
+$op = Request::getVar('op', 'list'); //isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 //$limit = !empty($_REQUEST['limit']) ? $_REQUEST['limit'] : $moduleHelper->getConfig('tdmpicture_page');
-$ct    = isset($_REQUEST['ct']) ? $_REQUEST['ct'] : false;
-$start = isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
-$tris  = isset($_REQUEST['tris']) ? $_REQUEST['tris'] : 'file_indate';
-$order = isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
+$ct    = Request::getString('ct', false); //isset($_REQUEST['ct']) ? $_REQUEST['ct'] : false;
+$start = Request::getString('start', 0); //isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
+$tris  = Request::getString('tris', 'file_indate'); //iisset($_REQUEST['tris']) ? $_REQUEST['tris'] : 'file_indate';
+$order = Request::getString('order', 'desc'); //iisset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc';
 
 //
 //mode de visualisation
@@ -99,7 +101,7 @@ switch ($op) {
         $xoopsTpl->assign('tree_title', $GLOBALS['cat_title']);
 
         $xoopsTpl->assign('display_tris', $mytree->makeSelTris($_SERVER['PHP_SELF'], 'ct=' . $ct, $tris, $order));
-        //$xoopsTpl->assign('selectview', TdmPictureUtilities::selectView((int)($ct), $limit));
+        //$xoopsTpl->assign('selectview', TdmpictureUtility::selectView((int)($ct), $limit));
         $meta_title = $meta_keywords = $meta_description = $GLOBALS['cat_title'];
 
         //$xoopsTpl->assign('nav_bar', $GLOBALS['navbar']);
@@ -163,7 +165,7 @@ switch ($op) {
                     $file['postername'] = XoopsUser::getUnameFromId($file_arr[$f]->getVar('file_uid'));
                     $file['uid']        = $file_arr[$f]->getVar('file_uid');
                     //test si l'user a un album
-                    $file['useralb'] = TdmPictureUtilities::useralb($file_arr[$f]->getVar('file_uid'));
+                    $file['useralb'] = TdmpictureUtility::getUserAlbum($file_arr[$f]->getVar('file_uid'));
                     //
                     $file['indate'] = formatTimestamp($file_arr[$f]->getVar('file_indate'), 'S');
                     //nombre de vote
@@ -213,8 +215,7 @@ switch ($op) {
 
             //navigation
             if ($numfile > $limit) {
-                $pagenav = new XoopsPageNav($numfile, $moduleHelper->getConfig('tdmpicture_page'), $start, 'start',
-                                            'ct=' . $ct . '&tris=' . $tris . '&limit=' . $limit);
+                $pagenav = new XoopsPageNav($numfile, $moduleHelper->getConfig('tdmpicture_page'), $start, 'start', 'ct=' . $ct . '&tris=' . $tris . '&limit=' . $limit);
                 $xoopsTpl->assign('nav_page', $pagenav->renderNav(2));
             }
         }
@@ -222,14 +223,14 @@ switch ($op) {
         break;
 
 }
-TdmPictureUtilities::header();
+TdmpictureUtility::getHeader();
 $xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($xoopsModule->name() . ' : ' . $meta_title));
 
 if (isset($xoTheme) && is_object($xoTheme)) {
-    $xoTheme->addMeta('meta', 'keywords', TdmPictureUtilities::keywords($meta_description));
+    $xoTheme->addMeta('meta', 'keywords', TdmpictureUtility::getKeywords($meta_description));
     $xoTheme->addMeta('meta', 'description', $meta_description);
 } else {    // Compatibility for old Xoops versions
-    $xoopsTpl->assign('xoops_meta_keywords', TdmPictureUtilities::keywords($moduleHelper->getConfig('tdmpicture_keywords')));
+    $xoopsTpl->assign('xoops_meta_keywords', TdmpictureUtility::getKeywords($moduleHelper->getConfig('tdmpicture_keywords')));
     $xoopsTpl->assign('xoops_meta_description', $moduleHelper->getConfig('tdmpicture_description'));
 }
 

@@ -79,6 +79,6 @@ $modCopyright
 //xoops_loadLanguage('common', $moduleDirName);
 //
 //xoops_load('constants', $moduleDirName);
-//xoops_load('utilities', $moduleDirName);
+//xoops_load('utility', $moduleDirName);
 //xoops_load('XoopsRequest');
 //xoops_load('XoopsFilterInput');

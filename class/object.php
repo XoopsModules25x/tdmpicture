@@ -31,7 +31,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
 
     /**
      * Constructor - called from child classes
-     * @param object|XoopsDatabase $db        {@link XoopsDatabase}
+     * @param XoopsDatabase $db        {@link XoopsDatabase}
      *                                        object
      * @param string               $tablename Name of database table
      * @param string               $classname Name of Class, this handler is managing
@@ -55,7 +55,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @param bool $isNew Flag the new objects as "new"?
      *
-     * @return object
+     * @return XoopsObject
      */
     public function create($isNew = true)
     {
@@ -98,7 +98,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * retrieve objects from the database
      *
-     * @param object $criteria  {@link CriteriaElement} conditions to be met
+     * @param CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
      * @param bool   $id_as_key use the ID as key for the array?
      * @param bool   $as_object return an array of objects?
      *
@@ -142,7 +142,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
             $obj->assignVars($myrow);
             if (!$id_as_key) {
                 if ($as_object) {
-                    $ret[] =& $obj;
+                    $ret[] = $obj;
                 } else {
                     $row  = array();
                     $vars = $obj->getVars();
@@ -153,7 +153,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
                 }
             } else {
                 if ($as_object) {
-                    $ret[$myrow[$this->keyName]] =& $obj;
+                    $ret[$myrow[$this->keyName]] = $obj;
                 } else {
                     $row  = array();
                     $vars = $obj->getVars();
@@ -218,7 +218,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * count objects matching a condition
      *
-     * @param  object $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */
     public function getCount($criteria = null)
@@ -290,13 +290,13 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * insert a new object in the database
      *
-     * @param  object $obj         reference to the object
-     * @param  bool   $force       whether to force the query execution despite security settings
-     * @param  bool   $checkObject check if the object is dirty and clean the attributes
+     * @param  XoopsObject $obj         reference to the object
+     * @param  bool        $force       whether to force the query execution despite security settings
+     * @param  bool        $checkObject check if the object is dirty and clean the attributes
      * @return bool   FALSE if failed, TRUE if already present and unchanged or successful
      */
 
-    public function insert($obj, $force = false, $checkObject = true)
+    public function insert(XoopsObject $obj, $force = false, $checkObject = true)
     {
         if ($checkObject !== false) {
             if (!is_object($obj)) {
@@ -337,8 +337,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
                     $cleanvars[$this->keyName] = $this->db->genId($this->table . '_' . $this->keyName . '_seq');
                 }
             }
-            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(',', array_keys($cleanvars)) . ') VALUES (' . implode(',', array_values($cleanvars))
-                   . ')';
+            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(',', array_keys($cleanvars)) . ') VALUES (' . implode(',', array_values($cleanvars)) . ')';
         } else {
             $sql = 'UPDATE ' . $this->table . ' SET';
             foreach ($cleanvars as $key => $value) {
@@ -351,7 +350,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
                 if (isset($notfirst)) {
                     $sql .= ',';
                 }
-                $sql .= ' ' . $key . ' = ' . $value;
+                $sql      .= ' ' . $key . ' = ' . $value;
                 $notfirst = true;
             }
             if (is_array($this->keyName)) {
@@ -420,7 +419,7 @@ class TdmpictureXoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * delete all objects meeting the conditions
      *
-     * @param  object $criteria {@link CriteriaElement} with conditions to meet
+     * @param  CriteriaElement $criteria {@link CriteriaElement} with conditions to meet
      * @return bool
      */
     public function deleteAll($criteria = null)

@@ -158,8 +158,7 @@ class TDMPictureMenu
         if ($ws) {
             $csscode = "<style type=\"text/css\">\n<!--";
         }
-        $csscode
-            .= "div.rmmenuicon{
+        $csscode .= "div.rmmenuicon{
                 margin: 3px;
                 font-family: $this->Font;
                 text-align: " . $this->TextAlign . ';
@@ -215,8 +214,7 @@ class TDMPictureMenu
     {
         $ret = "<div class='rmmenuicon'>";
         foreach ($this->_items as $k => $v) {
-            $ret .= "<a href='$v[link]' title='" . ($v['alt'] != '' ? $v['alt'] : $v['name']) . "'>" . ($v['icon']
-                                                                                                        != '' ? "<img src='$v[icon]' alt='$v[name]' /> " : '');
+            $ret .= "<a href='$v[link]' title='" . ($v['alt'] != '' ? $v['alt'] : $v['name']) . "'>" . ($v['icon'] != '' ? "<img src='$v[icon]' alt='$v[name]' /> " : '');
             if ($v['name'] != '') {
                 $ret .= "<span>$v[name]</span>";
             }

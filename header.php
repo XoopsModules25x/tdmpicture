@@ -20,10 +20,11 @@ use Xmf\Module\Helper;
  * ****************************************************************************
  */
 
-include __DIR__ . '/../../mainfile.php';
+include_once __DIR__ . '/../../include/cp_header.php';
+//include __DIR__ . '/../../mainfile.php';
 
 $moduleDirName = basename(__DIR__);
-$moduleHelper        = Helper::getHelper($moduleDirName);
+$moduleHelper  = Helper::getHelper($moduleDirName);
 
 /* Use XOOPS_ROOT_PATH for all include file */
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
